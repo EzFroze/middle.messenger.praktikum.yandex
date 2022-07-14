@@ -1,0 +1,24 @@
+{
+  "name": "yandex-practicum-module-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel static/index.hbs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EzFroze/yandex-practicum-module-1.git"
+  },
+  "author": "Rustam <sultanbekov-01@yandex.ru>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EzFroze/yandex-practicum-module-1/issues"
+  },
+  "homepage": "https://github.com/EzFroze/yandex-practicum-module-1#readme",
+  "devDependencies": {
+    "@anikin/parcel-transformer-handlebars": "^1.0.9",
+    "parcel": "^2.6.2"
+  },
+  "dependencies": {}
+}
