@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "parcel static/index.html --no-cache",
+    "dev": "rm -rf ./dist && parcel static/index.html --no-cache",
     "build": "rm -rf ./dist && parcel build static/index.html --public-url . --no-cache --no-source-maps"
   },
   "repository": {
@@ -26,6 +26,8 @@
     "handlebars": "^4.7.7"
   },
   "@parcel/transformer-css": {
-    "cssModules": true
+    "cssModules": {
+      "global": false
+    }
   }
 }
