@@ -2,9 +2,9 @@
   "name": "yandex-practicum-module-1",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "dev": "parcel static/index.hbs"
+    "dev": "parcel static/index.html --no-cache",
+    "build": "rm -rf ./dist && parcel build static/index.html --public-url . --no-cache --no-source-maps"
   },
   "repository": {
     "type": "git",
@@ -17,8 +17,15 @@
   },
   "homepage": "https://github.com/EzFroze/yandex-practicum-module-1#readme",
   "devDependencies": {
-    "@anikin/parcel-transformer-handlebars": "^1.0.9",
-    "parcel": "^2.6.2"
+    "@parcel/optimizer-cssnano": "^2.6.2",
+    "@parcel/transformer-inline-string": "^2.6.2",
+    "parcel": "^2.6.2",
+    "parcel-transformer-hbs": "^1.0.4"
   },
-  "dependencies": {}
+  "dependencies": {
+    "handlebars": "^4.7.7"
+  },
+  "@parcel/transformer-css": {
+    "cssModules": true
+  }
 }
