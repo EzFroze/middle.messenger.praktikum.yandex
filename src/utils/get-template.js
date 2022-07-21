@@ -3,7 +3,7 @@ import { urls } from "../const";
 export function getTemplate() {
   let pathname = window.location.pathname;
 
-  if (!pathname) return;
+  if (!pathname) return urls["404"];
 
   if (pathname.length === 1) {
     window.location.href = "/auth"; // Временное решение чтобы попадать на авторизацию
