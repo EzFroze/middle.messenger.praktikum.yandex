@@ -1,5 +1,16 @@
+:root {
+  --black: #1e1e1e;
+  --white: #ffffff;
+  --blue: #3369f3;
+  --secondary: #999999;
+}
+
 * {
   box-sizing: border-box;
+}
+
+html {
+  height: 100%;
 }
 
 body {
@@ -7,6 +18,11 @@ body {
   font-weight: 500;
   margin: 0;
   padding: 0;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
 }
 
 h1,
@@ -20,4 +36,9 @@ p,
 div {
   margin: 0;
   padding: 0;
+}
+
+a {
+  color: var(--blue);
+  text-decoration: none;
 }
