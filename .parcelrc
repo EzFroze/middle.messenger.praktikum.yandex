@@ -6,7 +6,7 @@
     ]
   },
   "optimizers": {
-    "*.css": [
+    "[*.css, *.pcss]": [
       "@parcel/optimizer-cssnano"
     ]
   }
