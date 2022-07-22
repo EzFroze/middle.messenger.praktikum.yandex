@@ -6,7 +6,7 @@ export function getTemplate() {
   if (!pathname) return urls["404"];
 
   if (pathname.length === 1) {
-    window.location.href = "/auth"; // Временное решение чтобы попадать на авторизацию
+    return urls["main"];
   }
 
   if (pathname.length > 1) {
