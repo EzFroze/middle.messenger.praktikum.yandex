@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "dev": "rm -rf ./dist && parcel static/index.html --no-cache",
-    "build": "rm -rf ./dist && parcel build static/index.html --public-url . --no-cache --no-source-maps"
+    "build": "rm -rf ./dist && parcel build static/index.html --public-url . --no-cache --no-source-maps",
+    "start": "npm run build && node server.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "postcss-nested": "^5.0.6"
   },
   "dependencies": {
+    "express": "^4.18.1",
     "handlebars": "^4.7.7"
   },
   "@parcel/transformer-css": {
