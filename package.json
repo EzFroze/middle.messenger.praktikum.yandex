@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/EzFroze/yandex-practicum-module-1#readme",
   "engines": {
-    "node": "^12"
+    "node": ">=12",
+    "browsers": ">= 0.25%"
   },
   "devDependencies": {
     "@parcel/optimizer-cssnano": "^2.6.2",
