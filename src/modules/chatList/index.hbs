@@ -1,22 +1,22 @@
 <div class={{style.container}}>
-  <div class={{style.profile}}>
-    Профиль
-  </div>
+  <a href="/profile" class={{style.profile}}>
+    Профиль <img src={{arrow}} alt="arrow">
+  </a>
   <div class={{style.search}}>
-    Поиск
+    <input type="text" placeholder="Поиск" required>
   </div>
   <ul class={{style.list}}>
     <hr />
     {{#each chats}}
-      <li class={{style.item}}>
-        <div class={{style.avatar}}></div>
-        <div class={{style.message}}>
-          <h3 class={{style.name}}>{{this.name}}</h3>
-          <span class={{style.text}}>{{this.text}}</span>
+      <li class={{../style.item}}>
+        <div class={{../style.avatar}}></div>
+        <div class={{../style.message}}>
+          <h3 class={{../style.name}}>{{name}}</h3>
+          <span class={{../style.messageText}}>{{text}}</span>
         </div>
-        <div class={{style.info}}>
-          <p class={{style.time}}>{{this.time}}</p>
-          <span class={{style.messageCount}}>{{this.unread}}</span>
+        <div class={{../style.info}}>
+          <p class={{../style.time}}>{{time}}</p>
+          <span class={{../style.messageCount}}>{{unread}}</span>
         </div>
       </li>
       <hr />
