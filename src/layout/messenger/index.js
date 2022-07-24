@@ -2,5 +2,5 @@ import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
 
 export const messengerLayout = (chatList, chat) => {
-  return template({ style, chat, chatList });
+  return template({ style, chatList, chat });
 };
