@@ -1,0 +1,81 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding: 10px 20px;
+}
+
+.recipient {
+  display: flex;
+  flex-direction: column;
+
+  hr {
+    margin: 0;
+    margin-top: 10px;
+  }
+}
+
+.recipientContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.userInfo {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  .avatar {
+    width: 34px;
+    height: 34px;
+
+    background: #efefef;
+    border-radius: 100%;
+  }
+}
+
+.settings {
+  width: 30px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.sendMessage {
+  display: flex;
+  flex-direction: column;
+
+  hr {
+    margin-top: 10px; /* Remove */
+    margin-bottom: 10px;
+  }
+
+  .inputs {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+
+    .file {
+      cursor: pointer;
+      display: flex;
+    }
+
+    .text {
+      width: 100%;
+      input {
+        background: #efefef;
+        border-radius: 30px;
+        border: none;
+        padding: 10px 20px;
+        width: 100%;
+      }
+    }
+
+    .sendArrow {
+      display: flex;
+    }
+  }
+}
