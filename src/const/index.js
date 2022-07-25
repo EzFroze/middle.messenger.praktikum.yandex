@@ -1,9 +1,12 @@
-import { mainPage } from "../pages/exports";
-import { authPage } from "../pages/exports";
-import { registerPage } from "../pages/exports";
-import { page404 } from "../pages/exports";
-import { page500 } from "../pages/exports";
-import { messengerPage } from "../pages/exports";
+import {
+  mainPage,
+  profilePage,
+  authPage,
+  registerPage,
+  messengerPage,
+  page404,
+  page500,
+} from "../pages/exports";
 
 export const urls = {
   main: mainPage,
@@ -12,4 +15,5 @@ export const urls = {
   404: page404,
   500: page500,
   messenger: messengerPage,
+  profile: profilePage,
 };
