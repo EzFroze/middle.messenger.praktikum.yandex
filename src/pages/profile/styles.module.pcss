@@ -1,0 +1,57 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.avatar {
+  margin-bottom: 21px;
+}
+
+.name {
+  margin-bottom: 60px;
+  color: var(--black);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.info {
+  max-width: 510px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 60px;
+
+  hr {
+    margin: 0;
+  }
+}
+
+.actions .item {
+  .key {
+    color: var(--blue);
+  }
+
+  .red {
+    color: var(--red);
+  }
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  line-height: 13px;
+
+  .key {
+    color: var(--black);
+  }
+
+  .value {
+    color: var(--secondary);
+  }
+}
