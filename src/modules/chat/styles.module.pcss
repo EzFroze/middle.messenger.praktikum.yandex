@@ -42,12 +42,68 @@
   cursor: pointer;
 }
 
+.chat {
+  padding: 30px 0;
+  height: 100%;
+
+  .date {
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    line-height: 12px;
+    color: var(--secondary);
+    margin-bottom: 30px;
+  }
+
+  .messageContainer {
+    max-width: 402px;
+    width: fit-content;
+    position: relative;
+    border-radius: 12px;
+    padding: 11px;
+  }
+
+  .messageText {
+    font-size: 12px;
+    line-height: 15px;
+    color: var(--black);
+  }
+
+  .from {
+    background: #f8f8f8;
+
+    .messageTime {
+      position: absolute;
+      bottom: 11px;
+      right: 11px;
+      color: var(--secondary);
+    }
+  }
+
+  .messageTime {
+    font-size: 9px;
+    line-height: 9px;
+  }
+
+  .to {
+    margin-left: auto;
+    display: flex;
+    align-items: flex-end;
+    background: #e4edfd;
+    gap: 28px;
+
+    .messageTime {
+      color: var(--blue);
+    }
+  }
+}
+
 .sendMessage {
   display: flex;
   flex-direction: column;
 
   hr {
-    margin-top: 10px; /* Remove */
+    margin: 0;
     margin-bottom: 10px;
   }
 
