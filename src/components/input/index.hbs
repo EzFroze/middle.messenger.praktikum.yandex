@@ -1,0 +1,17 @@
+<div class={{style.floatingLabelGroup}}>
+  <input
+    type={{type}}
+    id={{id}}
+    class={{style.formControl}}
+    autocomplete="off"
+
+    {{#if autofocus}}
+      autofocus="autofocus"
+    {{/if}}
+
+    {{#if required}}
+      required="required"
+    {{/if}}
+  />
+  <label class={{style.floatingLabel}}>{{label}}</label>
+</div>

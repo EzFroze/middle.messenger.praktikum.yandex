@@ -1,0 +1,47 @@
+:root {
+  --black: #1e1e1e;
+  --white: #ffffff;
+  --blue: #3369f3;
+  --secondary: #999999;
+  --red: #ff0000;
+  --crystal-bell: #efefef;
+  --whiteout: #fbfbfb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+p,
+div {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: var(--blue);
+  text-decoration: none;
+}

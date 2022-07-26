@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.bar {
+  height: 100%;
+  flex-basis: 64px;
+  background: var(--whiteout);
+  padding: 0 18px;
+
+  display: flex;
+  align-items: center;
+
+  .arrow {
+    transform: rotate(-180deg);
+  }
+}
+
+.content {
+  flex-basis: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,43 @@
+{
+  "name": "yandex-practicum-module-1",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "rimraf ./dist && parcel static/index.html --no-cache",
+    "build": "rimraf ./dist && parcel build static/index.html --public-url . --no-cache --no-source-maps",
+    "start": "npm run build && node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EzFroze/yandex-practicum-module-1.git"
+  },
+  "author": "Rustam <sultanbekov-01@yandex.ru>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EzFroze/yandex-practicum-module-1/issues"
+  },
+  "homepage": "https://github.com/EzFroze/yandex-practicum-module-1#readme",
+  "engines": {
+    "node": ">=12",
+    "browsers": ">= 0.25%"
+  },
+  "devDependencies": {
+    "@parcel/optimizer-cssnano": "2.6.2",
+    "@parcel/transformer-inline-string": "2.6.2",
+    "parcel": "2.6.2",
+    "parcel-transformer-hbs": "1.0.4",
+    "postcss": "8.4.14",
+    "postcss-modules": "4.3.1",
+    "postcss-nested": "5.0.6",
+    "rimraf": "3.0.2"
+  },
+  "dependencies": {
+    "express": "4.18.1",
+    "handlebars": "4.7.7"
+  },
+  "@parcel/transformer-css": {
+    "cssModules": {
+      "global": false
+    }
+  }
+}
