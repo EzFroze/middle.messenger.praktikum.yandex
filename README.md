@@ -4,4 +4,4 @@
 
 ### Проект запускается командой `npm run start`
 
-### Ссылка на проект - [Netify](/)
+### Ссылка на проект - [Netify](https://nimble-bubblegum-c28335.netlify.app/)
