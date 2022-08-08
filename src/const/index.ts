@@ -8,7 +8,7 @@ import {
   page500,
 } from "../pages/exports";
 
-export const urls = {
+export const urls: Record<string, string> = {
   main: mainPage,
   auth: authPage,
   register: registerPage,

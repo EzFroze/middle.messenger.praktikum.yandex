@@ -5,6 +5,6 @@ import dots from "../../../static/images/dots.svg";
 import clip from "../../../static/images/clip.svg";
 import sendArrow from "../../../static/images/send-arrow.svg";
 
-export const chat = (chatData) => {
+export const chat = (chatData?: unknown) => {
   return template({ style, dots, clip, sendArrow, chatData });
 };

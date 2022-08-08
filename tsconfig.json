@@ -1,0 +1,16 @@
+{
+  "include": ["src/**/*", "static/**/*", "declaration.d.ts"],
+  "exclude": ["node_modules", "dist"],
+  "compilerOptions": {
+    "outDir": "dist",
+    "target": "es2016",
+    "declaration": true,
+    "declarationMap": true,
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "strictNullChecks": true
+  }
+}

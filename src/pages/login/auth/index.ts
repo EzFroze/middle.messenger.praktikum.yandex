@@ -1,6 +1,6 @@
 import * as style from "./styles.module.pcss";
 import template from "./index.hbs";
-import { loginLayout } from "../../../layout/login";
+import { loginLayout } from "../../../layout/exports";
 import { input } from "../../../components/exports";
 
 const result = template({
