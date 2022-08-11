@@ -8,7 +8,9 @@
     "build": "rimraf ./dist && parcel build static/index.html --public-url . --no-cache --no-source-maps",
     "start": "npm run build && node server.js",
     "lint": "eslint src/**/*.ts server.ts",
-    "lint:fix": "eslint src/**/*.ts server.ts --fix"
+    "lint:fix": "eslint src/**/*.ts server.ts --fix",
+    "style": "stylelint src/**/*.pcss",
+    "style:fix": "stylelint src/**/*.pcss --fix"
   },
   "repository": {
     "type": "git",
@@ -39,7 +41,9 @@
     "postcss": "8.4.14",
     "postcss-modules": "4.3.1",
     "postcss-nested": "5.0.6",
-    "rimraf": "3.0.2"
+    "rimraf": "3.0.2",
+    "stylelint": "^14.10.0",
+    "stylelint-config-standard": "^27.0.0"
   },
   "dependencies": {
     "express": "4.18.1",
