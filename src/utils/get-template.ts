@@ -1,12 +1,12 @@
 import { urls } from "../const";
 
 export function getTemplate() {
-  let pathname = window.location.pathname;
+  let { pathname } = window.location;
 
   if (!pathname) return urls["404"];
 
   if (pathname.length === 1) {
-    return urls["main"];
+    return urls.main;
   }
 
   if (pathname.length > 1) {

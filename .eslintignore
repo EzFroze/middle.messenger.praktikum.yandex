@@ -1,0 +1,10 @@
+/node_modules
+/dist
+/.parcel-cahce
+/.idea
+/.github
+/tsconfig.json
+/package.json
+/package-lock.json
+/netlify.toml
+/README.md

@@ -4,7 +4,7 @@ declare module "*.module.pcss" {
 }
 
 declare module "*.hbs" {
-  const content: (props?: Record<string, unknown>) => string;
+  const content: <T>(props?: T) => string;
   export default content;
 }
 
