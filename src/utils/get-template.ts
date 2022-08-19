@@ -12,7 +12,7 @@ export function getTemplate() {
   if (pathname.length > 1) {
     pathname = pathname.slice(1);
     if (!urls[pathname]) {
-      window.location.href = "/404";
+      return urls["404"];
     }
   }
 
