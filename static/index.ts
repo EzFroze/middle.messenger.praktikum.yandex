@@ -1,5 +1,14 @@
+import Block from "../src/utils/block";
 import { getTemplate } from "../src/utils/get-template";
 
 const root = document.getElementById("root")!;
 
-root.innerHTML = getTemplate();
+const template = getTemplate();
+
+if (template instanceof Block) {
+  root.appendChild(template.getContent()!);
+
+  template.dispatchComponentDidMount();
+} else {
+  root.innerHTML = template;
+}
