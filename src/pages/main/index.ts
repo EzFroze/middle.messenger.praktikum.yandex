@@ -1,12 +1,12 @@
 import * as style from "./styles.module.pcss";
 import template from "./index.hbs";
-import Block from "../../utils/block";
+import Block, { TProps } from "../../utils/block";
 
 type Props = {
   style: typeof style
-};
+} & TProps;
 
-class MainPage extends Block {
+class MainPage extends Block<Props> {
   constructor(props: Props) {
     super("div", props);
   }

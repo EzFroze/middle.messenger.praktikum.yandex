@@ -1,15 +1,20 @@
+import { v4 as makeUUID } from "uuid";
 import { EventBus } from "./event-bus";
 
 type TMeta = {
   tagName: string,
-  props: object
+  props: TProps,
 };
 
-type TProps = {
-  children?: typeof Block
-} & Record<string, any> | {};
+type BlockEvents = Record<string, (event: any) => void>;
 
-class Block {
+export type TProps = {
+  children?: Block<{}>,
+  events?: BlockEvents,
+  _id?: string
+};
+
+class Block<P extends object> {
   static EVENTS = {
     INIT: "init",
     FLOW_CMD: "flow:component-did-mount",
@@ -23,7 +28,11 @@ class Block {
 
   tagName: string | "div";
 
-  props: TProps;
+  props: P & TProps;
+
+  _id: null | string;
+
+  children: null | Record<string, Block<{}>>;
 
   _eventBus: () => EventBus;
 
@@ -33,15 +42,19 @@ class Block {
    *
    * @returns {void}
    */
-  constructor(tagName = "div", props: TProps) {
+  constructor(tagName = "div", propsAndChildren: P & TProps) {
     const eventBus = new EventBus();
+
+    const props = propsAndChildren;
 
     this._meta = {
       tagName,
       props
     };
 
-    this.props = props;
+    this._id = makeUUID();
+
+    this.props = this._makePropsProxy({ ...props, _id: this._id } as TProps & P);
 
     this._eventBus = () => eventBus;
 
@@ -69,7 +82,6 @@ class Block {
   }
 
   _componentDidMount() {
-    this.props = this._makePropsProxy(this.props);
     this.componentDidMount();
   }
 
@@ -81,14 +93,13 @@ class Block {
     this._eventBus().emit(Block.EVENTS.FLOW_CMD);
   }
 
-  _componentDidUpdate(oldProps: {}, newProps: {}) {
-    console.log(oldProps, newProps);
-    this.componentDidUpdate();
+  _componentDidUpdate(oldProps: {}, newProps: {}): void {
+    this.componentDidUpdate(oldProps, newProps);
     this._eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  componentDidUpdate(): any {
-    return true;
+  componentDidUpdate(oldProps: {}, newProps: {}): void {
+    console.log(oldProps, newProps);
   }
 
   setProps = (nextProps: {}) => {
@@ -108,7 +119,11 @@ class Block {
 
     if (!this._element) return;
 
+    this._removeEvents();
+
     this._element.innerHTML = block;
+
+    this._addEvents();
   }
 
   render(): any {
@@ -119,14 +134,15 @@ class Block {
     return this.element;
   }
 
-  _makePropsProxy<T extends TProps>(props: T) {
+  _makePropsProxy(props: P & TProps) {
     const update = (oldProps: {}, newProps: {}) => {
       this._eventBus().emit(Block.EVENTS.FLOW_CMU, oldProps, newProps);
     };
 
     return new Proxy(props, {
-      set(target: Record<string, any>, key: string, value: any) {
+      set(target: typeof props, key: string, value: any) {
         const oldProps = { ...target };
+        // @ts-ignore
         target[key] = value;
         update(oldProps, target);
         return true;
@@ -135,8 +151,23 @@ class Block {
   }
 
   _createDocumentElement(tagName: string) {
-    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     return document.createElement(tagName);
+  }
+
+  _addEvents() {
+    const { events = {} } = this.props;
+
+    Object.keys(events).forEach((eventName) => {
+      this._element?.addEventListener(eventName, events[eventName]);
+    });
+  }
+
+  _removeEvents() {
+    const { events = {} } = this.props;
+
+    Object.keys(events).forEach((eventName) => {
+      this._element?.removeEventListener(eventName, events[eventName]);
+    });
   }
 
   show() {
