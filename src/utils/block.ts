@@ -9,7 +9,6 @@ type TMeta = {
 type BlockEvents = Record<string, (event: any) => void>;
 
 export type TProps = {
-  children?: Block<{}>,
   events?: BlockEvents,
   _id?: string
 };
@@ -43,9 +42,11 @@ class Block<P extends object> {
    * @returns {void}
    */
   constructor(tagName = "div", propsAndChildren: P & TProps) {
-    const eventBus = new EventBus();
+    const { props, children } = this._getChildren(propsAndChildren);
 
-    const props = propsAndChildren;
+    this.children = children;
+
+    const eventBus = new EventBus();
 
     this._meta = {
       tagName,
@@ -83,6 +84,12 @@ class Block<P extends object> {
 
   _componentDidMount() {
     this.componentDidMount();
+
+    if (!this.children) return;
+
+    Object.values(this.children).forEach((child) => {
+      child.dispatchComponentDidMount();
+    });
   }
 
   componentDidMount(): any {
@@ -114,6 +121,10 @@ class Block<P extends object> {
     return this._element;
   }
 
+  get id() {
+    return this._id;
+  }
+
   _render() {
     const block = this.render();
 
@@ -121,7 +132,9 @@ class Block<P extends object> {
 
     this._removeEvents();
 
-    this._element.innerHTML = block;
+    this._element.innerHTML = "";
+
+    this._element.appendChild(block);
 
     this._addEvents();
   }
@@ -168,6 +181,42 @@ class Block<P extends object> {
     Object.keys(events).forEach((eventName) => {
       this._element?.removeEventListener(eventName, events[eventName]);
     });
+  }
+
+  _getChildren(propsAndChildren: {}) {
+    const children: Record<string, any> = {};
+    const props: Record<string, any> = {};
+
+    Object.entries(propsAndChildren).forEach(([key, value]) => {
+      if (value instanceof Block) {
+        children[key] = value;
+      } else {
+        props[key] = value;
+      }
+    });
+
+    return { children, props };
+  }
+
+  compile(template: (props: Record<string, any>) => string, props: Record<string, any>) {
+    if (!this.children) return undefined;
+    const propsAndStubs = { ...props };
+
+    Object.entries(this.children).forEach(([key, child]) => {
+      propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
+    });
+
+    const fragment = this._createDocumentElement("template");
+
+    fragment.innerHTML = template(propsAndStubs);
+
+    Object.values(this.children).forEach((child) => {
+      const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+
+      stub.replaceWith(child.getContent());
+    });
+
+    return fragment.content;
   }
 
   show() {

@@ -1,12 +1,29 @@
 import * as style from "./styles.module.pcss";
 import template from "./index.hbs";
-import { loginLayout } from "../../../layout/exports";
-import { input } from "../../../components/exports";
+import { LoginLayout } from "../../../layout/exports";
+import { Input } from "../../../components/exports";
+import Block, { TProps } from "../../../utils/block";
 
-const result = template({
+type Props = {
+  style: typeof style,
+  loginInput: Input,
+  passwordInput: Input
+} & TProps;
+
+class AuthPage extends Block<Props> {
+  constructor(props: Props) {
+    super("div", props);
+  }
+
+  render() {
+    return this.compile(template, this.props);
+  }
+}
+
+const result = new AuthPage({
   style,
-  loginInput: input("Логин", "text", "login", true, true),
-  passwordInput: input("Пароль", "password", "password", false, true),
+  loginInput: new Input({ label: "Логин", type: "text", id: "login", autofocus: true, reqiured: true }),
+  passwordInput: new Input({ label: "Пароль", type: "password", id: "password", autofocus: false, reqiured: true }),
 });
 
-export const authPage = loginLayout(result);
+export const authPage = new LoginLayout({ content: result });

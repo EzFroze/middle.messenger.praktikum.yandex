@@ -12,7 +12,7 @@ class MainPage extends Block<Props> {
   }
 
   render() {
-    return template(this.props);
+    return this.compile(template, this.props);
   }
 }
 
