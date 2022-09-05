@@ -1,11 +1,7 @@
 type TCallback<T> = (...args: T[]) => void;
 
 export class EventBus {
-  listeners: Record<string, Array<Function>>;
-
-  constructor() {
-    this.listeners = {};
-  }
+  private readonly listeners: Record<string, Array<Function>> = {};
 
   on<T>(event: string, callback: TCallback<T>) {
     if (!this.listeners[event]) {
