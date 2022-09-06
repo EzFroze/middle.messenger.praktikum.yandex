@@ -11,7 +11,7 @@ const defaultValues: Pick<Props, "style"> = { style };
 
 export class LoginLayout extends Block<Props> {
   constructor(props: Props) {
-    super("div", { ...defaultValues, ...props });
+    super({ ...defaultValues, ...props });
   }
 
   render() {

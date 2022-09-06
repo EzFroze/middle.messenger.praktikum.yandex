@@ -12,7 +12,7 @@ type Props = {
 
 class AuthPage extends Block<Props> {
   constructor(props: Props) {
-    super("div", props);
+    super({ ...props });
   }
 
   render() {

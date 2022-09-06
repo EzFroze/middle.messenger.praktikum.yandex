@@ -19,7 +19,7 @@ const defaultValues: Pick<Props, "autofocus" | "reqiured" | "style"> = {
 
 export class Input extends Block<Props> {
   constructor(props: Props) {
-    super("div", { ...defaultValues, ...props });
+    super({ ...defaultValues, ...props });
   }
 
   render() {

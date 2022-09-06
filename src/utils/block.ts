@@ -2,7 +2,6 @@ import { v4 as makeUUID } from "uuid";
 import { EventBus } from "./event-bus";
 
 type TMeta = {
-  tagName: string,
   props: TProps,
 };
 
@@ -38,7 +37,7 @@ class Block<P = any> {
    *
    * @returns {void}
    */
-  constructor(tagName = "div", propsAndChildren: P & TProps) {
+  constructor(propsAndChildren: P & TProps) {
     const { props, children } = this._getChildren(propsAndChildren);
 
     this.children = children;
@@ -46,7 +45,6 @@ class Block<P = any> {
     const eventBus = new EventBus();
 
     this._meta = {
-      tagName,
       props
     };
 
@@ -68,13 +66,7 @@ class Block<P = any> {
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  private _createResources() {
-    const { tagName } = this._meta;
-    this._element = this._createDocumentElement(tagName);
-  }
-
   init() {
-    this._createResources();
     this._eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
@@ -120,13 +112,17 @@ class Block<P = any> {
   }
 
   private _render() {
-    const block = this.render();
+    const fragment = this.render();
 
     this._removeEvents();
 
-    this._element.innerHTML = "";
+    const newElement = fragment.firstElementChild;
 
-    this._element.appendChild(block);
+    if (!newElement) return;
+
+    this._element?.replaceWith(newElement);
+
+    this._element = newElement as HTMLElement;
 
     this._addEvents();
   }
