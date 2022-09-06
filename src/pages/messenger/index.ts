@@ -1,12 +1,27 @@
 import template from "./index.hbs";
 
-import { messengerLayout } from "../../layout/exports";
-import { chat, chatList } from "../../modules/exports";
+import { MessengerLayout } from "../../layout/exports";
+import { Chat, ChatList } from "../../modules/exports";
 import { chatList as chatListMock } from "./mock";
+import Block from "../../utils/block";
 
-const chatListResult = chatList(chatListMock);
-const chatResult = chat();
+type Props = {
+  content: Block
+};
 
-const layout = messengerLayout(chatListResult, chatResult);
+class MessengerPage extends Block<Props> {
+  constructor(props: Props) {
+    super(props);
+  }
 
-export const messengerPage = template({ content: layout });
+  render() {
+    return this.compile(template, this.props);
+  }
+}
+
+const chatListResult = new ChatList({ chats: chatListMock });
+const chatResult = new Chat({});
+
+const layout = new MessengerLayout({ chatList: chatListResult, chat: chatResult });
+
+export const messengerPage = new MessengerPage({ content: layout });

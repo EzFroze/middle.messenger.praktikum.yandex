@@ -9,7 +9,7 @@ import {
 } from "../pages/exports";
 import Block from "../utils/block";
 
-export const urls: Record<string, string | Block> = {
+export const urls: Record<string, Block> = {
   main: mainPage,
   auth: authPage,
   register: registerPage,

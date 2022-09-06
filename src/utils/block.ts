@@ -12,8 +12,8 @@ export type TProps = {
 class Block<P = any> {
   static EVENTS = {
     INIT: "init",
-    FLOW_CMD: "flow:component-did-mount",
-    FLOW_CMU: "flow:component-did-update",
+    FLOW_CDM: "flow:component-did-mount",
+    FLOW_CDU: "flow:component-did-update",
     FLOW_RENDER: "flow:render"
   };
 
@@ -61,8 +61,8 @@ class Block<P = any> {
 
   private _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_CMD, this._componentDidMount.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_CMU, this._componentDidUpdate.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
@@ -83,7 +83,7 @@ class Block<P = any> {
   }
 
   public dispatchComponentDidMount() {
-    this._eventBus().emit(Block.EVENTS.FLOW_CMD);
+    this._eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
   private _componentDidUpdate(oldProps: {}, newProps: {}): void {
@@ -137,7 +137,7 @@ class Block<P = any> {
 
   private _makePropsProxy(props: P & TProps) {
     const update = (oldProps: {}, newProps: {}) => {
-      this._eventBus().emit(Block.EVENTS.FLOW_CMU, oldProps, newProps);
+      this._eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, newProps);
     };
 
     return new Proxy(props, {

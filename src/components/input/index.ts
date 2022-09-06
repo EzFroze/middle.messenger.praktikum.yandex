@@ -26,13 +26,3 @@ export class Input extends Block<Props> {
     return this.compile(template, this.props);
   }
 }
-
-export const input = (
-  label = "",
-  type = "text",
-  id = "",
-  autofocus = false,
-  required = false
-) => {
-  return template({ style, label, type, id, autofocus, required });
-};

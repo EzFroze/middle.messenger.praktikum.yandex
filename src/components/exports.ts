@@ -1,2 +1,2 @@
-export { input, Input } from "./input";
-export { avatar } from "./avatar";
+export { Input } from "./input";
+export { Avatar } from "./avatar";

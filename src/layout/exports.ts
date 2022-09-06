@@ -1,3 +1,3 @@
-export { loginLayout, LoginLayout } from "./login";
-export { messengerLayout } from "./messenger";
-export { profileLayout } from "./profile";
+export { LoginLayout } from "./login";
+export { MessengerLayout } from "./messenger";
+export { ProfileLayout } from "./profile";

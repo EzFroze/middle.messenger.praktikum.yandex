@@ -2,11 +2,21 @@ import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
 
 import emptySrc from "../../../static/images/empty-image.png";
+import Block from "../../utils/block";
 
-export const avatar = (src: string) => {
-  if (!src) {
-    return template({ src: emptySrc, isEmpty: true, style });
+type Props = {
+  style?: typeof style,
+  src?: string
+};
+
+const defaultValues: Pick<Props, "style" | "src"> = { style, src: emptySrc };
+
+export class Avatar extends Block<Props> {
+  constructor(props: Props) {
+    super({ ...defaultValues, ...props });
   }
 
-  return template({ src, style });
-};
+  render() {
+    return this.compile(template, this.props);
+  }
+}
