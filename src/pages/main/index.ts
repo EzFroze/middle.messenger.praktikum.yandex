@@ -8,7 +8,7 @@ type Props = {
 
 class MainPage extends Block<Props> {
   constructor(props: Props) {
-    super({ ...props });
+    super(props);
   }
 
   render() {

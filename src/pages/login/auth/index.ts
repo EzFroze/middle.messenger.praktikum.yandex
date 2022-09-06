@@ -12,7 +12,7 @@ type Props = {
 
 class AuthPage extends Block<Props> {
   constructor(props: Props) {
-    super({ ...props });
+    super(props);
   }
 
   render() {
@@ -20,10 +20,10 @@ class AuthPage extends Block<Props> {
   }
 }
 
-const result = new AuthPage({
+const authInstance = new AuthPage({
   style,
   loginInput: new Input({ label: "Логин", type: "text", id: "login", autofocus: true, reqiured: true }),
   passwordInput: new Input({ label: "Пароль", type: "password", id: "password", autofocus: false, reqiured: true }),
 });
 
-export const authPage = new LoginLayout({ content: result });
+export const authPage = new LoginLayout({ content: authInstance });

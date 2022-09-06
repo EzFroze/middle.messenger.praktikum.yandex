@@ -13,14 +13,15 @@
       "double",
       { "allowTemplateLiterals": true }
     ],
+    "@typescript-eslint/default-param-last": "off",
+    "@typescript-eslint/comma-dangle": "off",
+    "@typescript-eslint/no-useless-constructor": "off",
     "import/prefer-default-export": "off",
     "arrow-body-style": "off",
-    "@typescript-eslint/comma-dangle": "off",
     "object-curly-newline": "off",
     "no-underscore-dangle": "off",
     "no-useless-return": "off",
     "class-methods-use-this": "off",
-    "@typescript-eslint/default-param-last": "off",
     "no-param-reassign": "warn"
   },
   "settings": {
