@@ -141,12 +141,20 @@ class Block<P = any> {
     };
 
     return new Proxy(props, {
+      get(target, key) {
+        // @ts-ignore
+        const value = target[key];
+        return typeof value === "function" ? value.bind(target) : value;
+      },
       set(target, key, value) {
         const oldProps = { ...target };
         // @ts-ignore
         target[key] = value;
         update(oldProps, target);
         return true;
+      },
+      deleteProperty() {
+        throw new Error("Нет доступа");
       }
     });
   }
