@@ -4,6 +4,7 @@
     id={{id}}
     class={{style.formControl}}
     autocomplete="off"
+    placeholder={{placeholder}}
 
     {{#if autofocus}}
       autofocus="autofocus"
@@ -13,5 +14,7 @@
       required="required"
     {{/if}}
   />
-  <label class={{style.floatingLabel}} for={{id}}>{{label}}</label>
+  {{#if label}}
+    <label class={{style.floatingLabel}} for={{id}}>{{label}}</label>
+  {{/if}}
 </div>
