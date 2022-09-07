@@ -2,17 +2,18 @@ import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
 
 import { ProfileLayout } from "../../layout/exports";
-import { Avatar } from "../../components/exports";
+import { Avatar, ProfileInfoBlock } from "../../components/exports";
 import Block from "../../utils/block";
 
 type Props = {
   style?: typeof style,
-  name: string,
-  email: string,
-  login: string,
-  surname: string,
-  nickname: string,
-  phone: string,
+  titleName: string,
+  name: ProfileInfoBlock,
+  email: ProfileInfoBlock,
+  login: ProfileInfoBlock,
+  surname: ProfileInfoBlock,
+  nickname: ProfileInfoBlock,
+  phone: ProfileInfoBlock,
   avatar: Block
 };
 
@@ -32,15 +33,15 @@ const src = "https://avatars.githubusercontent.com/u/43078049?v=4";
 
 const avatarResult = new Avatar({ src });
 
-const props = {
-  name: "Рустам",
-  email: "RS@yandex.ru",
-  login: "EzFroze",
-  surname: "Султанбеков",
-  nickname: "Руста",
-  phone: "8 800-555-35-35",
+const infoBlock = {
+  name: new ProfileInfoBlock({ key: "Имя", value: "Рустам" }),
+  surname: new ProfileInfoBlock({ key: "Фамилия", value: "Султанбеков" }),
+  email: new ProfileInfoBlock({ key: "Почта", value: "RS@yandex.ru" }),
+  login: new ProfileInfoBlock({ key: "Логин", value: "EzFroze" }),
+  nickname: new ProfileInfoBlock({ key: "Имя в чате", value: "Руста" }),
+  phone: new ProfileInfoBlock({ key: "Телефон", value: "8 800-555-35-35" }),
 };
 
-const profileInstance = new ProfilePage({ ...props, avatar: avatarResult });
+const profileInstance = new ProfilePage({ ...infoBlock, titleName: "Рустам", avatar: avatarResult });
 
 export const profilePage = new ProfileLayout({ content: profileInstance });
