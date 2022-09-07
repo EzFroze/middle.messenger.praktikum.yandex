@@ -1,4 +1,4 @@
-import * as style from "./styles.module.pcss";
+import style from "./styles.module.pcss";
 import template from "./index.hbs";
 import { LoginLayout } from "../../../layout/exports";
 import { Input } from "../../../components/exports";

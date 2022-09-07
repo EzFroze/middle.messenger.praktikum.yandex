@@ -1,5 +1,5 @@
 import template from "./index.hbs";
-import * as style from "./styles.module.pcss";
+import style from "./styles.module.pcss";
 
 import { ProfileLayout } from "../../layout/exports";
 import { Avatar, ProfileInfoBlock } from "../../components/exports";

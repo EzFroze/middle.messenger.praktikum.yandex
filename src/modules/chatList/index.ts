@@ -1,5 +1,5 @@
 import template from "./index.hbs";
-import * as style from "./styles.module.pcss";
+import style from "./styles.module.pcss";
 
 import arrow from "../../../static/images/arrow.svg";
 import { TChatList } from "./types";

@@ -1,10 +1,10 @@
 import Block from "../../utils/block";
 import template from "./index.hbs";
-import * as style from "./styles.module.pcss";
+import style from "./styles.module.pcss";
 
 type Props = {
   style?: typeof style,
-  content: Block<{}>
+  content: Block
 };
 
 const defaultValues: Pick<Props, "style"> = { style };
