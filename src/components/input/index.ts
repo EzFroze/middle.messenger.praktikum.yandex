@@ -8,12 +8,12 @@ type Props = {
   type: string,
   id: string,
   autofocus?: boolean,
-  reqiured?: boolean
+  required?: boolean
 };
 
-const defaultValues: Pick<Props, "autofocus" | "reqiured" | "style"> = {
+const defaultValues: Pick<Props, "autofocus" | "required" | "style"> = {
   autofocus: false,
-  reqiured: false,
+  required: false,
   style
 };
 

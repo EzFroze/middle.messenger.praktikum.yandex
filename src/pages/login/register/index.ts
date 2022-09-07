@@ -27,13 +27,13 @@ export class RegisterPage extends Block<Props> {
 
 const registerInstance = new RegisterPage({
   style,
-  mailInput: new Input({ label: "Почта", type: "text", id: "email", autofocus: true, reqiured: true }),
-  loginInput: new Input({ label: "Логин", type: "text", id: "login", reqiured: true }),
-  nameInput: new Input({ label: "Имя", type: "text", id: "first_name", reqiured: true }),
-  surnameInput: new Input({ label: "Фамилия", type: "text", id: "second_name", reqiured: true }),
-  phoneInput: new Input({ label: "Телефон", type: "text", id: "phone", reqiured: true }),
-  passwordInput: new Input({ label: "Пароль", type: "password", id: "password", reqiured: true }),
-  passwordRetryInput: new Input({ label: "Пароль (ещё раз)", type: "password", id: "password", reqiured: true }),
+  mailInput: new Input({ label: "Почта", type: "text", id: "email", autofocus: true, required: true }),
+  loginInput: new Input({ label: "Логин", type: "text", id: "login", required: true }),
+  nameInput: new Input({ label: "Имя", type: "text", id: "first_name", required: true }),
+  surnameInput: new Input({ label: "Фамилия", type: "text", id: "second_name", required: true }),
+  phoneInput: new Input({ label: "Телефон", type: "text", id: "phone", required: true }),
+  passwordInput: new Input({ label: "Пароль", type: "password", id: "password", required: true }),
+  passwordRetryInput: new Input({ label: "Пароль (ещё раз)", type: "password", id: "password", required: true }),
 });
 
 export const registerPage = new LoginLayout({ content: registerInstance });
