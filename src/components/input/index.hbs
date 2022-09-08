@@ -4,7 +4,9 @@
     id={{id}}
     class={{style.formControl}}
     autocomplete="off"
-    placeholder={{placeholder}}
+    {{#if placeholder}}
+      placeholder={{placeholder}}
+    {{/if}}
 
     {{#if autofocus}}
       autofocus="autofocus"
