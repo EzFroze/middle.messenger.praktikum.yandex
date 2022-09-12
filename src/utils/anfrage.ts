@@ -3,6 +3,15 @@
 // Привет ревьюеру и счастья и здоровья и любви
 // PS Пишу это в 2 часа ночи
 
+function queryStringify(data = {}): string {
+  const result = Object.entries(data).reduce((acc, [key, value]) => {
+    acc += `${key}=${String(value)}&`;
+    return acc;
+  }, "?");
+
+  return result.slice(0, -1);
+}
+
 enum METHOD {
   GET = "GET",
   POST = "POST",
@@ -20,7 +29,8 @@ type OptionsWithoutMethod = Omit<Options, "method">;
 
 class Anfrage {
   get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-    return this._request(url, { ...options, method: METHOD.GET });
+    const query = queryStringify(options.data);
+    return this._request(url + query, { ...options, method: METHOD.GET });
   }
 
   post(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
