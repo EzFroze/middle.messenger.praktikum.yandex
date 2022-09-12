@@ -1,4 +1,4 @@
-import { urls } from "../const";
+import { urls } from "../routes";
 
 export function getTemplate() {
   let { pathname } = window.location;
