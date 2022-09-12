@@ -1,9 +1,7 @@
 import template from "./index.hbs";
 import style from "./styles.module.pcss";
 
-import dots from "../../../static/images/dots.svg";
-import clip from "../../../static/images/clip.svg";
-import sendArrow from "../../../static/images/send-arrow.svg";
+import { clip, sendArrow, dots } from "../../../static/images";
 import Block from "../../utils/block";
 import { Input } from "../../components/input";
 
