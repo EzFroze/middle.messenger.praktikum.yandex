@@ -1,6 +1,6 @@
 import style from "./styles.module.pcss";
 import template from "./index.hbs";
-import Block from "../../utils/block";
+import Block, { TProps } from "../../utils/block";
 
 type Props = {
   style?: typeof style,
@@ -9,13 +9,15 @@ type Props = {
   type: string,
   id: string,
   autofocus?: boolean,
-  required?: boolean
-};
+  required?: boolean,
+  value?: string
+} & TProps;
 
-const defaultValues: Pick<Props, "autofocus" | "required" | "style"> = {
+const defaultValues: Pick<Props, "autofocus" | "required" | "style" | "value"> = {
   autofocus: false,
   required: false,
-  style
+  style,
+  value: ""
 };
 
 export class Input extends Block<Props> {

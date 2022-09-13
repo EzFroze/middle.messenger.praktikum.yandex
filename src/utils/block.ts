@@ -60,15 +60,18 @@ class Block<P = any> {
   }
 
   private _registerEvents(eventBus: EventBus) {
-    eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
+    eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  init() {
+  _init() {
+    this.init();
     this._eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
+
+  init() {}
 
   private _componentDidMount() {
     this.componentDidMount();
@@ -86,13 +89,13 @@ class Block<P = any> {
     this._eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  private _componentDidUpdate(oldProps: {}, newProps: {}): void {
+  private _componentDidUpdate(oldProps: P & TProps, newProps: P & TProps): void {
     this.componentDidUpdate(oldProps, newProps);
     this._eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected componentDidUpdate(oldProps: {}, newProps: {}): void {
+  protected componentDidUpdate(oldProps: P & TProps, newProps: P & TProps): void {
   }
 
   setProps = (nextProps: Record<string, any>) => {
