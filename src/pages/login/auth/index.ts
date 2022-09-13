@@ -12,10 +12,21 @@ type Props = {
   authBtn: Button
 } & TProps;
 
+type TForm = {
+  [key: string]: {
+    value: string,
+    error?: string
+  }
+};
+
 class AuthPage extends Block<Props> {
-  private form: Record<string, string> = {
-    login: "",
-    password: ""
+  private form: TForm = {
+    login: {
+      value: ""
+    },
+    password: {
+      value: ""
+    }
   };
 
   constructor(props: Props) {
@@ -43,10 +54,10 @@ class AuthPage extends Block<Props> {
     }, [] as Input[]);
   }
 
-  handleChangeInput(event: any, input: Input) {
-    const { value } = event.target;
+  handleChangeInput(event: Event, input: Input) {
+    const { value } = event.target as HTMLInputElement;
 
-    this.form[input.props.id] = value;
+    this.form[input.props.id].value = value;
 
     input.setProps({ value });
   }

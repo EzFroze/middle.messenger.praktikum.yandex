@@ -3,6 +3,7 @@ import template from "./index.hbs";
 import { LoginLayout } from "../../../layout/exports";
 import { Input } from "../../../components/exports";
 import Block, { TProps } from "../../../utils/block";
+import { Button } from "../../../components/button";
 
 type Props = {
   style: typeof style,
@@ -13,11 +14,73 @@ type Props = {
   surnameInput: Input,
   passwordInput: Input,
   passwordRetryInput: Input,
+  registerBtn: Button
 } & TProps;
 
+type TForm = {
+  [key: string]: {
+    value: string,
+    error?: string
+  }
+};
+
 export class RegisterPage extends Block<Props> {
+  private form: TForm = {
+    email: {
+      value: "",
+    },
+    login: {
+      value: ""
+    },
+    first_name: {
+      value: ""
+    },
+    second_name: {
+      value: ""
+    },
+    phone: {
+      value: ""
+    },
+    password: {
+      value: ""
+    },
+    password_retry: {
+      value: ""
+    },
+  };
+
   constructor(props: Props) {
     super(props);
+  }
+
+  init() {
+    const inputs = this.getInputs();
+
+    inputs.forEach((input) => {
+      input.setProps(
+        { events: { change: (event: any) => this.handleChangeInput(event, input) } }
+      );
+    });
+
+    this.children.registerBtn.setProps({
+      events: { click: () => { console.log(this.form); } }
+    });
+  }
+
+  handleChangeInput(event: Event, input: Input) {
+    const { value } = event.target as HTMLInputElement;
+
+    this.form[input.props.id].value = value;
+    input.setProps({ value });
+  }
+
+  getInputs() {
+    return Object.values(this.children).reduce((acc, children) => {
+      if (children instanceof Input) {
+        acc.push(children);
+      }
+      return acc;
+    }, [] as Input[]);
   }
 
   render() {
@@ -33,7 +96,8 @@ const registerInstance = new RegisterPage({
   surnameInput: new Input({ label: "Фамилия", type: "text", id: "second_name", required: true }),
   phoneInput: new Input({ label: "Телефон", type: "text", id: "phone", required: true }),
   passwordInput: new Input({ label: "Пароль", type: "password", id: "password", required: true }),
-  passwordRetryInput: new Input({ label: "Пароль (ещё раз)", type: "password", id: "password", required: true }),
+  passwordRetryInput: new Input({ label: "Пароль (ещё раз)", type: "password", id: "password_retry", required: true }),
+  registerBtn: new Button({ text: "Создать профиль", className: style.authBtn, type: "link", link: "/messenger" })
 });
 
 export const registerPage = new LoginLayout({ content: registerInstance });

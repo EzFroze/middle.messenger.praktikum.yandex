@@ -66,12 +66,12 @@ class Block<P = any> {
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _init() {
+  private _init() {
     this.init();
     this._eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  init() {}
+  protected init() {}
 
   private _componentDidMount() {
     this.componentDidMount();
@@ -81,7 +81,7 @@ class Block<P = any> {
     });
   }
 
-  componentDidMount(): any {
+  protected componentDidMount(): any {
     return true;
   }
 
