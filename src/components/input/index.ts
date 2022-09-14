@@ -10,7 +10,8 @@ type Props = {
   id: string,
   autofocus?: boolean,
   required?: boolean,
-  value?: string
+  value?: string,
+  error?: string
 } & TProps;
 
 const defaultValues: Pick<Props, "autofocus" | "required" | "style" | "value"> = {

@@ -98,7 +98,7 @@ class Block<P = any> {
   protected componentDidUpdate(oldProps: P & TProps, newProps: P & TProps): void {
   }
 
-  setProps = (nextProps: Record<string, any>) => {
+  setProps = (nextProps: Partial<P & TProps>) => {
     if (!nextProps) {
       return;
     }
@@ -170,7 +170,7 @@ class Block<P = any> {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
-      this._element?.addEventListener(eventName, events[eventName]);
+      this._element.addEventListener(eventName, events[eventName]);
     });
   }
 
@@ -178,7 +178,7 @@ class Block<P = any> {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
-      this._element?.removeEventListener(eventName, events[eventName]);
+      this._element.removeEventListener(eventName, events[eventName]);
     });
   }
 

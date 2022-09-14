@@ -4,6 +4,7 @@ import { LoginLayout } from "../../../layout/exports";
 import { Input } from "../../../components/exports";
 import Block, { TProps } from "../../../utils/block";
 import { Button } from "../../../components/button";
+import { TForm, validate } from "../../../utils/validate";
 
 type Props = {
   style: typeof style,
@@ -17,35 +18,38 @@ type Props = {
   registerBtn: Button
 } & TProps;
 
-type TForm = {
-  [key: string]: {
-    value: string,
-    error?: string
-  }
-};
-
 export class RegisterPage extends Block<Props> {
   private form: TForm = {
     email: {
       value: "",
+      validate: {
+        regexp: /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/,
+        minLength: 4
+      }
     },
     login: {
-      value: ""
+      value: "",
+      validate: {}
     },
     first_name: {
-      value: ""
+      value: "",
+      validate: {}
     },
     second_name: {
-      value: ""
+      value: "",
+      validate: {}
     },
     phone: {
-      value: ""
+      value: "",
+      validate: {}
     },
     password: {
-      value: ""
+      value: "",
+      validate: {}
     },
     password_retry: {
-      value: ""
+      value: "",
+      validate: {}
     },
   };
 
@@ -55,11 +59,12 @@ export class RegisterPage extends Block<Props> {
 
   init() {
     const inputs = this.getInputs();
-
+    const self = this;
     inputs.forEach((input) => {
-      input.setProps(
-        { events: { change: (event: any) => this.handleChangeInput(event, input) } }
-      );
+      input.setProps({ events: {
+        change(event: Event) { self.handleChangeInput(event, input); },
+        focusout(event: Event) { self.handleBlurInput(event, input); }
+      } });
     });
 
     this.children.registerBtn.setProps({
@@ -70,8 +75,19 @@ export class RegisterPage extends Block<Props> {
   handleChangeInput(event: Event, input: Input) {
     const { value } = event.target as HTMLInputElement;
 
-    this.form[input.props.id].value = value;
+    const form = this.form[input.props.id];
+
+    form.value = value;
+
     input.setProps({ value });
+  }
+
+  handleBlurInput(_: Event, input: Input) {
+    const form = this.form[input.props.id];
+
+    const { error } = validate(form.value, form.validate);
+
+    input.setProps({ error });
   }
 
   getInputs() {

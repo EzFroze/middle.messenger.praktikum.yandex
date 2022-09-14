@@ -59,7 +59,7 @@ class AuthPage extends Block<Props> {
 
     this.form[input.props.id].value = value;
 
-    input.setProps({ value });
+    input.setProps({ value, error: value });
   }
 
   render() {
