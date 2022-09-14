@@ -5,6 +5,7 @@ import { Input } from "../../../components/exports";
 import Block, { TProps } from "../../../utils/block";
 import { Button } from "../../../components/button";
 import { TForm, validate } from "../../../utils/validate";
+import { patterns } from "../../../const/regexp";
 
 type Props = {
   style: typeof style,
@@ -23,33 +24,74 @@ export class RegisterPage extends Block<Props> {
     email: {
       value: "",
       validate: {
-        regexp: /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/,
+        regexp: {
+          pattern: patterns.EMAIL,
+          errorMessage: "Проверьте правильность введенной почты"
+        },
         minLength: 4
       }
     },
     login: {
       value: "",
-      validate: {}
+      validate: {
+        minLength: 3,
+        maxLength: 20,
+        regexp: {
+          pattern: patterns.LOGIN,
+          errorMessage: "Логин"
+        }
+      }
     },
     first_name: {
       value: "",
-      validate: {}
+      validate: {
+        regexp: {
+          pattern: patterns.NAME,
+          errorMessage: "Имя может на латинице или кирилице. Первая буква заглавная"
+        }
+      }
     },
     second_name: {
       value: "",
-      validate: {}
+      validate: {
+        regexp: {
+          pattern: patterns.NAME,
+          errorMessage: "Фамилия может на латинице или кирилице. Первая буква заглавная"
+        }
+      }
     },
     phone: {
       value: "",
-      validate: {}
+      validate: {
+        regexp: {
+          pattern: patterns.PHONE,
+          errorMessage: "Введите корректный номер телефона"
+        },
+        minLength: 10,
+        maxLength: 15,
+      }
     },
     password: {
       value: "",
-      validate: {}
+      validate: {
+        minLength: 8,
+        maxLength: 40,
+        regexp: {
+          pattern: patterns.PASSWORD,
+          errorMessage: "Минимум 8 букв и одна заглавная"
+        }
+      }
     },
     password_retry: {
       value: "",
-      validate: {}
+      validate: {
+        minLength: 8,
+        maxLength: 40,
+        regexp: {
+          pattern: patterns.PASSWORD,
+          errorMessage: "Минимум 8 букв и одна заглавная"
+        }
+      }
     },
   };
 
@@ -66,7 +108,7 @@ export class RegisterPage extends Block<Props> {
     });
 
     this.children.registerBtn.setProps({
-      events: { click: () => { console.log(this.form); } }
+      events: { click: (event: Event) => this.handleClick(event) }
     });
   }
 
@@ -80,7 +122,22 @@ export class RegisterPage extends Block<Props> {
     form.value = value;
     form.error = error;
 
-    input.setProps({ value: form.value, error: form.error });
+    input.setProps({ value, error });
+  }
+
+  handleClick(event: Event) {
+    const inputs = this.getInputs();
+
+    inputs.forEach((input) => {
+      const form = this.form[input.props.id];
+      const { error } = validate(form.value, form.validate);
+
+      if (error) {
+        event.preventDefault();
+      }
+
+      input.setProps({ value: form.value, error });
+    });
   }
 
   getInputs() {

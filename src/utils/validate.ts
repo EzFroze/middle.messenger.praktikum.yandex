@@ -1,5 +1,8 @@
 type TOptions = {
-  regexp?: RegExp,
+  regexp?: {
+    pattern: RegExp,
+    errorMessage?: string
+  },
   maxLength?: number,
   minLength?: number,
 };
@@ -22,10 +25,10 @@ export function validate(value: string, validateOptions: TOptions): TResult {
   let error;
 
   if (regexp) {
-    const rTest = regexp.test(value);
+    const rTest = regexp.pattern.test(value);
 
     if (!rTest) {
-      error = "Ошибка";
+      error = regexp.errorMessage || "Ошибка при вводе данных";
     }
   }
 
