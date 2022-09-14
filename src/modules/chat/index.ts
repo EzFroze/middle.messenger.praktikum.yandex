@@ -4,6 +4,7 @@ import style from "./styles.module.pcss";
 import { clip, sendArrow, dots } from "../../../static/images";
 import Block from "../../utils/block";
 import { Input } from "../../components/input";
+import { TForm, validate } from "../../utils/validate";
 
 type Props = {
   style?: typeof style,
@@ -19,8 +20,44 @@ const defaultValues: Pick<Props, "dots" | "clip" | "sendArrow" | "style"> = {
 };
 
 export class Chat extends Block<Props> {
+  private form: TForm = {
+    message: {
+      validate: {
+        minLength: 1
+      },
+      value: ""
+    }
+  };
+
   constructor(props: Props) {
     super({ ...defaultValues, ...props });
+  }
+
+  init() {
+    this.children.messageInput.setProps(
+      {
+        style: {
+          formControl: style.input,
+          error: style.error
+        },
+        events: {
+          change: (event: Event) => this.handleChangeMessage(event, this.children.messageInput)
+        }
+      }
+    );
+  }
+
+  handleChangeMessage(event: Event, input: Block) {
+    const { value } = event.target as HTMLInputElement;
+
+    const form = this.form.message;
+
+    const { error } = validate(value, form.validate);
+
+    form.value = value;
+    form.error = error;
+
+    input.setProps({ value, error });
   }
 
   render() {

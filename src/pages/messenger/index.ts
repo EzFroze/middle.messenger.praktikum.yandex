@@ -21,7 +21,7 @@ class MessengerPage extends Block<Props> {
 }
 
 const chatListResult = new ChatList({ chats: chatListMock });
-const chatResult = new Chat({ messageInput: new Input({ placeholder: "Сообщение", type: "text", id: "messageInput", style: {} }) });
+const chatResult = new Chat({ messageInput: new Input({ placeholder: "Сообщение", type: "text", id: "message", style: {} }) });
 
 const layout = new MessengerLayout({ chatList: chatListResult, chat: chatResult });
 

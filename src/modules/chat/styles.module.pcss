@@ -110,7 +110,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     gap: 10px;
 
     .file {
@@ -120,14 +120,19 @@
 
     .text {
       width: 100%;
+    }
 
-      input {
-        background: var(--crystal-bell);
-        border-radius: 30px;
-        border: none;
-        padding: 10px 20px;
-        width: 100%;
-      }
+    .input {
+      background: var(--crystal-bell);
+      border-radius: 30px;
+      border: none;
+      padding: 10px 20px;
+      width: 100%;
+    }
+
+    .error {
+      font-size: 10px;
+      color: var(--red);
     }
 
     .sendArrow {
