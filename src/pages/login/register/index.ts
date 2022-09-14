@@ -59,11 +59,9 @@ export class RegisterPage extends Block<Props> {
 
   init() {
     const inputs = this.getInputs();
-    const self = this;
     inputs.forEach((input) => {
       input.setProps({ events: {
-        change(event: Event) { self.handleChangeInput(event, input); },
-        focusout(event: Event) { self.handleBlurInput(event, input); }
+        focusout: (event: Event) => { this.handleChangeBlur(event, input); },
       } });
     });
 
@@ -72,22 +70,17 @@ export class RegisterPage extends Block<Props> {
     });
   }
 
-  handleChangeInput(event: Event, input: Input) {
+  handleChangeBlur(event: Event, input: Input) {
     const { value } = event.target as HTMLInputElement;
 
     const form = this.form[input.props.id];
 
+    const { error } = validate(value, form.validate);
+
     form.value = value;
+    form.error = error;
 
-    input.setProps({ value });
-  }
-
-  handleBlurInput(_: Event, input: Input) {
-    const form = this.form[input.props.id];
-
-    const { error } = validate(form.value, form.validate);
-
-    input.setProps({ error });
+    input.setProps({ value: form.value, error: form.error });
   }
 
   getInputs() {
