@@ -6,3 +6,12 @@
 
 ### Ссылка на проект - [Netify](https://nimble-bubblegum-c28335.netlify.app/)
 
+### Стек технологий который используется в проекте
+
+- TypeScript
+- Node
+- Express
+- Handlebars
+- PostCSS
+- ESlint
+- Stylelint
