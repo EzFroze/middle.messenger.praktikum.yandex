@@ -30,7 +30,6 @@
   .avatar {
     width: 34px;
     height: 34px;
-
     background: var(--crystal-bell);
     border-radius: 100%;
   }
@@ -69,6 +68,11 @@
     color: var(--black);
   }
 
+  .messageTime {
+    font-size: 9px;
+    line-height: 9px;
+  }
+
   .from {
     background: #f8f8f8;
 
@@ -78,11 +82,6 @@
       right: 11px;
       color: var(--secondary);
     }
-  }
-
-  .messageTime {
-    font-size: 9px;
-    line-height: 9px;
   }
 
   .to {
@@ -111,7 +110,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     gap: 10px;
 
     .file {
@@ -121,13 +120,19 @@
 
     .text {
       width: 100%;
-      input {
-        background: var(--crystal-bell);
-        border-radius: 30px;
-        border: none;
-        padding: 10px 20px;
-        width: 100%;
-      }
+    }
+
+    .input {
+      background: var(--crystal-bell);
+      border-radius: 30px;
+      border: none;
+      padding: 10px 20px;
+      width: 100%;
+    }
+
+    .error {
+      font-size: 10px;
+      color: var(--red);
     }
 
     .sendArrow {

@@ -1,18 +1,18 @@
-import { urls } from "../const";
+import { urls } from "../routes";
 
 export function getTemplate() {
-  let pathname = window.location.pathname;
+  let { pathname } = window.location;
 
   if (!pathname) return urls["404"];
 
   if (pathname.length === 1) {
-    return urls["main"];
+    return urls.main;
   }
 
   if (pathname.length > 1) {
     pathname = pathname.slice(1);
     if (!urls[pathname]) {
-      window.location.href = "/404";
+      return urls["404"];
     }
   }
 

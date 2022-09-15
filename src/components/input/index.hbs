@@ -2,8 +2,14 @@
   <input
     type={{type}}
     id={{id}}
-    class={{style.formControl}}
+    class="{{style.formControl}} {{#if error}}{{style.redLine}}{{/if}}"
     autocomplete="off"
+    {{#if value}}
+      value="{{value}}"
+    {{/if}}
+    {{#if placeholder}}
+      placeholder={{placeholder}}
+    {{/if}}
 
     {{#if autofocus}}
       autofocus="autofocus"
@@ -13,5 +19,10 @@
       required="required"
     {{/if}}
   />
-  <label class={{style.floatingLabel}}>{{label}}</label>
+  {{#if label}}
+    <label class={{style.floatingLabel}} for={{id}}>{{label}}</label>
+  {{/if}}
+  {{#if error}}
+    <span class={{style.error}}>{{error}}</span>
+  {{/if}}
 </div>

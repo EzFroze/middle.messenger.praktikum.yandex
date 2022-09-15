@@ -1,4 +1,6 @@
-export const chatList = [
+import { TChatList } from "../../modules/chatList/types";
+
+export const chatList: TChatList[] = [
   {
     name: "Андрей",
     text: "Изображение",
