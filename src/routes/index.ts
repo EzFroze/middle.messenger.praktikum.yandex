@@ -7,7 +7,7 @@ import {
   page404,
   page500,
 } from "../pages/exports";
-import Block from "../utils/block";
+import Block from "../app/block";
 
 export const urls: Record<string, Block> = {
   main: mainPage,

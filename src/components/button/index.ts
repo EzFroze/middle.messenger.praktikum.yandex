@@ -1,4 +1,4 @@
-import Block, { TProps } from "../../utils/block";
+import Block, { TProps } from "../../app/block";
 import template from "./index.hbs";
 
 type Props = {

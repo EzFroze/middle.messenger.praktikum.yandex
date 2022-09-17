@@ -2,7 +2,7 @@ import template from "./index.hbs";
 import style from "./styles.module.pcss";
 
 import { clip, sendArrow, dots } from "../../../static/images";
-import Block from "../../utils/block";
+import Block from "../../app/block";
 import { Input } from "../../components/input";
 import { TForm, validate } from "../../utils/validate";
 

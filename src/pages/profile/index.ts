@@ -3,7 +3,7 @@ import style from "./styles.module.pcss";
 
 import { ProfileLayout } from "../../layout/exports";
 import { Avatar, ProfileInfoBlock } from "../../components/exports";
-import Block from "../../utils/block";
+import Block from "../../app/block";
 
 type Props = {
   style?: typeof style,

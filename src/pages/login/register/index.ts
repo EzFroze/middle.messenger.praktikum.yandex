@@ -2,7 +2,7 @@ import style from "./styles.module.pcss";
 import template from "./index.hbs";
 import { LoginLayout } from "../../../layout/exports";
 import { Input } from "../../../components/exports";
-import Block, { TProps } from "../../../utils/block";
+import Block, { TProps } from "../../../app/block";
 import { Button } from "../../../components/button";
 import { TForm, validate } from "../../../utils/validate";
 import { patterns } from "../../../const/regexp";

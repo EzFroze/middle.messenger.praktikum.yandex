@@ -3,7 +3,7 @@ import template from "./index.hbs";
 import { MessengerLayout } from "../../layout/exports";
 import { Chat, ChatList } from "../../modules/exports";
 import { chatList as chatListMock } from "./mock";
-import Block from "../../utils/block";
+import Block from "../../app/block";
 import { Input } from "../../components/input";
 
 type Props = {

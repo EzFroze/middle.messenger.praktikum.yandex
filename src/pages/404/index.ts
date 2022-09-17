@@ -1,4 +1,4 @@
-import Block from "../../utils/block";
+import Block from "../../app/block";
 import template from "./index.hbs";
 import style from "./styles.module.pcss";
 

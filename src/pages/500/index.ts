@@ -1,6 +1,6 @@
 import style from "./styles.module.pcss";
 import template from "./index.hbs";
-import Block, { TProps } from "../../utils/block";
+import Block, { TProps } from "../../app/block";
 
 type Props = {
   style: typeof style

@@ -2,7 +2,7 @@ import style from "./styles.module.pcss";
 import template from "./index.hbs";
 
 import arrow from "../../../static/images/send-arrow.svg";
-import Block from "../../utils/block";
+import Block from "../../app/block";
 
 type Props = {
   style?: typeof style,

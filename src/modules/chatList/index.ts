@@ -3,7 +3,7 @@ import style from "./styles.module.pcss";
 
 import arrow from "../../../static/images/arrow.svg";
 import { TChatList } from "./types";
-import Block from "../../utils/block";
+import Block from "../../app/block";
 
 type Props = {
   style?: typeof style,

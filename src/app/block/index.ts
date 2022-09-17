@@ -1,5 +1,5 @@
 import { v4 as makeUUID } from "uuid";
-import { EventBus } from "./event-bus";
+import { EventBus } from "../event-bus";
 
 type TMeta = {
   props: TProps,
@@ -32,7 +32,6 @@ class Block<P = any> {
   private _eventBus: () => EventBus;
 
   /**
-   * @param tagName {string} - Тег который нужно создать
    * @param propsAndChildren {object} - Пропсы
    *
    * @returns {void}
@@ -130,7 +129,7 @@ class Block<P = any> {
     this._addEvents();
   }
 
-  protected render(): DocumentFragment {
+  public render(): DocumentFragment {
     return new DocumentFragment();
   }
 
