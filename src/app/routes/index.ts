@@ -16,5 +16,5 @@ export const routes: Record<string, typeof Block> = {
   "/404": page404,
   "/500": page500,
   "/messenger": messengerPage,
-  "/profile": profilePage
+  "/profile": profilePage,
 };

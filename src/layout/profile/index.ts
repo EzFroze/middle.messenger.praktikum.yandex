@@ -5,9 +5,9 @@ import arrow from "../../../static/images/send-arrow.svg";
 import Block from "../../app/block";
 
 type Props = {
-  style?: typeof style,
-  arrow?: string,
-  content: Block
+  style?: typeof style;
+  arrow?: string;
+  content: Block;
 };
 
 const defaultValues: Pick<Props, "arrow" | "style"> = { style, arrow };

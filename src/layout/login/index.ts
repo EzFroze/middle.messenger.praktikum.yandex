@@ -3,8 +3,8 @@ import template from "./index.hbs";
 import style from "./styles.module.pcss";
 
 type Props = {
-  style?: typeof style,
-  content: Block
+  style?: typeof style;
+  content: Block;
 };
 
 const defaultValues: Pick<Props, "style"> = { style };
