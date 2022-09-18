@@ -16,4 +16,4 @@ class Page404 extends Block<Props> {
   }
 }
 
-export const page404 = new Page404({ style });
+export const page404 = Page404.bind(null, { style });

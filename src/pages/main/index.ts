@@ -16,4 +16,4 @@ class MainPage extends Block<Props> {
   }
 }
 
-export const mainPage = new MainPage({ style });
+export const mainPage = MainPage.bind(null, { style });

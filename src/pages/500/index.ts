@@ -16,4 +16,4 @@ class Page500 extends Block<Props> {
   }
 }
 
-export const page500 = new Page500({ style });
+export const page500 = Page500.bind(null, { style });

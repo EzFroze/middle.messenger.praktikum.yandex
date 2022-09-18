@@ -74,4 +74,4 @@ const authInstance = new AuthPage({
   authBtn: new Button({ text: "Войти", className: style.authBtn, type: "link", link: "/messenger" })
 });
 
-export const authPage = new LoginLayout({ content: authInstance });
+export const authPage = LoginLayout.bind(null, { content: authInstance });

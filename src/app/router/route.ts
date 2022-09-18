@@ -4,6 +4,12 @@ function isEqual(lhs: string, rhs: string) {
   return lhs === rhs;
 }
 
+function render(query: string, block: Block) {
+  const root = document.querySelector(query);
+  const fragment = block.render();
+  root?.appendChild(fragment);
+}
+
 export class Route {
   private _pathname: string;
 
@@ -29,8 +35,12 @@ export class Route {
 
   leave() {
     if (this._block) {
-      this._block.hide();
+      this._block = null;
     }
+  }
+
+  get pathname() {
+    return this._pathname;
   }
 
   match(pathname: string) {
@@ -40,11 +50,8 @@ export class Route {
   render() {
     if (!this._block) {
       this._block = new this._blockClass(this._props);
-      this._block.render();
-
+      render(this._props.rootQuery, this._block);
       return;
     }
-
-    this._block.show();
   }
 }

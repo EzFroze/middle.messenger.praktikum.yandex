@@ -1,9 +1,9 @@
-import { getTemplate } from "../src/utils/get-template";
+import { Router } from "../src/app/router";
+import { routes } from "../src/app/routes";
 
-const root = document.getElementById("root")!;
+const router = new Router("#root");
 
-const template = getTemplate();
-
-root.appendChild(template.getContent()!);
-
-template.dispatchComponentDidMount();
+window.addEventListener("DOMContentLoaded", () => {
+  router.registerRoutes(routes);
+  router.start();
+});

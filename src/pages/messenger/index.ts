@@ -25,4 +25,4 @@ const chatResult = new Chat({ messageInput: new Input({ placeholder: "Сообщ
 
 const layout = new MessengerLayout({ chatList: chatListResult, chat: chatResult });
 
-export const messengerPage = new MessengerPage({ content: layout });
+export const messengerPage = MessengerPage.bind(null, { content: layout });

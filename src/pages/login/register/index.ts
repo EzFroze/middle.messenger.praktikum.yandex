@@ -166,4 +166,4 @@ const registerInstance = new RegisterPage({
   registerBtn: new Button({ text: "Создать профиль", className: style.authBtn, type: "link", link: "/messenger" })
 });
 
-export const registerPage = new LoginLayout({ content: registerInstance });
+export const registerPage = LoginLayout.bind(null, { content: registerInstance });

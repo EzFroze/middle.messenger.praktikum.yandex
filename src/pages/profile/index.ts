@@ -44,4 +44,4 @@ const infoBlock = {
 
 const profileInstance = new ProfilePage({ ...infoBlock, titleName: "Рустам", avatar: avatarResult });
 
-export const profilePage = new ProfileLayout({ content: profileInstance });
+export const profilePage = ProfileLayout.bind(null, { content: profileInstance });
