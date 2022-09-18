@@ -7,7 +7,8 @@ function isEqual(lhs: string, rhs: string) {
 function render(query: string, block: Block) {
   const root = document.querySelector(query);
   const fragment = block.render();
-  root?.appendChild(fragment);
+  root?.replaceChildren(fragment);
+  block.dispatchComponentDidMount();
 }
 
 export class Route {
@@ -17,9 +18,9 @@ export class Route {
 
   private _block: Block | null;
 
-  private _props: any;
+  private _props: { rootQuery: string };
 
-  constructor(pathname: string, view: typeof Block, props: any) {
+  constructor(pathname: string, view: typeof Block, props: { rootQuery: string }) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;
@@ -50,6 +51,7 @@ export class Route {
   render() {
     if (!this._block) {
       this._block = new this._blockClass(this._props);
+
       render(this._props.rootQuery, this._block);
       return;
     }

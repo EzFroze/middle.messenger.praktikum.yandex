@@ -17,7 +17,7 @@ class Block<P = any> {
     FLOW_RENDER: "flow:render"
   };
 
-  private _element: HTMLElement;
+  private _element?: HTMLElement;
 
   private _meta: TMeta;
 
@@ -166,18 +166,21 @@ class Block<P = any> {
   }
 
   private _addEvents() {
+    if (!this._element) return;
+
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
-      this._element.addEventListener(eventName, events[eventName]);
+      this._element!.addEventListener(eventName, events[eventName]);
     });
   }
 
   private _removeEvents() {
+    if (!this._element) return;
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
-      this._element.removeEventListener(eventName, events[eventName]);
+      this._element!.removeEventListener(eventName, events[eventName]);
     });
   }
 
@@ -216,18 +219,10 @@ class Block<P = any> {
 
       if (!stub) return;
 
-      stub.replaceWith(child.getContent());
+      stub.replaceWith(child.getContent()!);
     });
 
     return fragment.content;
-  }
-
-  show() {
-    this.getContent().style.display = "block";
-  }
-
-  hide() {
-    this.getContent().style.display = "none";
   }
 }
 
