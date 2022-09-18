@@ -1,18 +1,13 @@
 import Block from "../../app/block";
 import template from "./index.hbs";
-import style from "./styles.module.pcss";
 
 type Props = {
-  style?: typeof style,
-  chatList: Block,
-  chat: Block
+  content: Block
 };
-
-const defaultValues: Pick<Props, "style"> = { style };
 
 export class MessengerLayout extends Block<Props> {
   constructor(props: Props) {
-    super({ ...defaultValues, ...props });
+    super(props);
   }
 
   render() {

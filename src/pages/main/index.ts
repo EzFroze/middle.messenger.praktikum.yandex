@@ -3,12 +3,12 @@ import template from "./index.hbs";
 import Block, { TProps } from "../../app/block";
 
 type Props = {
-  style: typeof style
+  style?: typeof style
 } & TProps;
 
-class MainPage extends Block<Props> {
+export class MainPage extends Block<Props> {
   constructor(props: Props) {
-    super(props);
+    super({ style, ...props });
   }
 
   render() {
@@ -16,4 +16,4 @@ class MainPage extends Block<Props> {
   }
 }
 
-export const mainPage = MainPage.bind(null, { style });
+export const mainPage = MainPage;

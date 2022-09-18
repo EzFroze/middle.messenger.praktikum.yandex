@@ -1,16 +1,18 @@
 import template from "./index.hbs";
-
 import { MessengerLayout } from "../../layout/exports";
 import { Chat, ChatList } from "../../modules/exports";
 import { chatList as chatListMock } from "./mock";
 import Block from "../../app/block";
 import { Input } from "../../components/input";
+import style from "./styles.module.pcss";
 
 type Props = {
-  content: Block
+  chatList: Block,
+  chat: Block,
+  style?: typeof style
 };
 
-class MessengerPage extends Block<Props> {
+export class MessengerPage extends Block<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -23,6 +25,6 @@ class MessengerPage extends Block<Props> {
 const chatListResult = new ChatList({ chats: chatListMock });
 const chatResult = new Chat({ messageInput: new Input({ placeholder: "Сообщение", type: "text", id: "message", style: {} }) });
 
-const layout = new MessengerLayout({ chatList: chatListResult, chat: chatResult });
+const pageInstance = new MessengerPage({ chatList: chatListResult, chat: chatResult, style });
 
-export const messengerPage = MessengerPage.bind(null, { content: layout });
+export const messengerPage = MessengerLayout.bind(null, { content: pageInstance });
