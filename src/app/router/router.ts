@@ -1,8 +1,9 @@
+import { ROOT_QUERY } from "../../const";
 import Block from "../block";
 import { Route } from "./route";
 
-export class Router {
-  static __instance: Router;
+export class RouterBase {
+  static __instance: RouterBase;
 
   routes: Route[];
 
@@ -13,10 +14,10 @@ export class Router {
   private _rootQuery: string;
 
   constructor(rootQuery: string) {
-    if (Router.__instance) {
+    if (RouterBase.__instance) {
       // отрубаем это правило тут, так как нам нужен singleton
       // eslint-disable-next-line no-constructor-return
-      return Router.__instance;
+      return RouterBase.__instance;
     }
 
     this.routes = [];
@@ -24,7 +25,7 @@ export class Router {
     this._currentRoute = null;
     this._rootQuery = rootQuery;
 
-    Router.__instance = this;
+    RouterBase.__instance = this;
   }
 
   public use(pathname: string, block: typeof Block) {
@@ -84,3 +85,5 @@ export class Router {
     return this.routes.find((route) => route.match(pathname));
   }
 }
+
+export const Router = new RouterBase(ROOT_QUERY);
