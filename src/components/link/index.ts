@@ -1,12 +1,13 @@
-import Block from "../../app/block";
+import Block, { TProps } from "../../app/block";
 import { PropsWithRouter, withRouter } from "../../hocs/with-router";
 import template from "./index.hbs";
 
-interface Props extends PropsWithRouter {
+type BaseTypes = PropsWithRouter & TProps;
+
+interface Props extends BaseTypes {
   to: string;
   text: string;
-  // Ожидается класс link
-  style?: Record<string, string>;
+  className?: string;
 }
 
 class LinkBase extends Block<Props> {
@@ -14,9 +15,8 @@ class LinkBase extends Block<Props> {
     super({
       ...props,
       events: {
-        click: (event: Event) => {
-          event.preventDefault();
-          this.navigate();
+        click: (event) => {
+          this.onClick(event);
         },
       },
     });
@@ -24,6 +24,37 @@ class LinkBase extends Block<Props> {
 
   navigate() {
     this.props.router?.go(this.props.to);
+  }
+
+  onClick(event: Event, cb?: (event: Event) => false | undefined) {
+    if (cb) {
+      const result = cb(event);
+      if (!result) {
+        return;
+      }
+    }
+
+    event.preventDefault();
+    this.navigate();
+  }
+
+  setProps(nextProps: Partial<Props>) {
+    if (!nextProps) {
+      return;
+    }
+
+    const events = { ...nextProps.events };
+
+    if (events?.click) {
+      nextProps.events = {
+        ...events,
+        click: (event) => {
+          this.onClick.call(this, event, events.click);
+        },
+      };
+    }
+
+    Object.assign(this.props, nextProps);
   }
 
   render() {

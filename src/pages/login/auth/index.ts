@@ -1,32 +1,32 @@
 import style from "./styles.module.pcss";
 import template from "./index.hbs";
 import { LoginLayout } from "../../../layout/exports";
-import { Input } from "../../../components/exports";
+import { Input, Link } from "../../../components/exports";
 import Block, { TProps } from "../../../app/block";
-import { Button } from "../../../components/button";
 
 type Props = {
-  style: typeof style,
-  loginInput: Input,
-  passwordInput: Input,
-  authBtn: Button
+  style: typeof style;
+  loginInput: Input;
+  passwordInput: Input;
+  authLink: Block;
+  registerLink: Block;
 } & TProps;
 
 type TForm = {
   [key: string]: {
-    value: string,
-    error?: string
-  }
+    value: string;
+    error?: string;
+  };
 };
 
 class AuthPage extends Block<Props> {
   private form: TForm = {
     login: {
-      value: ""
+      value: "",
     },
     password: {
-      value: ""
-    }
+      value: "",
+    },
   };
 
   constructor(props: Props) {
@@ -37,12 +37,20 @@ class AuthPage extends Block<Props> {
     const inputs = this.getInputs();
 
     inputs.forEach((input) => {
-      input.setProps(
-        { events: { change: (event: any) => this.handleChangeInput(event, input) } }
-      );
+      input.setProps({
+        events: {
+          change: (event: any) => this.handleChangeInput(event, input),
+        },
+      });
     });
 
-    this.children.authBtn.setProps({ events: { click: () => { console.log(this.form); } } });
+    this.children.authLink.setProps({
+      events: {
+        click: () => {
+          console.log(this.form);
+        },
+      },
+    });
   }
 
   getInputs() {
@@ -69,9 +77,30 @@ class AuthPage extends Block<Props> {
 
 const authInstance = new AuthPage({
   style,
-  loginInput: new Input({ label: "Логин", type: "text", id: "login", autofocus: true, required: true }),
-  passwordInput: new Input({ label: "Пароль", type: "password", id: "password", autofocus: false, required: true }),
-  authBtn: new Button({ text: "Войти", className: style.authBtn, type: "link", link: "/messenger" })
+  loginInput: new Input({
+    label: "Логин",
+    type: "text",
+    id: "login",
+    autofocus: true,
+    required: true,
+  }),
+  passwordInput: new Input({
+    label: "Пароль",
+    type: "password",
+    id: "password",
+    autofocus: false,
+    required: true,
+  }),
+  authLink: new Link({
+    text: "Войти",
+    className: style.authBtn,
+    to: "/messenger",
+  }),
+  registerLink: new Link({
+    text: "Зарегистрироваться",
+    to: "/register",
+    className: style.register,
+  }),
 });
 
 export const authPage = LoginLayout.bind(null, { content: authInstance });

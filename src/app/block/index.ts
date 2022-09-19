@@ -2,11 +2,11 @@ import { v4 as makeUUID } from "uuid";
 import { EventBus } from "../event-bus";
 
 type TMeta = {
-  props: TProps,
+  props: TProps;
 };
 
 export type TProps = {
-  events?: Record<string, (event: any) => void>,
+  events?: Record<string, (event: any) => void>;
 };
 
 class Block<P = any> {
@@ -14,7 +14,7 @@ class Block<P = any> {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
     FLOW_CDU: "flow:component-did-update",
-    FLOW_RENDER: "flow:render"
+    FLOW_RENDER: "flow:render",
   };
 
   private _element?: HTMLElement;
@@ -44,12 +44,13 @@ class Block<P = any> {
     const eventBus = new EventBus();
 
     this._meta = {
-      props
+      props,
     };
 
     this._id = makeUUID();
 
-    this.props = this._makePropsProxy({ ...props, _id: this._id } as TProps & P & { _id: string });
+    this.props = this._makePropsProxy({ ...props, _id: this._id } as TProps &
+      P & { _id: string });
 
     this._eventBus = () => eventBus;
 
@@ -88,22 +89,28 @@ class Block<P = any> {
     this._eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  private _componentDidUpdate(oldProps: P & TProps, newProps: P & TProps): void {
+  private _componentDidUpdate(
+    oldProps: P & TProps,
+    newProps: P & TProps
+  ): void {
     this.componentDidUpdate(oldProps, newProps);
     this._eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected componentDidUpdate(oldProps: P & TProps, newProps: P & TProps): void {
-  }
+  protected componentDidUpdate(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    oldProps: P & TProps,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    newProps: P & TProps
+  ): void {}
 
-  setProps = (nextProps: Partial<P & TProps>) => {
+  setProps(nextProps: Partial<P & TProps>) {
     if (!nextProps) {
       return;
     }
 
     Object.assign(this.props, nextProps);
-  };
+  }
 
   get element() {
     return this._element;
@@ -157,7 +164,7 @@ class Block<P = any> {
       },
       deleteProperty() {
         throw new Error("Нет доступа");
-      }
+      },
     });
   }
 
@@ -210,7 +217,9 @@ class Block<P = any> {
       propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
     });
 
-    const fragment = this._createDocumentElement("template") as HTMLTemplateElement;
+    const fragment = this._createDocumentElement(
+      "template"
+    ) as HTMLTemplateElement;
 
     fragment.innerHTML = template(propsAndStubs);
 
