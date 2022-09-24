@@ -1,27 +1,28 @@
 type TOptions = {
   regexp?: {
-    pattern: RegExp,
-    errorMessage?: string
-  },
-  maxLength?: number,
-  minLength?: number,
+    pattern: RegExp;
+    errorMessage?: string;
+  };
+  maxLength?: number;
+  minLength?: number;
 };
 
 type TResult = {
-  value: string,
-  error?: string
+  value: string;
+  error?: string;
 };
 
 export type TForm = {
   [key: string]: {
-    value: string,
-    error?: string
-    validate: TOptions
-  }
+    value: string;
+    error?: string;
+    validate: TOptions;
+  };
 };
 
 export function validate(value: string, validateOptions: TOptions): TResult {
   const { regexp, maxLength, minLength } = validateOptions;
+
   let error;
 
   if (regexp) {

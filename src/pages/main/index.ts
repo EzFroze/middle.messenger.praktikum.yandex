@@ -1,7 +1,7 @@
-import style from "./styles.module.pcss";
-import template from "./index.hbs";
 import Block, { TProps } from "../../app/block";
 import { Link } from "../../components/exports";
+import template from "./index.hbs";
+import style from "./styles.module.pcss";
 
 type Props = {
   style?: typeof style;

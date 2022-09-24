@@ -1,22 +1,22 @@
-import style from "./styles.module.pcss";
-import template from "./index.hbs";
-import { LoginLayout } from "../../../layout/exports";
-import { Input } from "../../../components/exports";
 import Block, { TProps } from "../../../app/block";
 import { Button } from "../../../components/button";
-import { TForm, validate } from "../../../utils/validate";
+import { Input } from "../../../components/exports";
 import { patterns } from "../../../const/regexp";
+import { LoginLayout } from "../../../layout/exports";
+import { TForm, validate } from "../../../utils/validate";
+import template from "./index.hbs";
+import style from "./styles.module.pcss";
 
 type Props = {
-  style: typeof style,
-  mailInput: Input,
-  loginInput: Input,
-  nameInput: Input,
-  phoneInput: Input,
-  surnameInput: Input,
-  passwordInput: Input,
-  passwordRetryInput: Input,
-  registerBtn: Button
+  style: typeof style;
+  mailInput: Input;
+  loginInput: Input;
+  nameInput: Input;
+  phoneInput: Input;
+  surnameInput: Input;
+  passwordInput: Input;
+  passwordRetryInput: Input;
+  registerBtn: Button;
 } & TProps;
 
 export class RegisterPage extends Block<Props> {
@@ -26,10 +26,10 @@ export class RegisterPage extends Block<Props> {
       validate: {
         regexp: {
           pattern: patterns.EMAIL,
-          errorMessage: "Проверьте правильность введенной почты"
+          errorMessage: "Проверьте правильность введенной почты",
         },
-        minLength: 4
-      }
+        minLength: 4,
+      },
     },
     login: {
       value: "",
@@ -38,38 +38,40 @@ export class RegisterPage extends Block<Props> {
         maxLength: 20,
         regexp: {
           pattern: patterns.LOGIN,
-          errorMessage: "Логин"
-        }
-      }
+          errorMessage: "Логин",
+        },
+      },
     },
     first_name: {
       value: "",
       validate: {
         regexp: {
           pattern: patterns.NAME,
-          errorMessage: "Имя может на латинице или кирилице. Первая буква заглавная"
-        }
-      }
+          errorMessage:
+            "Имя может на латинице или кирилице. Первая буква заглавная",
+        },
+      },
     },
     second_name: {
       value: "",
       validate: {
         regexp: {
           pattern: patterns.NAME,
-          errorMessage: "Фамилия может на латинице или кирилице. Первая буква заглавная"
-        }
-      }
+          errorMessage:
+            "Фамилия может на латинице или кирилице. Первая буква заглавная",
+        },
+      },
     },
     phone: {
       value: "",
       validate: {
         regexp: {
           pattern: patterns.PHONE,
-          errorMessage: "Введите корректный номер телефона"
+          errorMessage: "Введите корректный номер телефона",
         },
         minLength: 10,
         maxLength: 15,
-      }
+      },
     },
     password: {
       value: "",
@@ -78,9 +80,9 @@ export class RegisterPage extends Block<Props> {
         maxLength: 40,
         regexp: {
           pattern: patterns.PASSWORD,
-          errorMessage: "Минимум 8 букв и одна заглавная"
-        }
-      }
+          errorMessage: "Минимум 8 букв и одна заглавная",
+        },
+      },
     },
     password_retry: {
       value: "",
@@ -89,9 +91,9 @@ export class RegisterPage extends Block<Props> {
         maxLength: 40,
         regexp: {
           pattern: patterns.PASSWORD,
-          errorMessage: "Минимум 8 букв и одна заглавная"
-        }
-      }
+          errorMessage: "Минимум 8 букв и одна заглавная",
+        },
+      },
     },
   };
 
@@ -102,13 +104,17 @@ export class RegisterPage extends Block<Props> {
   init() {
     const inputs = this.getInputs();
     inputs.forEach((input) => {
-      input.setProps({ events: {
-        focusout: (event: Event) => { this.handleChangeBlur(event, input); },
-      } });
+      input.setProps({
+        events: {
+          focusout: (event: Event) => {
+            this.handleChangeBlur(event, input);
+          },
+        },
+      });
     });
 
     this.children.registerBtn.setProps({
-      events: { click: (event: Event) => this.handleClick(event) }
+      events: { click: (event: Event) => this.handleClick(event) },
     });
   }
 
@@ -134,9 +140,10 @@ export class RegisterPage extends Block<Props> {
 
       if (error) {
         event.preventDefault();
+        form.error = error;
       }
 
-      input.setProps({ value: form.value, error });
+      input.setProps({ value: form.value, error: form.error });
     });
   }
 
@@ -156,14 +163,57 @@ export class RegisterPage extends Block<Props> {
 
 const registerInstance = new RegisterPage({
   style,
-  mailInput: new Input({ label: "Почта", type: "text", id: "email", autofocus: true, required: true }),
-  loginInput: new Input({ label: "Логин", type: "text", id: "login", required: true }),
-  nameInput: new Input({ label: "Имя", type: "text", id: "first_name", required: true }),
-  surnameInput: new Input({ label: "Фамилия", type: "text", id: "second_name", required: true }),
-  phoneInput: new Input({ label: "Телефон", type: "text", id: "phone", required: true }),
-  passwordInput: new Input({ label: "Пароль", type: "password", id: "password", required: true }),
-  passwordRetryInput: new Input({ label: "Пароль (ещё раз)", type: "password", id: "password_retry", required: true }),
-  registerBtn: new Button({ text: "Создать профиль", className: style.authBtn, type: "link", link: "/messenger" })
+  mailInput: new Input({
+    label: "Почта",
+    type: "text",
+    id: "email",
+    autofocus: true,
+    required: true,
+  }),
+  loginInput: new Input({
+    label: "Логин",
+    type: "text",
+    id: "login",
+    required: true,
+  }),
+  nameInput: new Input({
+    label: "Имя",
+    type: "text",
+    id: "first_name",
+    required: true,
+  }),
+  surnameInput: new Input({
+    label: "Фамилия",
+    type: "text",
+    id: "second_name",
+    required: true,
+  }),
+  phoneInput: new Input({
+    label: "Телефон",
+    type: "text",
+    id: "phone",
+    required: true,
+  }),
+  passwordInput: new Input({
+    label: "Пароль",
+    type: "password",
+    id: "password",
+    required: true,
+  }),
+  passwordRetryInput: new Input({
+    label: "Пароль (ещё раз)",
+    type: "password",
+    id: "password_retry",
+    required: true,
+  }),
+  registerBtn: new Button({
+    text: "Создать профиль",
+    className: style.authBtn,
+    type: "link",
+    link: "/messenger",
+  }),
 });
 
-export const registerPage = LoginLayout.bind(null, { content: registerInstance });
+export const registerPage = LoginLayout.bind(null, {
+  content: registerInstance,
+});
