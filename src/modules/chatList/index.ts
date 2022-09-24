@@ -2,16 +2,24 @@ import template from "./index.hbs";
 import style from "./styles.module.pcss";
 
 import arrow from "../../../static/images/arrow.svg";
-import { TChatList } from "./types";
 import Block from "../../app/block";
+import { Link } from "../../components/exports";
+import { TChatList } from "./types";
 
 type Props = {
-  style?: typeof style,
-  arrow?: string,
-  chats: TChatList[]
+  style?: typeof style;
+  chats: TChatList[];
+  profileLink?: Block;
 };
 
-const defaultValues: Pick<Props, "style" | "arrow"> = { style, arrow };
+const defaultValues: Pick<Props, "style" | "profileLink"> = {
+  style,
+  profileLink: new Link({
+    to: "/profile",
+    text: `Профиль <img src="${arrow}" alt="arrow">`,
+    className: style.profile,
+  }),
+};
 
 export class ChatList extends Block<Props> {
   constructor(props: Props) {

@@ -1,8 +1,8 @@
-import style from "./styles.module.pcss";
-import template from "./index.hbs";
-import { LoginLayout } from "../../../layout/exports";
-import { Input, Link } from "../../../components/exports";
 import Block, { TProps } from "../../../app/block";
+import { Input, Link } from "../../../components/exports";
+import { LoginLayout } from "../../../layout/exports";
+import template from "./index.hbs";
+import style from "./styles.module.pcss";
 
 type Props = {
   style: typeof style;

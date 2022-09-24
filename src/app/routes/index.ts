@@ -1,15 +1,14 @@
 import {
-  mainPage,
-  profilePage,
   authPage,
-  registerPage,
+  mainPage,
   messengerPage,
   page404,
   page500,
+  profilePage,
+  registerPage,
 } from "../../pages/exports";
-import Block from "../block";
 
-export const routes: Record<string, typeof Block> = {
+export const routes = {
   "/": mainPage,
   "/auth": authPage,
   "/register": registerPage,
@@ -17,4 +16,4 @@ export const routes: Record<string, typeof Block> = {
   "/500": page500,
   "/messenger": messengerPage,
   "/profile": profilePage,
-};
+} as const;

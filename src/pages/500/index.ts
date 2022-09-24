@@ -1,9 +1,11 @@
-import style from "./styles.module.pcss";
-import template from "./index.hbs";
 import Block, { TProps } from "../../app/block";
+import { Link } from "../../components/exports";
+import template from "./index.hbs";
+import style from "./styles.module.pcss";
 
 type Props = {
-  style: typeof style
+  style: typeof style;
+  messengerLink: Block;
 } & TProps;
 
 class Page500 extends Block<Props> {
@@ -16,4 +18,11 @@ class Page500 extends Block<Props> {
   }
 }
 
-export const page500 = Page500.bind(null, { style });
+export const page500 = Page500.bind(null, {
+  style,
+  messengerLink: new Link({
+    to: "/messenger",
+    text: "Назад к чатам",
+    className: style.link,
+  }),
+});

@@ -1,6 +1,5 @@
 import Block, { TProps } from "../../../app/block";
-import { Button } from "../../../components/button";
-import { Input } from "../../../components/exports";
+import { Input, Link } from "../../../components/exports";
 import { patterns } from "../../../const/regexp";
 import { LoginLayout } from "../../../layout/exports";
 import { TForm, validate } from "../../../utils/validate";
@@ -16,7 +15,8 @@ type Props = {
   surnameInput: Input;
   passwordInput: Input;
   passwordRetryInput: Input;
-  registerBtn: Button;
+  registerBtn: Block;
+  authBtn: Block;
 } & TProps;
 
 export class RegisterPage extends Block<Props> {
@@ -206,11 +206,15 @@ const registerInstance = new RegisterPage({
     id: "password_retry",
     required: true,
   }),
-  registerBtn: new Button({
+  registerBtn: new Link({
     text: "Создать профиль",
     className: style.authBtn,
-    type: "link",
-    link: "/messenger",
+    to: "/messenger",
+  }),
+  authBtn: new Link({
+    to: "/auth",
+    text: "Войти",
+    className: style.register,
   }),
 });
 
