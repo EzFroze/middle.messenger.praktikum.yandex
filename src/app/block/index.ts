@@ -17,8 +17,6 @@ class Block<P = any> {
 
   private _id: string;
 
-  public tagName: string;
-
   public props: P & TProps;
 
   children: Record<string, Block>;
@@ -42,7 +40,10 @@ class Block<P = any> {
 
     this._id = makeUUID();
 
-    this.props = this._makePropsProxy({ ...props, _id: this._id } as TProps &
+    this.props = this._makePropsProxy({
+      ...props,
+      _id: this._id
+    } as TProps &
     P & { _id: string });
 
     this._eventBus = () => eventBus;
@@ -61,17 +62,20 @@ class Block<P = any> {
 
   private _init() {
     this.init();
-    this._eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    this._eventBus()
+      .emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  protected init() {}
+  protected init() {
+  }
 
   private _componentDidMount() {
     this.componentDidMount();
 
-    Object.values(this.children).forEach((child) => {
-      child.dispatchComponentDidMount();
-    });
+    Object.values(this.children)
+      .forEach((child) => {
+        child.dispatchComponentDidMount();
+      });
   }
 
   protected componentDidMount(): any {
@@ -79,7 +83,8 @@ class Block<P = any> {
   }
 
   public dispatchComponentDidMount() {
-    this._eventBus().emit(Block.EVENTS.FLOW_CDM);
+    this._eventBus()
+      .emit(Block.EVENTS.FLOW_CDM);
   }
 
   private _componentDidUpdate(
@@ -87,7 +92,8 @@ class Block<P = any> {
     newProps: P & TProps
   ): void {
     this.componentDidUpdate(oldProps, newProps);
-    this._eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    this._eventBus()
+      .emit(Block.EVENTS.FLOW_RENDER);
   }
 
   protected componentDidUpdate(
@@ -97,7 +103,8 @@ class Block<P = any> {
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     newProps: P & TProps
-  ): void {}
+  ): void {
+  }
 
   setProps(nextProps: Partial<P & TProps>) {
     if (!nextProps) {
@@ -141,7 +148,8 @@ class Block<P = any> {
 
   private _makePropsProxy(props: P & TProps) {
     const update = (oldProps: {}, newProps: {}) => {
-      this._eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, newProps);
+      this._eventBus()
+        .emit(Block.EVENTS.FLOW_CDU, oldProps, newProps);
     };
 
     return new Proxy(props, {
@@ -173,33 +181,39 @@ class Block<P = any> {
 
     const { events = {} } = this.props;
 
-    Object.keys(events).forEach((eventName) => {
-      this._element!.addEventListener(eventName, events[eventName]);
-    });
+    Object.keys(events)
+      .forEach((eventName) => {
+        this._element!.addEventListener(eventName, events[eventName]);
+      });
   }
 
   private _removeEvents() {
     if (!this._element) return;
     const { events = {} } = this.props;
 
-    Object.keys(events).forEach((eventName) => {
-      this._element!.removeEventListener(eventName, events[eventName]);
-    });
+    Object.keys(events)
+      .forEach((eventName) => {
+        this._element!.removeEventListener(eventName, events[eventName]);
+      });
   }
 
   private _getChildren(propsAndChildren: {}) {
     const children: Record<string, Block> = {};
     const props: Record<string, any> = {};
 
-    Object.entries(propsAndChildren).forEach(([key, value]) => {
-      if (value instanceof Block) {
-        children[key] = value;
-      } else {
-        props[key] = value;
-      }
-    });
+    Object.entries(propsAndChildren)
+      .forEach(([key, value]) => {
+        if (value instanceof Block) {
+          children[key] = value;
+        } else {
+          props[key] = value;
+        }
+      });
 
-    return { children, props };
+    return {
+      children,
+      props
+    };
   }
 
   compile(
@@ -209,9 +223,10 @@ class Block<P = any> {
     if (!this.children) return new DocumentFragment();
     const propsAndStubs = { ...props };
 
-    Object.entries(this.children).forEach(([key, child]) => {
-      propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
-    });
+    Object.entries(this.children)
+      .forEach(([key, child]) => {
+        propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
+      });
 
     const fragment = this._createDocumentElement(
       "template"
@@ -219,13 +234,14 @@ class Block<P = any> {
 
     fragment.innerHTML = template(propsAndStubs);
 
-    Object.values(this.children).forEach((child) => {
-      const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+    Object.values(this.children)
+      .forEach((child) => {
+        const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
 
-      if (!stub) return;
+        if (!stub) return;
 
-      stub.replaceWith(child.getContent()!);
-    });
+        stub.replaceWith(child.getContent()!);
+      });
 
     return fragment.content;
   }

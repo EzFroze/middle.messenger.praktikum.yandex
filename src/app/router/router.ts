@@ -36,9 +36,10 @@ export class RouterBase {
   }
 
   public registerRoutes(routes: Record<string, typeof Block>) {
-    Object.entries(routes).forEach(([key, value]) => {
-      this.use(key, value);
-    });
+    Object.entries(routes)
+      .forEach(([key, value]) => {
+        this.use(key, value);
+      });
   }
 
   public start() {

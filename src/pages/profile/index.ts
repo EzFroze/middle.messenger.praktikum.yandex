@@ -2,11 +2,10 @@ import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
 
 import { ProfileLayout } from "../../layout";
-import { Avatar, ProfileInfoBlock } from "../../components";
+import { Avatar, Link, ProfileInfoBlock } from "../../components";
 import Block from "../../app/block";
 
 type Props = {
-  style?: typeof style,
   titleName: string,
   name: ProfileInfoBlock,
   email: ProfileInfoBlock,
@@ -14,7 +13,11 @@ type Props = {
   surname: ProfileInfoBlock,
   nickname: ProfileInfoBlock,
   phone: ProfileInfoBlock,
-  avatar: Block
+  avatar: Block,
+  editDataBtn: Block,
+  editPasswordBtn: Block,
+  exitBtn: Block,
+  style?: typeof style
 };
 
 const defaultValues: Pick<Props, "style"> = { style };
@@ -63,7 +66,22 @@ const infoBlock = {
 const profileInstance = new ProfilePage({
   ...infoBlock,
   titleName: "Рустам",
-  avatar: avatarResult
+  avatar: avatarResult,
+  editDataBtn: new Link({
+    to: "/",
+    className: style.key,
+    text: "Изменить данные"
+  }),
+  editPasswordBtn: new Link({
+    to: "/",
+    className: style.key,
+    text: "Изменить пароль"
+  }),
+  exitBtn: new Link({
+    to: "/",
+    className: `${style.red} ${style.key}`,
+    text: "Выход"
+  })
 });
 
 export const profilePage = ProfileLayout.bind(null, { content: profileInstance }) as typeof Block;
