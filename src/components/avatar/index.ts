@@ -1,5 +1,5 @@
 import template from "./index.hbs";
-import style from "./styles.module.pcss";
+import * as style from "./styles.module.pcss";
 
 import emptySrc from "../../../static/images/empty-image.png";
 import Block from "../../app/block";

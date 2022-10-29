@@ -1,7 +1,7 @@
 import Block from "../../app/block";
-import { Link } from "../../components/exports";
+import { Link } from "../../components";
 import template from "./index.hbs";
-import style from "./styles.module.pcss";
+import * as style from "./styles.module.pcss";
 
 type Props = {
   style: typeof style;
@@ -20,5 +20,8 @@ class Page404 extends Block<Props> {
 
 export const page404 = Page404.bind(null, {
   style,
-  messengerLink: new Link({ text: "Назад к чатам", to: "/messenger" }),
+  messengerLink: new Link({
+    text: "Назад к чатам",
+    to: "/messenger"
+  }),
 }) as typeof Block;

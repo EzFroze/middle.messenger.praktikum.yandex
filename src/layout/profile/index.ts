@@ -1,9 +1,9 @@
 import template from "./index.hbs";
-import style from "./styles.module.pcss";
+import * as style from "./styles.module.pcss";
 
 import arrow from "../../../static/images/send-arrow.svg";
 import Block from "../../app/block";
-import { Link } from "../../components/exports";
+import { Link } from "../../components";
 
 type Props = {
   style?: typeof style;

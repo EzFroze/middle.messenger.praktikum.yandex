@@ -4,7 +4,6 @@ import template from "./index.hbs";
 type Props = {
   text: string,
   className: string,
-  type: "button" | "link",
   link?: string
 } & TProps;
 

@@ -1,10 +1,10 @@
 import template from "./index.hbs";
-import { MessengerLayout } from "../../layout/exports";
-import { Chat, ChatList } from "../../modules/exports";
+import { MessengerLayout } from "../../layout";
+import { Chat, ChatList } from "../../modules";
 import { chatList as chatListMock } from "./mock";
 import Block from "../../app/block";
-import { Input } from "../../components/input";
-import style from "./styles.module.pcss";
+import { Input } from "../../components";
+import * as style from "./styles.module.pcss";
 
 type Props = {
   chatList: Block,
@@ -23,8 +23,18 @@ export class MessengerPage extends Block<Props> {
 }
 
 const chatListResult = new ChatList({ chats: chatListMock });
-const chatResult = new Chat({ messageInput: new Input({ placeholder: "Сообщение", type: "text", id: "message", style: {} }) });
+const chatResult = new Chat({
+  messageInput: new Input({
+    placeholder: "Сообщение",
+    type: "text",
+    id: "message",
+  })
+});
 
-const pageInstance = new MessengerPage({ chatList: chatListResult, chat: chatResult, style });
+const pageInstance = new MessengerPage({
+  chatList: chatListResult,
+  chat: chatResult,
+  style
+});
 
 export const messengerPage = MessengerLayout.bind(null, { content: pageInstance }) as typeof Block;

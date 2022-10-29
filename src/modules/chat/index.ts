@@ -1,9 +1,8 @@
 import template from "./index.hbs";
-import style from "./styles.module.pcss";
-
-import { clip, sendArrow, dots } from "../../../static/images";
+import * as style from "./styles.module.pcss";
+import { clip, dots, sendArrow } from "../../../static/images";
 import Block from "../../app/block";
-import { Input } from "../../components/input";
+import { Input } from "../../components";
 import { TForm, validate } from "../../utils/validate";
 
 type Props = {
@@ -16,7 +15,10 @@ type Props = {
 };
 
 const defaultValues: Pick<Props, "dots" | "clip" | "sendArrow" | "style"> = {
-  style, sendArrow, dots, clip,
+  style,
+  sendArrow,
+  dots,
+  clip,
 };
 
 export class Chat extends Block<Props> {
@@ -57,7 +59,10 @@ export class Chat extends Block<Props> {
     form.value = value;
     form.error = error;
 
-    input.setProps({ value, error });
+    input.setProps({
+      value,
+      error
+    });
   }
 
   render() {

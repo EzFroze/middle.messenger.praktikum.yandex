@@ -1,8 +1,8 @@
 import Block, { TProps } from "../../../app/block";
-import { Input, Link } from "../../../components/exports";
-import { LoginLayout } from "../../../layout/exports";
+import { Input, Link } from "../../../components";
+import { LoginLayout } from "../../../layout";
 import template from "./index.hbs";
-import style from "./styles.module.pcss";
+import * as style from "./styles.module.pcss";
 
 type Props = {
   style: typeof style;
@@ -47,6 +47,7 @@ class AuthPage extends Block<Props> {
     this.children.authLink.setProps({
       events: {
         click: () => {
+          // eslint-disable-next-line no-console
           console.log(this.form);
         },
       },
@@ -54,12 +55,13 @@ class AuthPage extends Block<Props> {
   }
 
   getInputs() {
-    return Object.values(this.children).reduce((acc, children) => {
-      if (children instanceof Input) {
-        acc.push(children);
-      }
-      return acc;
-    }, [] as Input[]);
+    return Object.values(this.children)
+      .reduce((acc, children) => {
+        if (children instanceof Input) {
+          acc.push(children);
+        }
+        return acc;
+      }, [] as Input[]);
   }
 
   handleChangeInput(event: Event, input: Input) {
@@ -67,7 +69,10 @@ class AuthPage extends Block<Props> {
 
     this.form[input.props.id].value = value;
 
-    input.setProps({ value, error: value });
+    input.setProps({
+      value,
+      error: value
+    });
   }
 
   render() {

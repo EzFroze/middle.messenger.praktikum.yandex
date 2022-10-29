@@ -1,9 +1,9 @@
 import template from "./index.hbs";
-import style from "./styles.module.pcss";
+import * as style from "./styles.module.pcss";
 
 import arrow from "../../../static/images/arrow.svg";
 import Block from "../../app/block";
-import { Link } from "../../components/exports";
+import { Link } from "../../components";
 import { TChatList } from "./types";
 
 type Props = {

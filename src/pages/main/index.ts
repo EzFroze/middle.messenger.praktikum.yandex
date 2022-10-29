@@ -1,7 +1,7 @@
 import Block, { TProps } from "../../app/block";
-import { Link } from "../../components/exports";
+import { Link } from "../../components";
 import template from "./index.hbs";
-import style from "./styles.module.pcss";
+import * as style from "./styles.module.pcss";
 
 type Props = {
   style?: typeof style;
@@ -15,13 +15,32 @@ type Props = {
 
 const defaultValues: Props = {
   style,
-  authLink: new Link({ text: "Авторизация", to: "/auth" }),
-  registerLink: new Link({ text: "Регистрация", to: "/register" }),
-  messengerLink: new Link({ text: "Мессенджер", to: "/messenger" }),
-  profileLink: new Link({ text: "Профиль", to: "/profile" }),
-  notFoundLink: new Link({ text: "404", to: "/404" }),
-  errorLink: new Link({ text: "500", to: "/500" }),
+  authLink: new Link({
+    text: "Авторизация",
+    to: "/auth"
+  }),
+  registerLink: new Link({
+    text: "Регистрация",
+    to: "/register"
+  }),
+  messengerLink: new Link({
+    text: "Мессенджер",
+    to: "/messenger"
+  }),
+  profileLink: new Link({
+    text: "Профиль",
+    to: "/profile"
+  }),
+  notFoundLink: new Link({
+    text: "404",
+    to: "/404"
+  }),
+  errorLink: new Link({
+    text: "500",
+    to: "/500"
+  }),
 };
+
 class MainPage extends Block<Props> {
   constructor(props: Props) {
     super({ ...defaultValues, ...props });

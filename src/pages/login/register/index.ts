@@ -1,10 +1,10 @@
 import Block, { TProps } from "../../../app/block";
-import { Input, Link } from "../../../components/exports";
+import { Input, Link } from "../../../components";
 import { patterns } from "../../../const/regexp";
-import { LoginLayout } from "../../../layout/exports";
+import { LoginLayout } from "../../../layout";
 import { TForm, validate } from "../../../utils/validate";
 import template from "./index.hbs";
-import style from "./styles.module.pcss";
+import * as style from "./styles.module.pcss";
 
 type Props = {
   style: typeof style;
@@ -128,7 +128,10 @@ export class RegisterPage extends Block<Props> {
     form.value = value;
     form.error = error;
 
-    input.setProps({ value, error });
+    input.setProps({
+      value,
+      error
+    });
   }
 
   handleClick(event: Event) {
@@ -143,17 +146,21 @@ export class RegisterPage extends Block<Props> {
         form.error = error;
       }
 
-      input.setProps({ value: form.value, error: form.error });
+      input.setProps({
+        value: form.value,
+        error: form.error
+      });
     });
   }
 
   getInputs() {
-    return Object.values(this.children).reduce((acc, children) => {
-      if (children instanceof Input) {
-        acc.push(children);
-      }
-      return acc;
-    }, [] as Input[]);
+    return Object.values(this.children)
+      .reduce((acc, children) => {
+        if (children instanceof Input) {
+          acc.push(children);
+        }
+        return acc;
+      }, [] as Input[]);
   }
 
   render() {

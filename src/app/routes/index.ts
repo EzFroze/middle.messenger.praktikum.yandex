@@ -6,7 +6,7 @@ import {
   page500,
   profilePage,
   registerPage,
-} from "../../pages/exports";
+} from "../../pages";
 
 export const routes = {
   "/": mainPage,
