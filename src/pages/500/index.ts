@@ -25,4 +25,4 @@ export const page500 = Page500.bind(null, {
     text: "Назад к чатам",
     className: style.link,
   }),
-});
+}) as typeof Block;

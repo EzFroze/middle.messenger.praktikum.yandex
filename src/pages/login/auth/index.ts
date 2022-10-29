@@ -103,4 +103,4 @@ const authInstance = new AuthPage({
   }),
 });
 
-export const authPage = LoginLayout.bind(null, { content: authInstance });
+export const authPage = LoginLayout.bind(null, { content: authInstance }) as typeof Block;

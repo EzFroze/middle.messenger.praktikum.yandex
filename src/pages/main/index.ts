@@ -32,4 +32,4 @@ class MainPage extends Block<Props> {
   }
 }
 
-export const mainPage = MainPage.bind(null);
+export const mainPage = MainPage.bind(null) as typeof Block;

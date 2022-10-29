@@ -1,10 +1,6 @@
 import { v4 as makeUUID } from "uuid";
 import { EventBus } from "../event-bus";
 
-type TMeta = {
-  props: TProps;
-};
-
 export type TProps = {
   events?: Record<string, (event: any) => void>;
 };
@@ -18,8 +14,6 @@ class Block<P = any> {
   };
 
   private _element?: HTMLElement;
-
-  private _meta: TMeta;
 
   private _id: string;
 
@@ -37,20 +31,19 @@ class Block<P = any> {
    * @returns {void}
    */
   constructor(propsAndChildren: P & TProps) {
-    const { props, children } = this._getChildren(propsAndChildren);
+    const {
+      props,
+      children
+    } = this._getChildren(propsAndChildren);
 
     this.children = children;
 
     const eventBus = new EventBus();
 
-    this._meta = {
-      props,
-    };
-
     this._id = makeUUID();
 
     this.props = this._makePropsProxy({ ...props, _id: this._id } as TProps &
-      P & { _id: string });
+    P & { _id: string });
 
     this._eventBus = () => eventBus;
 
@@ -98,8 +91,10 @@ class Block<P = any> {
   }
 
   protected componentDidUpdate(
+    // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     oldProps: P & TProps,
+    // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     newProps: P & TProps
   ): void {}
@@ -158,6 +153,7 @@ class Block<P = any> {
       set(target, key, value) {
         const oldProps = { ...target };
         // @ts-ignore
+        // eslint-disable-next-line no-param-reassign
         target[key] = value;
         update(oldProps, target);
         return true;

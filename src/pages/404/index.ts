@@ -21,4 +21,4 @@ class Page404 extends Block<Props> {
 export const page404 = Page404.bind(null, {
   style,
   messengerLink: new Link({ text: "Назад к чатам", to: "/messenger" }),
-});
+}) as typeof Block;

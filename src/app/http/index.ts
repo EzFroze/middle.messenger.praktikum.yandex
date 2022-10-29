@@ -5,6 +5,7 @@
 
 function queryStringify(data = {}): string {
   const result = Object.entries(data).reduce((acc, [key, value]) => {
+    // eslint-disable-next-line no-param-reassign
     acc += `${key}=${String(value)}&`;
     return acc;
   }, "?");

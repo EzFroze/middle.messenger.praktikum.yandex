@@ -27,4 +27,4 @@ const chatResult = new Chat({ messageInput: new Input({ placeholder: "Сообщ
 
 const pageInstance = new MessengerPage({ chatList: chatListResult, chat: chatResult, style });
 
-export const messengerPage = MessengerLayout.bind(null, { content: pageInstance });
+export const messengerPage = MessengerLayout.bind(null, { content: pageInstance }) as typeof Block;

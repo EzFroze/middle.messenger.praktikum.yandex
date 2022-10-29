@@ -220,4 +220,4 @@ const registerInstance = new RegisterPage({
 
 export const registerPage = LoginLayout.bind(null, {
   content: registerInstance,
-});
+}) as typeof Block;
