@@ -15,7 +15,7 @@ class Block<P = any> {
 
   private _element?: HTMLElement;
 
-  private _id: string;
+  private readonly _id: string;
 
   public props: P & TProps;
 
