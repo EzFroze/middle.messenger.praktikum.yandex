@@ -1,10 +1,12 @@
 <div class={{style.container}}>
   {{{profileLink}}}
   <div class={{style.search}}>
-    <input type="text" placeholder="Поиск" required>
+    <label>
+      <input type="text" placeholder="Поиск" required>
+    </label>
   </div>
   <ul class={{style.list}}>
-    <hr />
+    <hr/>
     {{#each chats}}
       <li class={{../style.item}}>
         <div class={{../style.avatar}}></div>
@@ -17,6 +19,7 @@
           <span class={{../style.messageCount}}>{{unread}}</span>
         </div>
       </li>
-      <hr />
+      <hr/>
     {{/each}}
+  </ul>
 </div>
