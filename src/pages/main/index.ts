@@ -17,11 +17,11 @@ const defaultValues: Props = {
   style,
   authLink: new Link({
     text: "Авторизация",
-    to: "/auth"
+    to: "/login/auth"
   }),
   registerLink: new Link({
     text: "Регистрация",
-    to: "/register"
+    to: "/login/register"
   }),
   messengerLink: new Link({
     text: "Мессенджер",

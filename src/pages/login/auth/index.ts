@@ -103,7 +103,7 @@ const authInstance = new AuthPage({
   }),
   registerLink: new Link({
     text: "Зарегистрироваться",
-    to: "/register",
+    to: "/login/register",
     className: style.register,
   }),
 });

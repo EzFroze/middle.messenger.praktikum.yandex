@@ -219,7 +219,7 @@ const registerInstance = new RegisterPage({
     to: "/messenger",
   }),
   authBtn: new Link({
-    to: "/auth",
+    to: "/login/auth",
     text: "Войти",
     className: style.register,
   }),

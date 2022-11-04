@@ -10,8 +10,8 @@ import {
 
 export const routes = {
   "/": mainPage,
-  "/auth": authPage,
-  "/register": registerPage,
+  "/login/auth": authPage,
+  "/login/register": registerPage,
   "/404": page404,
   "/500": page500,
   "/messenger": messengerPage,

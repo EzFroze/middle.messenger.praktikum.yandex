@@ -1,4 +1,4 @@
-import { TChatList } from "../../modules/chatList/types";
+import { TChatList } from "../../modules/chat-list/types";
 
 export const chatList: TChatList[] = [
   {
