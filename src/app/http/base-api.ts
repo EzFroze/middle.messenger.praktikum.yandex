@@ -1,17 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export class BaseApi {
-  create() {
+  create(..._args: unknown[]): Promise<XMLHttpRequest> {
     throw new Error("Not implemented");
   }
 
-  request() {
+  request(..._args: unknown[]): Promise<XMLHttpRequest> {
     throw new Error("Not implemented");
   }
 
-  update() {
+  update(..._args: unknown[]): Promise<XMLHttpRequest> {
     throw new Error("Not implemented");
   }
 
-  delete() {
+  delete(..._args: unknown[]): Promise<XMLHttpRequest> {
     throw new Error("Not implemented");
   }
 }

@@ -37,7 +37,8 @@
     "no-underscore-dangle": "off",
     "no-useless-return": "off",
     "class-methods-use-this": "off",
-    "no-param-reassign": "warn"
+    "no-param-reassign": "warn",
+    "max-classes-per-file": "off"
   },
   "overrides": [
     {

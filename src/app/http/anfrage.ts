@@ -1,8 +1,3 @@
-// Я подумал почему у Axios есть название Axios а у моей обертки ее нет
-// Если кратко запрос (русский) -> anfrage (немецкий)
-// Привет ревьюеру и счастья и здоровья и любви
-// PS Пишу это в 2 часа ночи
-
 function queryStringify(data = {}): string {
   const result = Object.entries(data)
     .reduce((acc, [key, value]) => {
@@ -29,6 +24,10 @@ type Options = {
 
 type OptionsWithoutMethod = Omit<Options, "method">;
 
+// Я подумал почему у Axios есть название Axios а у моей обертки ее нет
+// Если кратко запрос (русский) -> anfrage (немецкий)
+// Привет ревьюеру и счастья и здоровья и любви
+// PS Пишу это в 2 часа ночи
 class AnfrageBase {
   get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
     const query = queryStringify(options.data);
@@ -98,4 +97,31 @@ class AnfrageBase {
   }
 }
 
-export const Anfrage = new AnfrageBase();
+export class Anfrage extends AnfrageBase {
+  private readonly baseUrl: string;
+
+  constructor(baseUrl: string = "/") {
+    super();
+    this.baseUrl = `https://ya-praktikum.tech${baseUrl}`;
+  }
+
+  get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+    return super.get(this.baseUrl + url, options);
+  }
+
+  post(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+    return super.post(this.baseUrl + url, options);
+  }
+
+  put(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+    return super.put(this.baseUrl + url, options);
+  }
+
+  delete(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+    return super.delete(this.baseUrl + url, options);
+  }
+
+  patch(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+    return super.patch(this.baseUrl + url, options);
+  }
+}
