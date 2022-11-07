@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 const EMAIL = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
 const NAME = /^[А-ЯЁA-Z][а-яёa-z]*/;
 const LOGIN = /^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]*/;

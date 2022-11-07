@@ -12,7 +12,7 @@ type Props = {
   style?: typeof style
 };
 
-export class MessengerPage extends Block<Props> {
+class MessengerPage extends Block<Props> {
   constructor(props: Props) {
     super(props);
   }

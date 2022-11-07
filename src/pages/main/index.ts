@@ -17,27 +17,33 @@ const defaultValues: Props = {
   style,
   authLink: new Link({
     text: "Авторизация",
-    to: "/login/auth"
+    to: "/login/auth",
+    className: style.link,
   }),
   registerLink: new Link({
     text: "Регистрация",
-    to: "/login/register"
+    to: "/login/register",
+    className: style.link
   }),
   messengerLink: new Link({
     text: "Мессенджер",
-    to: "/messenger"
+    to: "/messenger",
+    className: style.link
   }),
   profileLink: new Link({
     text: "Профиль",
-    to: "/profile"
+    to: "/profile",
+    className: style.link
   }),
   notFoundLink: new Link({
     text: "404",
-    to: "/404"
+    to: "/404",
+    className: style.link
   }),
   errorLink: new Link({
     text: "500",
-    to: "/500"
+    to: "/500",
+    className: style.link
   }),
 };
 

@@ -215,13 +215,13 @@ const registerInstance = new RegisterPage({
   }),
   registerBtn: new Link({
     text: "Создать профиль",
-    className: style.authBtn,
+    className: style.register,
     to: "/messenger",
   }),
   authBtn: new Link({
     to: "/login/auth",
     text: "Войти",
-    className: style.register,
+    className: style.authBtn,
   }),
 });
 

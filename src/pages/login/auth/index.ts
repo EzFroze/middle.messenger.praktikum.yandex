@@ -1,8 +1,10 @@
 import Block, { TProps } from "../../../app/block";
 import { Input, Link } from "../../../components";
 import { LoginLayout } from "../../../layout";
+import { TForm, validate } from "../../../utils/validate";
 import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
+import { patterns } from "../../../const/regexp";
 
 type Props = {
   style: typeof style;
@@ -12,20 +14,29 @@ type Props = {
   registerLink: Block;
 } & TProps;
 
-type TForm = {
-  [key: string]: {
-    value: string;
-    error?: string;
-  };
-};
-
 class AuthPage extends Block<Props> {
   private form: TForm = {
     login: {
       value: "",
+      validate: {
+        minLength: 3,
+        maxLength: 20,
+        regexp: {
+          pattern: patterns.LOGIN,
+          errorMessage: "Укажите логин",
+        },
+      },
     },
     password: {
       value: "",
+      validate: {
+        minLength: 8,
+        maxLength: 40,
+        regexp: {
+          pattern: patterns.PASSWORD,
+          errorMessage: "Минимум 8 букв и одна заглавная",
+        },
+      },
     },
   };
 
@@ -39,18 +50,36 @@ class AuthPage extends Block<Props> {
     inputs.forEach((input) => {
       input.setProps({
         events: {
-          change: (event: any) => this.handleChangeInput(event, input),
+          focusout: (event: Event) => {
+            this.handleChangeInput(event, input);
+          }
         },
       });
     });
 
     this.children.authLink.setProps({
       events: {
-        click: () => {
-          // eslint-disable-next-line no-console
-          console.log(this.form);
-        },
+        click: (event: Event) => this.handleClick(event)
       },
+    });
+  }
+
+  handleClick(event: Event) {
+    const inputs = this.getInputs();
+
+    inputs.forEach((input) => {
+      const form = this.form[input.props.id];
+      const { error } = validate(form.value, form.validate);
+
+      if (error) {
+        event.preventDefault();
+        form.error = error;
+      }
+
+      input.setProps({
+        value: form.value,
+        error: form.error
+      });
     });
   }
 
@@ -67,11 +96,16 @@ class AuthPage extends Block<Props> {
   handleChangeInput(event: Event, input: Input) {
     const { value } = event.target as HTMLInputElement;
 
-    this.form[input.props.id].value = value;
+    const form = this.form[input.props.id];
+
+    const { error } = validate(value, form.validate);
+
+    form.value = value;
+    form.error = error;
 
     input.setProps({
       value,
-      error: value
+      error
     });
   }
 
@@ -105,7 +139,7 @@ const authInstance = new AuthPage({
     text: "Зарегистрироваться",
     to: "/login/register",
     className: style.register,
-  }),
+  })
 });
 
 export const authPage = LoginLayout.bind(null, { content: authInstance }) as typeof Block;

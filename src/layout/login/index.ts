@@ -18,10 +18,3 @@ export class LoginLayout extends Block<Props> {
     return this.compile(template, this.props);
   }
 }
-
-export const loginLayout = (content: string) => {
-  return template({
-    style,
-    content
-  });
-};
