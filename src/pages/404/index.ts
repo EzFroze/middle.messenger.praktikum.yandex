@@ -2,10 +2,11 @@ import Block from "../../app/block";
 import { Link } from "../../components";
 import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
+import { ChildType } from "../../app/block/typings";
 
 type Props = {
   style: typeof style;
-  messengerLink: Block;
+  messengerLink: ChildType<Link>;
 };
 
 class Page404 extends Block<Props> {
@@ -18,10 +19,20 @@ class Page404 extends Block<Props> {
   }
 }
 
-export const page404 = Page404.bind(null, {
+const page404Props: Props = {
   style,
-  messengerLink: new Link({
-    text: "Назад к чатам",
-    to: "/messenger"
-  }),
-}) as typeof Block;
+  messengerLink: {
+    block: Link,
+    props: {
+      text: "Назад к чатам",
+      to: "/messenger"
+    },
+    $$type: "child"
+  },
+};
+
+export const page404: ChildType<Page404> = {
+  block: Page404,
+  props: page404Props,
+  $$type: "child"
+};

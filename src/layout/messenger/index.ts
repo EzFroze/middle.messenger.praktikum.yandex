@@ -1,8 +1,9 @@
 import Block from "../../app/block";
 import template from "./index.hbs";
+import { ChildType } from "../../app/block/typings";
 
 type Props = {
-  content: Block
+  content: ChildType
 };
 
 export class MessengerLayout extends Block<Props> {

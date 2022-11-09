@@ -1,10 +1,11 @@
 import Block from "../../app/block";
 import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
+import { ChildType } from "../../app/block/typings";
 
 type Props = {
   style?: typeof style;
-  content: Block;
+  content: ChildType;
 };
 
 const defaultValues: Pick<Props, "style"> = { style };

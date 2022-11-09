@@ -5,20 +5,25 @@ import arrow from "../../../static/images/arrow.svg";
 import Block from "../../app/block";
 import { Link } from "../../components";
 import { TChatList } from "./types";
+import { ChildType } from "../../app/block/typings";
 
 type Props = {
   style?: typeof style;
   chats: TChatList[];
-  profileLink?: Block;
+  profileLink?: ChildType<Link>;
 };
 
 const defaultValues: Pick<Props, "style" | "profileLink"> = {
   style,
-  profileLink: new Link({
-    to: "/profile",
-    text: `Профиль <img src="${arrow}" alt="arrow">`,
-    className: style.profile,
-  }),
+  profileLink: {
+    block: Link,
+    props: {
+      to: "/profile",
+      text: `Профиль <img src="${arrow}" alt="arrow">`,
+      className: style.profile,
+    },
+    $$type: "child"
+  },
 };
 
 export class ChatList extends Block<Props> {

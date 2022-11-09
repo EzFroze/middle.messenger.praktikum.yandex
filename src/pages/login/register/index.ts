@@ -5,18 +5,19 @@ import { LoginLayout } from "../../../layout";
 import { TForm, validate } from "../../../utils/validate";
 import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
+import { ChildType } from "../../../app/block/typings";
 
 type Props = {
   style: typeof style;
-  mailInput: Input;
-  loginInput: Input;
-  nameInput: Input;
-  phoneInput: Input;
-  surnameInput: Input;
-  passwordInput: Input;
-  passwordRetryInput: Input;
-  registerBtn: Block;
-  authBtn: Block;
+  mailInput: ChildType<Input>;
+  loginInput: ChildType<Input>;
+  nameInput: ChildType<Input>;
+  phoneInput: ChildType<Input>;
+  surnameInput: ChildType<Input>;
+  passwordInput: ChildType<Input>;
+  passwordRetryInput: ChildType<Input>;
+  registerBtn: ChildType<Link>;
+  authBtn: ChildType<Link>;
 } & TProps;
 
 export class RegisterPage extends Block<Props> {
@@ -168,63 +169,107 @@ export class RegisterPage extends Block<Props> {
   }
 }
 
-const registerInstance = new RegisterPage({
+const registerProps: Props = {
   style,
-  mailInput: new Input({
-    label: "Почта",
-    type: "text",
-    id: "email",
-    autofocus: true,
-    required: true,
-  }),
-  loginInput: new Input({
-    label: "Логин",
-    type: "text",
-    id: "login",
-    required: true,
-  }),
-  nameInput: new Input({
-    label: "Имя",
-    type: "text",
-    id: "first_name",
-    required: true,
-  }),
-  surnameInput: new Input({
-    label: "Фамилия",
-    type: "text",
-    id: "second_name",
-    required: true,
-  }),
-  phoneInput: new Input({
-    label: "Телефон",
-    type: "text",
-    id: "phone",
-    required: true,
-  }),
-  passwordInput: new Input({
-    label: "Пароль",
-    type: "password",
-    id: "password",
-    required: true,
-  }),
-  passwordRetryInput: new Input({
-    label: "Пароль (ещё раз)",
-    type: "password",
-    id: "password_retry",
-    required: true,
-  }),
-  registerBtn: new Link({
-    text: "Создать профиль",
-    className: style.register,
-    to: "/messenger",
-  }),
-  authBtn: new Link({
-    to: "/login/auth",
-    text: "Войти",
-    className: style.authBtn,
-  }),
-});
+  mailInput: {
+    block: Input,
+    props: {
+      label: "Почта",
+      type: "text",
+      id: "email",
+      autofocus: true,
+      required: true,
+    },
+    $$type: "child"
+  },
+  loginInput: {
+    block: Input,
+    props: {
+      label: "Логин",
+      type: "text",
+      id: "login",
+      required: true,
+    },
+    $$type: "child"
+  },
+  nameInput: {
+    block: Input,
+    props: {
+      label: "Имя",
+      type: "text",
+      id: "first_name",
+      required: true,
+    },
+    $$type: "child"
+  },
+  surnameInput: {
+    block: Input,
+    props: {
+      label: "Фамилия",
+      type: "text",
+      id: "second_name",
+      required: true,
+    },
+    $$type: "child"
+  },
+  phoneInput: {
+    block: Input,
+    props: {
+      label: "Телефон",
+      type: "text",
+      id: "phone",
+      required: true,
+    },
+    $$type: "child"
+  },
+  passwordInput: {
+    block: Input,
+    props: {
+      label: "Пароль",
+      type: "password",
+      id: "password",
+      required: true,
+    },
+    $$type: "child"
+  },
+  passwordRetryInput: {
+    block: Input,
+    props: {
+      label: "Пароль (ещё раз)",
+      type: "password",
+      id: "password_retry",
+      required: true,
+    },
+    $$type: "child"
+  },
+  registerBtn: {
+    block: Link,
+    props: {
+      text: "Создать профиль",
+      className: style.register,
+      to: "/messenger",
+    },
+    $$type: "child"
+  },
+  authBtn: {
+    block: Link,
+    props: {
+      to: "/login/auth",
+      text: "Войти",
+      className: style.authBtn,
+    },
+    $$type: "child"
+  },
+};
 
-export const registerPage = LoginLayout.bind(null, {
-  content: registerInstance,
-}) as typeof Block;
+export const registerPage: ChildType<LoginLayout> = {
+  block: LoginLayout,
+  props: {
+    content: {
+      block: RegisterPage,
+      props: registerProps,
+      $$type: "child"
+    },
+  },
+  $$type: "child"
+};

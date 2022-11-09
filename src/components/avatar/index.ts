@@ -9,7 +9,10 @@ type Props = {
   src?: string
 };
 
-const defaultValues: Pick<Props, "style" | "src"> = { style, src: emptySrc };
+const defaultValues: Pick<Props, "style" | "src"> = {
+  style,
+  src: emptySrc
+};
 
 export class Avatar extends Block<Props> {
   constructor(props: Props) {

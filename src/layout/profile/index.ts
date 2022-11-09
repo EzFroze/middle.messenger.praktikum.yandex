@@ -4,19 +4,24 @@ import * as style from "./styles.module.pcss";
 import arrow from "../../../static/images/send-arrow.svg";
 import Block from "../../app/block";
 import { Link } from "../../components";
+import { ChildType } from "../../app/block/typings";
 
 type Props = {
   style?: typeof style;
-  content: Block;
-  messengerLink?: Block;
+  content: ChildType;
+  messengerLink?: ChildType<Link>;
 };
 
 const defaultValues: Pick<Props, "style" | "messengerLink"> = {
   style,
-  messengerLink: new Link({
-    to: "/messenger",
-    text: `<img src="${arrow}" alt="arrow" class="${style.arrow}" />`,
-  }),
+  messengerLink: {
+    block: Link,
+    props: {
+      to: "/messenger",
+      text: `<img src="${arrow}" alt="arrow" class="${style.arrow}" />`,
+    },
+    $$type: "child"
+  },
 };
 
 export class ProfileLayout extends Block<Props> {

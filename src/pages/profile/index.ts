@@ -4,19 +4,20 @@ import * as style from "./styles.module.pcss";
 import { ProfileLayout } from "../../layout";
 import { Avatar, Link, ProfileInfoBlock } from "../../components";
 import Block from "../../app/block";
+import { ChildType } from "../../app/block/typings";
 
 type Props = {
   titleName: string,
-  name: ProfileInfoBlock,
-  email: ProfileInfoBlock,
-  login: ProfileInfoBlock,
-  surname: ProfileInfoBlock,
-  nickname: ProfileInfoBlock,
-  phone: ProfileInfoBlock,
-  avatar: Block,
-  editDataBtn: Block,
-  editPasswordBtn: Block,
-  exitBtn: Block,
+  name: ChildType<ProfileInfoBlock>,
+  email: ChildType<ProfileInfoBlock>,
+  login: ChildType<ProfileInfoBlock>,
+  surname: ChildType<ProfileInfoBlock>,
+  nickname: ChildType<ProfileInfoBlock>,
+  phone: ChildType<ProfileInfoBlock>,
+  avatar: ChildType<Avatar>,
+  editDataBtn: ChildType<Link>,
+  editPasswordBtn: ChildType<Link>,
+  exitBtn: ChildType<Link>,
   style?: typeof style
 };
 
@@ -34,54 +35,98 @@ class ProfilePage extends Block<Props> {
 
 const src = "https://avatars.githubusercontent.com/u/43078049?v=4";
 
-const avatarResult = new Avatar({ src });
-
-const infoBlock = {
-  name: new ProfileInfoBlock({
-    key: "Имя",
-    value: "Рустам"
-  }),
-  surname: new ProfileInfoBlock({
-    key: "Фамилия",
-    value: "Султанбеков"
-  }),
-  email: new ProfileInfoBlock({
-    key: "Почта",
-    value: "RS@yandex.ru"
-  }),
-  login: new ProfileInfoBlock({
-    key: "Логин",
-    value: "EzFroze"
-  }),
-  nickname: new ProfileInfoBlock({
-    key: "Имя в чате",
-    value: "Руста"
-  }),
-  phone: new ProfileInfoBlock({
-    key: "Телефон",
-    value: "8 800-555-35-35"
-  }),
-};
-
-const profileInstance = new ProfilePage({
-  ...infoBlock,
+const profileProps: Props = ({
+  name: {
+    block: ProfileInfoBlock,
+    props: {
+      key: "Имя",
+      value: "Рустам"
+    },
+    $$type: "child"
+  },
+  surname: {
+    block: ProfileInfoBlock,
+    props: {
+      key: "Фамилия",
+      value: "Султанбеков"
+    },
+    $$type: "child"
+  },
+  email: {
+    block: ProfileInfoBlock,
+    props: {
+      key: "Почта",
+      value: "RS@yandex.ru"
+    },
+    $$type: "child"
+  },
+  login: {
+    block: ProfileInfoBlock,
+    props: {
+      key: "Логин",
+      value: "EzFroze"
+    },
+    $$type: "child"
+  },
+  nickname: {
+    block: ProfileInfoBlock,
+    props: {
+      key: "Имя в чате",
+      value: "Руста"
+    },
+    $$type: "child"
+  },
+  phone: {
+    block: ProfileInfoBlock,
+    props: {
+      key: "Телефон",
+      value: "8 800-555-35-35"
+    },
+    $$type: "child"
+  },
   titleName: "Рустам",
-  avatar: avatarResult,
-  editDataBtn: new Link({
-    to: "/",
-    className: style.key,
-    text: "Изменить данные"
-  }),
-  editPasswordBtn: new Link({
-    to: "/",
-    className: style.key,
-    text: "Изменить пароль"
-  }),
-  exitBtn: new Link({
-    to: "/",
-    className: `${style.red} ${style.key}`,
-    text: "Выход"
-  })
+  avatar: {
+    block: Avatar,
+    props: { src },
+    $$type: "child"
+  },
+  editDataBtn: {
+    block: Link,
+    props: {
+      to: "/",
+      className: style.key,
+      text: "Изменить данные"
+    },
+    $$type: "child"
+  },
+  editPasswordBtn: {
+    block: Link,
+    props: {
+      to: "/",
+      className: style.key,
+      text: "Изменить пароль"
+    },
+    $$type: "child"
+  },
+  exitBtn: {
+    block: Link,
+    props: {
+      to: "/",
+      className: `${style.red} ${style.key}`,
+      text: "Выход"
+    },
+    $$type: "child"
+  }
 });
 
-export const profilePage = ProfileLayout.bind(null, { content: profileInstance }) as typeof Block;
+export const profilePage: ChildType<ProfileLayout> = {
+  block: ProfileLayout,
+  props: {
+    content: {
+      block: ProfilePage,
+      props: profileProps,
+      $$type: "child"
+    }
+  },
+  $$type: "child"
+};

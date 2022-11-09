@@ -1,4 +1,5 @@
 import Block from "../block";
+import { ChildType } from "../block/typings";
 
 function isEqual(lhs: string, rhs: string) {
   return lhs === rhs;
@@ -14,15 +15,15 @@ function render(query: string, block: Block) {
 export class Route {
   private _pathname: string;
 
-  private _blockClass: typeof Block;
+  private readonly _blockClass: ChildType;
 
   private _block: Block | null;
 
-  private _props: { rootQuery: string };
+  private readonly _props: { rootQuery: string };
 
   constructor(
     pathname: string,
-    view: typeof Block,
+    view: ChildType,
     props: { rootQuery: string }
   ) {
     this._pathname = pathname;
@@ -40,6 +41,7 @@ export class Route {
 
   leave() {
     if (this._block) {
+      this._block.dispatchComponentDidUnmount();
       this._block = null;
     }
   }
@@ -54,7 +56,11 @@ export class Route {
 
   render() {
     if (!this._block) {
-      this._block = new this._blockClass(this._props);
+      const {
+        block: BlockClass,
+        props
+      } = this._blockClass;
+      this._block = new BlockClass(props);
 
       render(this._props.rootQuery, this._block);
       return;

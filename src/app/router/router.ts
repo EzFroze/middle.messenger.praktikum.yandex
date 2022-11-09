@@ -1,6 +1,6 @@
 import { ROOT_QUERY } from "../../const";
-import Block from "../block";
 import { Route } from "./route";
+import { ChildsRecord, ChildType } from "../block/typings";
 
 export class RouterBase {
   static __instance: RouterBase;
@@ -11,7 +11,7 @@ export class RouterBase {
 
   private _currentRoute: Route | null;
 
-  private _rootQuery: string;
+  private readonly _rootQuery: string;
 
   constructor(rootQuery: string) {
     if (RouterBase.__instance) {
@@ -28,14 +28,14 @@ export class RouterBase {
     RouterBase.__instance = this;
   }
 
-  public use(pathname: string, block: typeof Block) {
+  public use(pathname: string, block: ChildType) {
     const route = new Route(pathname, block, { rootQuery: this._rootQuery });
     this.routes.push(route);
 
     return this;
   }
 
-  public registerRoutes(routes: Record<string, typeof Block>) {
+  public registerRoutes(routes: ChildsRecord) {
     Object.entries(routes)
       .forEach(([path, block]) => {
         this.use(path, block);

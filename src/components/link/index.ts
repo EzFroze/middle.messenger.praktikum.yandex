@@ -1,19 +1,16 @@
 import Block, { TProps } from "../../app/block";
-import { routes } from "../../app/routes";
-import { PropsWithRouter, withRouter } from "../../hocs/with-router";
+
 import template from "./index.hbs";
+import { Router } from "../../app/router";
+import { Routes } from "../../app/routes/typings";
 
-type BaseTypes = PropsWithRouter & TProps;
-
-type Routes = keyof typeof routes;
-
-interface Props extends BaseTypes {
+interface Props extends TProps {
   to: Routes;
   text: string;
   className?: string;
 }
 
-class LinkBase extends Block<Props> {
+export class Link extends Block<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -30,12 +27,10 @@ class LinkBase extends Block<Props> {
   }
 
   navigate() {
-    this.props.router?.go(this.props.to);
+    Router.go(this.props.to);
   }
 
   render() {
     return this.compile(template, this.props);
   }
 }
-
-export const Link = withRouter<Props>(LinkBase);

@@ -5,13 +5,14 @@ import { TForm, validate } from "../../../utils/validate";
 import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
 import { patterns } from "../../../const/regexp";
+import { ChildType } from "../../../app/block/typings";
 
 type Props = {
   style: typeof style;
-  loginInput: Input;
-  passwordInput: Input;
-  authLink: Block;
-  registerLink: Block;
+  loginInput: ChildType<Input>;
+  passwordInput: ChildType<Input>;
+  authLink: ChildType<Link>;
+  registerLink: ChildType<Link>;
 } & TProps;
 
 class AuthPage extends Block<Props> {
@@ -114,32 +115,58 @@ class AuthPage extends Block<Props> {
   }
 }
 
-const authInstance = new AuthPage({
+const authPageProps: Props = {
   style,
-  loginInput: new Input({
-    label: "Логин",
-    type: "text",
-    id: "login",
-    autofocus: true,
-    required: true,
-  }),
-  passwordInput: new Input({
-    label: "Пароль",
-    type: "password",
-    id: "password",
-    autofocus: false,
-    required: true,
-  }),
-  authLink: new Link({
-    text: "Войти",
-    className: style.authBtn,
-    to: "/messenger",
-  }),
-  registerLink: new Link({
-    text: "Зарегистрироваться",
-    to: "/login/register",
-    className: style.register,
-  })
-});
+  loginInput: {
+    block: Input,
+    props: {
+      label: "Логин",
+      type: "text",
+      id: "login",
+      autofocus: true,
+      required: true,
+    },
+    $$type: "child"
+  },
+  passwordInput: {
+    block: Input,
+    props: {
+      label: "Пароль",
+      type: "password",
+      id: "password",
+      autofocus: false,
+      required: true,
+    },
+    $$type: "child"
+  },
+  authLink: {
+    block: Link,
+    props: {
+      text: "Войти",
+      className: style.authBtn,
+      to: "/messenger",
+    },
+    $$type: "child"
+  },
+  registerLink: {
+    block: Link,
+    props: {
+      text: "Зарегистрироваться",
+      to: "/login/register",
+      className: style.register,
+    },
+    $$type: "child"
+  }
+};
 
-export const authPage = LoginLayout.bind(null, { content: authInstance }) as typeof Block;
+export const authPage: ChildType<LoginLayout> = {
+  block: LoginLayout,
+  props: {
+    content: {
+      block: AuthPage,
+      props: authPageProps,
+      $$type: "child"
+    }
+  },
+  $$type: "child"
+};

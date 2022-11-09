@@ -5,11 +5,12 @@ export type TProps = {
   events?: Record<string, (event: any) => void>;
 };
 
-class Block<P = any> {
+class Block<P extends Record<string | number | symbol, any> = any> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
     FLOW_CDU: "flow:component-did-update",
+    FLOW_CDUM: "flow:component-did-unmount",
     FLOW_RENDER: "flow:render",
   };
 
@@ -57,6 +58,7 @@ class Block<P = any> {
     eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CDUM, this._componentDidUnmount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
@@ -104,6 +106,29 @@ class Block<P = any> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     newProps: P & TProps
   ): void {
+  }
+
+  protected componentDidUnmount() {
+
+  }
+
+  private _componentDidUnmount() {
+    this.componentDidUnmount();
+
+    if (this.children) {
+      Object.values(this.children)
+        .forEach((child) => {
+          child.dispatchComponentDidUnmount();
+        });
+    }
+
+    this._removeEvents();
+    this._element?.remove();
+  }
+
+  public dispatchComponentDidUnmount() {
+    this._eventBus()
+      .emit(Block.EVENTS.FLOW_CDUM);
   }
 
   setProps(nextProps: Partial<P & TProps>) {
@@ -197,14 +222,18 @@ class Block<P = any> {
       });
   }
 
-  private _getChildren(propsAndChildren: {}) {
+  private _getChildren(propsAndChildren: P & TProps) {
     const children: Record<string, Block> = {};
     const props: Record<string, any> = {};
 
     Object.entries(propsAndChildren)
       .forEach(([key, value]) => {
-        if (value instanceof Block) {
-          children[key] = value;
+        if (value?.$$type === "child") {
+          const {
+            props: childProps,
+            block: ChildBlock
+          } = value;
+          children[key] = new ChildBlock(childProps);
         } else {
           props[key] = value;
         }

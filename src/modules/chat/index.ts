@@ -4,6 +4,7 @@ import { clip, dots, sendArrow } from "../../../static/images";
 import Block from "../../app/block";
 import { Input } from "../../components";
 import { TForm, validate } from "../../utils/validate";
+import { ChildType } from "../../app/block/typings";
 
 type Props = {
   style?: typeof style,
@@ -11,7 +12,7 @@ type Props = {
   clip?: string,
   sendArrow?: string,
   chatData?: unknown,
-  messageInput: Input
+  messageInput: ChildType<Input>
 };
 
 const defaultValues: Pick<Props, "dots" | "clip" | "sendArrow" | "style"> = {

@@ -5,10 +5,11 @@ import {
   page404,
   page500,
   profilePage,
-  registerPage,
+  registerPage
 } from "../../pages";
+import { ChildsRecord } from "../block/typings";
 
-export const routes = {
+export const routes: ChildsRecord = {
   "/": mainPage,
   "/login/auth": authPage,
   "/login/register": registerPage,

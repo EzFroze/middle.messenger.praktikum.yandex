@@ -38,7 +38,8 @@
     "no-useless-return": "off",
     "class-methods-use-this": "off",
     "no-param-reassign": "warn",
-    "max-classes-per-file": "off"
+    "max-classes-per-file": "off",
+    "import/no-cycle": "off"
   },
   "overrides": [
     {
