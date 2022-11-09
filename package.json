@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "rimraf ./dist && parcel static/index.html --no-cache",
-    "build": "rimraf ./dist && parcel build static/index.html --public-url . --no-cache --no-source-maps",
+    "build": "rimraf ./dist && parcel build static/index.html --public-url '/' --no-cache --no-source-maps",
     "start": "npm run build && ts-node server.ts",
     "lint": "eslint src/**/*.ts server.ts",
     "lint:fix": "eslint src/**/*.ts server.ts --fix",
