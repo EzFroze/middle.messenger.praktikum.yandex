@@ -1,3 +1,5 @@
+import { METHOD, Options, OptionsWithoutMethod } from "./typings";
+
 function queryStringify(data = {}): string {
   const result = Object.entries(data)
     .reduce((acc, [key, value]) => {
@@ -8,21 +10,6 @@ function queryStringify(data = {}): string {
 
   return result.slice(0, -1);
 }
-
-enum METHOD {
-  GET = "GET",
-  POST = "POST",
-  PUT = "PUT",
-  PATCH = "PATCH",
-  DELETE = "DELETE"
-}
-
-type Options = {
-  method: METHOD,
-  data?: any
-};
-
-type OptionsWithoutMethod = Omit<Options, "method">;
 
 // Я подумал почему у Axios есть название Axios а у моей обертки ее нет
 // Если кратко запрос (русский) -> anfrage (немецкий)

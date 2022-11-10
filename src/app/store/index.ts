@@ -1,12 +1,5 @@
 import { EventBus } from "../event-bus";
-
-type Indexed<T = unknown> = Record<string, T>;
-
-type StoreState = {
-  login: Indexed,
-  profile: Indexed,
-  messenger: Indexed
-};
+import { Indexed, StoreEvents, StoreState } from "./typings";
 
 function set(
   state: StoreState,
@@ -31,10 +24,6 @@ function set(
   }, {});
 
   Object.assign(state, result);
-}
-
-export enum StoreEvents {
-  Updated = "updated"
 }
 
 class StoreBase extends EventBus {

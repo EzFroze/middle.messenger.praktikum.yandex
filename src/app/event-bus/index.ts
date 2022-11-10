@@ -1,4 +1,4 @@
-type TCallback<T> = (...args: T[]) => void;
+import { TCallback } from "./typings";
 
 export class EventBus {
   private readonly listeners: Record<string, Array<Function>> = {};
