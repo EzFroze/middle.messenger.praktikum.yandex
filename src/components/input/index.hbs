@@ -5,18 +5,14 @@
     class="{{style.formControl}} {{#if error}}{{style.redLine}}{{/if}}"
     autocomplete="off"
     {{#if value}}
-      value="{{value}}"
+    value="{{value}}"
     {{/if}}
     {{#if placeholder}}
-      placeholder={{placeholder}}
-    {{/if}}
-
-    {{#if autofocus}}
-      autofocus="autofocus"
+    placeholder={{placeholder}}
     {{/if}}
 
     {{#if required}}
-      required="required"
+    required="required"
     {{/if}}
   />
   {{#if label}}
