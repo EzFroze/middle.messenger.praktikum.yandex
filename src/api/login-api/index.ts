@@ -1,32 +1,32 @@
-import { Anfrage, BaseApi } from "../../app/http";
+import { BaseAPI } from "../../app/http";
 import { AuthPostRequest, RegisterPostRequest } from "./typings";
 
-const loginAPIInstance = new Anfrage("/auth");
+export class AuthAPI extends BaseAPI {
+  constructor() {
+    super("/auth");
+  }
 
-abstract class LoginApiAbstract {
-  abstract signup(data: RegisterPostRequest): Promise<XMLHttpRequest>;
-
-  abstract signin(data: AuthPostRequest): Promise<XMLHttpRequest>;
-
-  abstract user(): Promise<XMLHttpRequest>;
-
-  abstract logout(): Promise<XMLHttpRequest>;
-}
-
-export class LoginApi extends BaseApi implements LoginApiAbstract {
   signup(data: RegisterPostRequest): Promise<XMLHttpRequest> {
-    return loginAPIInstance.post("/signin", { data });
+    return this.http.post("/signin", { data });
   }
 
   signin(data: AuthPostRequest): Promise<XMLHttpRequest> {
-    return loginAPIInstance.post("/signin", { data });
+    return this.http.post("/signin", { data });
   }
 
   user(): Promise<XMLHttpRequest> {
-    return loginAPIInstance.get("/user");
+    return this.http.get("/user");
   }
 
   logout(): Promise<XMLHttpRequest> {
-    return loginAPIInstance.post("/logout");
+    return this.http.post("/logout");
   }
+
+  create = undefined;
+
+  request = undefined;
+
+  delete = undefined;
+
+  update = undefined;
 }

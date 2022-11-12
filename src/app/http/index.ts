@@ -1,2 +1,2 @@
 export { Anfrage } from "./anfrage";
-export { BaseApi } from "./base-api";
+export { BaseAPI } from "./base-api";
