@@ -20,8 +20,12 @@ class AuthPage extends Block<Props> {
     login: {
       value: "",
       validate: {
-        minLength: 3,
-        maxLength: 20,
+        minLength: {
+          length: 3
+        },
+        maxLength: {
+          length: 20
+        },
         regexp: {
           pattern: patterns.LOGIN,
           errorMessage: "Укажите логин",
@@ -31,12 +35,10 @@ class AuthPage extends Block<Props> {
     password: {
       value: "",
       validate: {
-        minLength: 8,
-        maxLength: 40,
-        regexp: {
-          pattern: patterns.PASSWORD,
-          errorMessage: "Минимум 8 букв и одна заглавная",
-        },
+        minLength: {
+          length: 1,
+          errorMessage: "Введите пароль"
+        }
       },
     },
   };

@@ -29,14 +29,20 @@ export class RegisterPage extends Block<Props> {
           pattern: patterns.EMAIL,
           errorMessage: "Проверьте правильность введенной почты",
         },
-        minLength: 4,
+        minLength: {
+          length: 4
+        },
       },
     },
     login: {
       value: "",
       validate: {
-        minLength: 3,
-        maxLength: 20,
+        minLength: {
+          length: 3
+        },
+        maxLength: {
+          length: 20
+        },
         regexp: {
           pattern: patterns.LOGIN,
           errorMessage: "Логин",
@@ -70,15 +76,23 @@ export class RegisterPage extends Block<Props> {
           pattern: patterns.PHONE,
           errorMessage: "Введите корректный номер телефона",
         },
-        minLength: 10,
-        maxLength: 15,
+        minLength: {
+          length: 10
+        },
+        maxLength: {
+          length: 15
+        },
       },
     },
     password: {
       value: "",
       validate: {
-        minLength: 8,
-        maxLength: 40,
+        minLength: {
+          length: 8
+        },
+        maxLength: {
+          length: 40
+        },
         regexp: {
           pattern: patterns.PASSWORD,
           errorMessage: "Минимум 8 букв и одна заглавная",
@@ -88,8 +102,12 @@ export class RegisterPage extends Block<Props> {
     password_retry: {
       value: "",
       validate: {
-        minLength: 8,
-        maxLength: 40,
+        minLength: {
+          length: 8
+        },
+        maxLength: {
+          length: 40
+        },
         regexp: {
           pattern: patterns.PASSWORD,
           errorMessage: "Минимум 8 букв и одна заглавная",
