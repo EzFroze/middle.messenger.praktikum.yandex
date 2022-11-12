@@ -75,6 +75,9 @@ class AnfrageBase {
       xhr.onerror = reject;
       xhr.ontimeout = reject;
 
+      xhr.withCredentials = true;
+      xhr.responseType = "json";
+
       if (method === "GET" || !data) {
         xhr.send();
       } else {
