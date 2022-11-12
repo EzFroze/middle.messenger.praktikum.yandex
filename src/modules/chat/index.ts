@@ -26,7 +26,9 @@ export class Chat extends Block<Props> {
   private form: TForm = {
     message: {
       validate: {
-        minLength: 1
+        minLength: {
+          length: 1
+        }
       },
       value: ""
     }
