@@ -1,18 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-export class BaseApi {
-  create(..._args: unknown[]): Promise<XMLHttpRequest> {
-    throw new Error("Not implemented");
+import { Anfrage } from "./anfrage";
+
+export abstract class BaseAPI {
+  protected http: Anfrage;
+
+  protected constructor(baseUrl: string) {
+    this.http = new Anfrage(baseUrl);
   }
 
-  request(..._args: unknown[]): Promise<XMLHttpRequest> {
-    throw new Error("Not implemented");
-  }
+  abstract create?(..._args: unknown[]): Promise<XMLHttpRequest>;
 
-  update(..._args: unknown[]): Promise<XMLHttpRequest> {
-    throw new Error("Not implemented");
-  }
+  abstract request?(..._args: unknown[]): Promise<XMLHttpRequest>;
 
-  delete(..._args: unknown[]): Promise<XMLHttpRequest> {
-    throw new Error("Not implemented");
-  }
+  abstract update?(..._args: unknown[]): Promise<XMLHttpRequest>;
+
+  abstract delete?(..._args: unknown[]): Promise<XMLHttpRequest>;
 }
