@@ -143,6 +143,10 @@ class Block<P extends Record<string | number | symbol, any> = any> {
     return this._element;
   }
 
+  protected set element(value: HTMLElement | undefined) {
+    this._element = value;
+  }
+
   get id() {
     return this._id;
   }
