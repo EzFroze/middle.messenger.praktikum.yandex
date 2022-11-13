@@ -92,7 +92,7 @@ export class Anfrage extends AnfrageBase {
 
   constructor(baseUrl: string = "/") {
     super();
-    this.baseUrl = `https://ya-praktikum.tech${baseUrl}`;
+    this.baseUrl = `https://ya-praktikum.tech/api/v2/${baseUrl}`;
   }
 
   get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
