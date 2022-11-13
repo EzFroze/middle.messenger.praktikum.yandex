@@ -26,7 +26,7 @@ function set(
   Object.assign(state, result);
 }
 
-class StoreBase extends EventBus {
+class Store extends EventBus {
   private state: StoreState = {
     login: {},
     profile: {},
@@ -43,4 +43,4 @@ class StoreBase extends EventBus {
   }
 }
 
-export const Store = new StoreBase();
+export const store = new Store();
