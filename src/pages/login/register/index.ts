@@ -1,11 +1,14 @@
 import Block, { TProps } from "../../../app/block";
-import { Input, Link } from "../../../components";
+import { Button, Input, Link } from "../../../components";
 import { patterns } from "../../../const/regexp";
 import { LoginLayout } from "../../../layout";
 import { TForm, validate } from "../../../utils/validate";
 import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
 import { ChildType } from "../../../app/block/typings";
+import { RegisterPostRequest } from "../../../api/login-api/typings";
+import { authController } from "../../../contollers";
+import { Routes } from "../../../app/routes/typings";
 
 type Props = {
   style: typeof style;
@@ -16,7 +19,7 @@ type Props = {
   surnameInput: ChildType<Input>;
   passwordInput: ChildType<Input>;
   passwordRetryInput: ChildType<Input>;
-  registerBtn: ChildType<Link>;
+  registerBtn: ChildType<Button>;
   authBtn: ChildType<Link>;
 } & TProps;
 
@@ -133,7 +136,7 @@ export class RegisterPage extends Block<Props> {
     });
 
     this.children.registerBtn.setProps({
-      events: { click: (event: Event) => this.handleClick(event) },
+      events: { click: this.handleClick.bind(this) },
     });
   }
 
@@ -153,23 +156,38 @@ export class RegisterPage extends Block<Props> {
     });
   }
 
-  handleClick(event: Event) {
+  handleClick() {
+    let hasError = false;
     const inputs = this.getInputs();
 
-    inputs.forEach((input) => {
+    for (let i = 0; i < inputs.length; i += 1) {
+      const input = inputs[i];
+
       const form = this.form[input.props.id];
       const { error } = validate(form.value, form.validate);
 
       if (error) {
-        event.preventDefault();
         form.error = error;
+        hasError = true;
       }
 
       input.setProps({
         value: form.value,
         error: form.error
       });
-    });
+    }
+
+    if (hasError) {
+      return;
+    }
+
+    const data = Object.entries(this.form)
+      .reduce<Record<string, string>>((acc, [key, value]) => {
+      acc[key] = value.value;
+      return acc;
+    }, {}) as RegisterPostRequest;
+
+    authController.signup(data);
   }
 
   getInputs() {
@@ -261,18 +279,17 @@ const registerProps: Props = {
     $$type: "child"
   },
   registerBtn: {
-    block: Link,
+    block: Button,
     props: {
       text: "Создать профиль",
       className: style.register,
-      to: "/messenger",
     },
     $$type: "child"
   },
   authBtn: {
     block: Link,
     props: {
-      to: "/login/auth",
+      to: Routes.AUTH_PAGE,
       text: "Войти",
       className: style.authBtn,
     },

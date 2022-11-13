@@ -1,17 +1,20 @@
 import Block, { TProps } from "../../../app/block";
-import { Input, Link } from "../../../components";
+import { Button, Input, Link } from "../../../components";
 import { LoginLayout } from "../../../layout";
 import { TForm, validate } from "../../../utils/validate";
 import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
 import { patterns } from "../../../const/regexp";
 import { ChildType } from "../../../app/block/typings";
+import { authController } from "../../../contollers";
+import { AuthPostRequest } from "../../../api/login-api/typings";
+import { Routes } from "../../../app/routes/typings";
 
 type Props = {
   style: typeof style;
   loginInput: ChildType<Input>;
   passwordInput: ChildType<Input>;
-  authLink: ChildType<Link>;
+  authLink: ChildType<Button>;
   registerLink: ChildType<Link>;
 } & TProps;
 
@@ -62,20 +65,23 @@ class AuthPage extends Block<Props> {
 
     this.children.authLink.setProps({
       events: {
-        click: (event: Event) => this.handleClick(event)
+        click: this.handleClick.bind(this)
       },
     });
   }
 
-  handleClick(event: Event) {
+  handleClick() {
+    let hasError = false;
+
     const inputs = this.getInputs();
 
-    inputs.forEach((input) => {
+    for (let i = 0; i < inputs.length; i += 1) {
+      const input = inputs[i];
       const form = this.form[input.props.id];
       const { error } = validate(form.value, form.validate);
 
       if (error) {
-        event.preventDefault();
+        hasError = true;
         form.error = error;
       }
 
@@ -83,7 +89,19 @@ class AuthPage extends Block<Props> {
         value: form.value,
         error: form.error
       });
-    });
+    }
+
+    if (hasError) {
+      return;
+    }
+
+    const data = Object.entries(this.form)
+      .reduce((acc, [key, value]) => {
+        acc[key] = value.value;
+        return acc;
+      }, {} as Record<string, string>) as AuthPostRequest;
+
+    authController.signin(data);
   }
 
   getInputs() {
@@ -142,11 +160,10 @@ const authPageProps: Props = {
     $$type: "child"
   },
   authLink: {
-    block: Link,
+    block: Button,
     props: {
       text: "Войти",
       className: style.authBtn,
-      to: "/messenger",
     },
     $$type: "child"
   },
@@ -154,7 +171,7 @@ const authPageProps: Props = {
     block: Link,
     props: {
       text: "Зарегистрироваться",
-      to: "/login/register",
+      to: Routes.REGISTER_PAGE,
       className: style.register,
     },
     $$type: "child"

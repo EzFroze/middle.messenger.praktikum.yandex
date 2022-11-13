@@ -2,9 +2,11 @@ import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
 
 import { ProfileLayout } from "../../layout";
-import { Avatar, Link, ProfileInfoBlock } from "../../components";
+import { Avatar, Button, Link, ProfileInfoBlock } from "../../components";
 import Block from "../../app/block";
 import { ChildType } from "../../app/block/typings";
+import { Routes } from "../../app/routes/typings";
+import { authController } from "../../contollers";
 
 type Props = {
   titleName: string,
@@ -17,7 +19,7 @@ type Props = {
   avatar: ChildType<Avatar>,
   editDataBtn: ChildType<Link>,
   editPasswordBtn: ChildType<Link>,
-  exitBtn: ChildType<Link>,
+  exitBtn: ChildType<Button>,
   style?: typeof style
 };
 
@@ -26,6 +28,9 @@ const defaultValues: Pick<Props, "style"> = { style };
 class ProfilePage extends Block<Props> {
   constructor(props: Props) {
     super({ ...defaultValues, ...props });
+  }
+
+  init() {
   }
 
   render() {
@@ -93,7 +98,7 @@ const profileProps: Props = ({
   editDataBtn: {
     block: Link,
     props: {
-      to: "/",
+      to: Routes.MAIN_PAGE,
       className: style.key,
       text: "Изменить данные"
     },
@@ -102,18 +107,22 @@ const profileProps: Props = ({
   editPasswordBtn: {
     block: Link,
     props: {
-      to: "/",
+      to: Routes.MAIN_PAGE,
       className: style.key,
       text: "Изменить пароль"
     },
     $$type: "child"
   },
   exitBtn: {
-    block: Link,
+    block: Button,
     props: {
-      to: "/",
-      className: `${style.red} ${style.key}`,
-      text: "Выход"
+      className: `${style.red} ${style.key} ${style.btn}`,
+      text: "Выход",
+      events: {
+        click: () => {
+          authController.logout();
+        }
+      }
     },
     $$type: "child"
   }
