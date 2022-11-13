@@ -1,7 +1,7 @@
 import Block, { TProps } from "../../app/block";
 
 import template from "./index.hbs";
-import { Router } from "../../app/router";
+import { router } from "../../app/router";
 import { Routes } from "../../app/routes/typings";
 
 interface Props extends TProps {
@@ -27,7 +27,7 @@ export class Link extends Block<Props> {
   }
 
   navigate() {
-    Router.go(this.props.to);
+    router.go(this.props.to);
   }
 
   render() {

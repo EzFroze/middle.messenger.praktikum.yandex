@@ -1,7 +1,7 @@
-import { Router } from "../src/app/router";
+import { router } from "../src/app/router";
 import { routes } from "../src/app/routes";
 
 window.addEventListener("DOMContentLoaded", () => {
-  Router.registerRoutes(routes)
+  router.registerRoutes(routes)
     .start();
 });
