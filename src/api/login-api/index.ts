@@ -7,7 +7,7 @@ export class AuthAPI extends BaseAPI {
   }
 
   signup(data: RegisterPostRequest): Promise<XMLHttpRequest> {
-    return this.http.post("/signin", { data });
+    return this.http.post("/signup", { data });
   }
 
   signin(data: AuthPostRequest): Promise<XMLHttpRequest> {
@@ -30,3 +30,5 @@ export class AuthAPI extends BaseAPI {
 
   update = undefined;
 }
+
+export default new AuthAPI();
