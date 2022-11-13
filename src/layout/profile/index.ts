@@ -5,6 +5,7 @@ import arrow from "../../../static/images/send-arrow.svg";
 import Block from "../../app/block";
 import { Link } from "../../components";
 import { ChildType } from "../../app/block/typings";
+import { Routes } from "../../app/routes/typings";
 
 type Props = {
   style?: typeof style;
@@ -17,7 +18,7 @@ const defaultValues: Pick<Props, "style" | "messengerLink"> = {
   messengerLink: {
     block: Link,
     props: {
-      to: "/messenger",
+      to: Routes.MESSENGER_PAGE,
       text: `<img src="${arrow}" alt="arrow" class="${style.arrow}" />`,
     },
     $$type: "child"

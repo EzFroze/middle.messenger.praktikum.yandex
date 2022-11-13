@@ -6,6 +6,7 @@ import Block from "../../app/block";
 import { Link } from "../../components";
 import { TChatList } from "./types";
 import { ChildType } from "../../app/block/typings";
+import { Routes } from "../../app/routes/typings";
 
 type Props = {
   style?: typeof style;
@@ -18,7 +19,7 @@ const defaultValues: Pick<Props, "style" | "profileLink"> = {
   profileLink: {
     block: Link,
     props: {
-      to: "/profile",
+      to: Routes.PROFILE_PAGE,
       text: `Профиль <img src="${arrow}" alt="arrow">`,
       className: style.profile,
     },

@@ -3,6 +3,7 @@ import { Link } from "../../components";
 import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
 import { ChildType } from "../../app/block/typings";
+import { Routes } from "../../app/routes/typings";
 
 type Props = {
   style?: typeof style;
@@ -35,7 +36,7 @@ export const mainPage: ChildType<MainPage> = {
       block: Link,
       props: {
         text: "Авторизация",
-        to: "/login/auth",
+        to: Routes.AUTH_PAGE,
         className: style.link,
       },
       $$type: "child"
@@ -44,7 +45,7 @@ export const mainPage: ChildType<MainPage> = {
       block: Link,
       props: {
         text: "Регистрация",
-        to: "/login/register",
+        to: Routes.REGISTER_PAGE,
         className: style.link
       },
       $$type: "child"
@@ -53,7 +54,7 @@ export const mainPage: ChildType<MainPage> = {
       block: Link,
       props: {
         text: "Мессенджер",
-        to: "/messenger",
+        to: Routes.MESSENGER_PAGE,
         className: style.link
       },
       $$type: "child"
@@ -62,7 +63,7 @@ export const mainPage: ChildType<MainPage> = {
       block: Link,
       props: {
         text: "Профиль",
-        to: "/profile",
+        to: Routes.PROFILE_PAGE,
         className: style.link
       },
       $$type: "child"
@@ -71,7 +72,7 @@ export const mainPage: ChildType<MainPage> = {
       block: Link,
       props: {
         text: "404",
-        to: "/404",
+        to: Routes.PAGE_404,
         className: style.link
       },
       $$type: "child"
@@ -80,7 +81,7 @@ export const mainPage: ChildType<MainPage> = {
       block: Link,
       props: {
         text: "500",
-        to: "/500",
+        to: Routes.PAGE_500,
         className: style.link
       },
       $$type: "child"

@@ -1,9 +1,10 @@
 import { ROOT_QUERY } from "../../const";
 import { Route } from "./route";
 import { ChildsRecord, ChildType } from "../block/typings";
+import { Routes } from "../routes/typings";
 
-export class RouterBase {
-  static __instance: RouterBase;
+export class Router {
+  static __instance: Router;
 
   routes: Route[];
 
@@ -14,10 +15,10 @@ export class RouterBase {
   private readonly _rootQuery: string;
 
   constructor(rootQuery: string) {
-    if (RouterBase.__instance) {
+    if (Router.__instance) {
       // отрубаем это правило тут, так как нам нужен singleton
       // eslint-disable-next-line no-constructor-return
-      return RouterBase.__instance;
+      return Router.__instance;
     }
 
     this.routes = [];
@@ -25,7 +26,7 @@ export class RouterBase {
     this._currentRoute = null;
     this._rootQuery = rootQuery;
 
-    RouterBase.__instance = this;
+    Router.__instance = this;
   }
 
   public use(pathname: string, block: ChildType) {
@@ -71,7 +72,7 @@ export class RouterBase {
     route.render();
   }
 
-  public go(pathname: string) {
+  public go(pathname: Routes) {
     this.history.pushState({}, "", pathname);
     this._onRoute(pathname);
   }
@@ -89,4 +90,4 @@ export class RouterBase {
   }
 }
 
-export const Router = new RouterBase(ROOT_QUERY);
+export const router = new Router(ROOT_QUERY);

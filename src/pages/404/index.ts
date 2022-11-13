@@ -3,6 +3,7 @@ import { Link } from "../../components";
 import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
 import { ChildType } from "../../app/block/typings";
+import { Routes } from "../../app/routes/typings";
 
 type Props = {
   style: typeof style;
@@ -25,7 +26,7 @@ const page404Props: Props = {
     block: Link,
     props: {
       text: "Назад к чатам",
-      to: "/messenger"
+      to: Routes.MESSENGER_PAGE
     },
     $$type: "child"
   },
