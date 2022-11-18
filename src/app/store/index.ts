@@ -29,9 +29,25 @@ function set(
 class Store extends EventBus {
   private state: StoreState = {
     login: {},
-    profile: {},
+    settings: {
+      id: 0,
+      first_name: "",
+      second_name: "",
+      email: "",
+      phone: "",
+      display_name: "",
+      login: "",
+      avatar: null
+    },
     messenger: {}
   };
+
+  constructor() {
+    super();
+    this.on(StoreEvents.Updated, () => {
+      console.log(this.state);
+    });
+  }
 
   public getState() {
     return this.state;
