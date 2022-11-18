@@ -7,9 +7,11 @@ function isEqual(lhs: string, rhs: string) {
 
 function render(query: string, block: Block) {
   const root = document.querySelector(query);
-  const fragment = block.render();
-  root?.replaceChildren(fragment);
-  block.dispatchComponentDidMount();
+  const fragment = block.getContent();
+  if (fragment) {
+    root?.replaceChildren(fragment);
+    block.dispatchComponentDidMount();
+  }
 }
 
 export class Route {
