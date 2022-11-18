@@ -17,5 +17,5 @@ export const routes: ChildsRecord = {
   [Routes.PAGE_404]: page404,
   [Routes.PAGE_500]: page500,
   [Routes.MESSENGER_PAGE]: messengerPage,
-  [Routes.PROFILE_PAGE]: profilePage,
+  [Routes.SETTINGS_PAGE]: profilePage,
 } as const;

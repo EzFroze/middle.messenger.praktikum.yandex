@@ -19,7 +19,7 @@ const defaultValues: Pick<Props, "style" | "profileLink"> = {
   profileLink: {
     block: Link,
     props: {
-      to: Routes.PROFILE_PAGE,
+      to: Routes.SETTINGS_PAGE,
       text: `Профиль <img src="${arrow}" alt="arrow">`,
       className: style.profile,
     },

@@ -63,7 +63,7 @@ export const mainPage: ChildType<MainPage> = {
       block: Link,
       props: {
         text: "Профиль",
-        to: Routes.PROFILE_PAGE,
+        to: Routes.SETTINGS_PAGE,
         className: style.link
       },
       $$type: "child"
