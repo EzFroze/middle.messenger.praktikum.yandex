@@ -1,7 +1,7 @@
 import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
 
-import emptySrc from "../../../static/images/empty-image.png";
+import emptySrc from "../../../static/images/empty-avatar.png";
 import Block from "../../app/block";
 
 type Props = {
