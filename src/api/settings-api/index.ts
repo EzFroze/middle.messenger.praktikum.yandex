@@ -11,7 +11,10 @@ export class SettingsAPI extends BaseAPI {
   }
 
   profileAvatar(data: UserProfileAvatar) {
-    return this.http.put("/profile/avatar", { data });
+    return this.http.put("/profile/avatar", {
+      data,
+      headers: []
+    });
   }
 
   password(data: UserPassword) {

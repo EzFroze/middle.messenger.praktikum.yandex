@@ -7,9 +7,7 @@ export type UserProfile = {
   phone: string
 };
 
-export type UserProfileAvatar = {
-  file: FormData
-};
+export type UserProfileAvatar = FormData;
 
 export type UserPassword = {
   oldPassword: string,

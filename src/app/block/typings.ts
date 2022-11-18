@@ -1,11 +1,12 @@
 import Block from ".";
 
-interface ChildConstructor<B = Block> {
-  new(props: unknown): B
+export interface ChildConstructor<B = Block,
+  P extends Record<string | number | symbol, any> = any> {
+  new(props: P): B
 }
 
 export type ChildType<B extends Block = Block, P = B["props"]> = {
-  block: ChildConstructor<B>,
+  block: ChildConstructor<B, P>,
   props: P,
   $$type: "child"
 };

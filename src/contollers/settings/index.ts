@@ -1,4 +1,4 @@
-import { UserPassword, UserProfile, UserProfileAvatar } from "../../api/settings-api/typings";
+import { UserPassword, UserProfile } from "../../api/settings-api/typings";
 import { settingsAPI } from "../../api";
 import { createNotification } from "../../utils/create-notification";
 import { store } from "../../app/store";
@@ -28,9 +28,13 @@ class SettingsController {
     }
   }
 
-  async editAvatar(data: UserProfileAvatar) {
+  async editAvatar(data: FileList) {
     try {
-      const result = await settingsAPI.profileAvatar(data);
+      const formData = new FormData();
+
+      formData.append("avatar", data[0]);
+
+      const result = await settingsAPI.profileAvatar(formData);
 
       const {
         response,

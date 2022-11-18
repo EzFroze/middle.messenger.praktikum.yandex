@@ -8,7 +8,8 @@ export enum METHOD {
 
 export type Options = {
   method: METHOD,
-  data?: any
+  data?: any,
+  headers?: { key: string, value: string }[]
 };
 
 export type OptionsWithoutMethod = Omit<Options, "method">;

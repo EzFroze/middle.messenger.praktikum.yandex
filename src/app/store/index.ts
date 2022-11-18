@@ -1,6 +1,26 @@
 import { EventBus } from "../event-bus";
 import { Indexed, StoreEvents, StoreState } from "./typings";
 
+function merge(lhs: Indexed, rhs: Indexed): Indexed {
+  const keys = Object.keys(rhs);
+  for (let i = 0; i < keys.length; i += 1) {
+    const key = keys[i];
+    try {
+      if (typeof rhs[key] === "object") {
+        // eslint-disable-next-line no-param-reassign
+        lhs[key] = merge(lhs[key] as Indexed, rhs[key] as Indexed);
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        lhs[key] = rhs[key];
+      }
+    } catch (e) {
+      // eslint-disable-next-line no-param-reassign
+      lhs[key] = rhs[key];
+    }
+  }
+  return lhs;
+}
+
 function set(
   state: StoreState,
   path: string,
@@ -23,7 +43,7 @@ function set(
     return acc;
   }, {});
 
-  Object.assign(state, result);
+  merge(state, result);
 }
 
 class Store extends EventBus {
@@ -37,16 +57,13 @@ class Store extends EventBus {
       phone: "",
       display_name: "",
       login: "",
-      avatar: null
+      avatar: ""
     },
     messenger: {}
   };
 
   constructor() {
     super();
-    this.on(StoreEvents.Updated, () => {
-      console.log(this.state);
-    });
   }
 
   public getState() {

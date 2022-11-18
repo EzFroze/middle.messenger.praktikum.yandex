@@ -8,7 +8,7 @@ export type StoreState = {
     second_name: string,
     display_name: string | null,
     login: string,
-    avatar: unknown,
+    avatar: string,
     email: string,
     phone: string
   },

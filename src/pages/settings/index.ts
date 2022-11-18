@@ -6,8 +6,8 @@ import { Avatar, Button, Link, ProfileInfoBlock } from "../../components";
 import Block from "../../app/block";
 import { ChildType } from "../../app/block/typings";
 import { Routes } from "../../app/routes/typings";
-import { authController } from "../../contollers";
-import { store } from "../../app/store";
+import { authController, resourcesController, settingsController } from "../../contollers";
+import { connect } from "../../app/store/helpers";
 import { StoreState } from "../../app/store/typings";
 
 type Props = {
@@ -22,7 +22,8 @@ type Props = {
   editDataBtn: ChildType<Link>,
   editPasswordBtn: ChildType<Link>,
   exitBtn: ChildType<Button>,
-  style?: typeof style
+  style?: typeof style,
+  state?: StoreState["settings"]
 };
 
 const defaultValues: Pick<Props, "style"> = { style };
@@ -32,18 +33,23 @@ class ProfilePage extends Block<Props> {
     super({ ...defaultValues, ...props });
   }
 
-  init() {
-    authController.getUser()
-      .then(() => {
-        const { settings } = store.getState();
+  async init() {
+    await authController.getUser();
 
-        this.setValues(settings);
-        this.setDisplayName(settings);
-      });
+    this.children.avatar.setProps({
+      events: {
+        change: this.handleClickInput.bind(this)
+      }
+    });
+
+    this.setValues();
+    this.setDisplayName();
+    this.setAvatar();
   }
 
-  setValues(profile: StoreState["settings"]) {
-    Object.entries(profile)
+  setValues() {
+    if (!this.props.state) return;
+    Object.entries(this.props.state)
       .forEach(([key, value]) => {
         if (this.children[key]) {
           this.children[key].setProps({ value });
@@ -51,15 +57,25 @@ class ProfilePage extends Block<Props> {
       });
   }
 
-  setDisplayName(profile: StoreState["settings"]) {
-    const displayName = profile.display_name;
-    if (displayName !== null) {
+  setDisplayName() {
+    const displayName = this.props.state?.display_name;
+    if (displayName) {
       this.setProps({ titleName: displayName });
     }
   }
 
   setAvatar() {
-    // TODO добавить аватар
+    const avatar = this.props.state?.avatar as string;
+    this.children.avatar.props.src = resourcesController.getFile(avatar);
+  }
+
+  async handleClickInput(event: Event) {
+    const target = event.target as HTMLInputElement;
+
+    if (!target.files) return;
+
+    await settingsController.editAvatar(target.files);
+    this.setAvatar();
   }
 
   render() {
@@ -155,14 +171,16 @@ const profileProps: Props = ({
   }
 });
 
+const WithStore = connect<ProfilePage>({
+  block: ProfilePage,
+  props: profileProps,
+  $$type: "child"
+}, (state) => state.settings);
+
 export const profilePage: ChildType<ProfileLayout> = {
   block: ProfileLayout,
   props: {
-    content: {
-      block: ProfilePage,
-      props: profileProps,
-      $$type: "child"
-    }
+    content: WithStore
   },
   $$type: "child"
 };

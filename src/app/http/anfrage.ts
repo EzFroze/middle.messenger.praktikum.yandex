@@ -66,7 +66,16 @@ class AnfrageBase {
       const xhr = new XMLHttpRequest();
       xhr.open(method, url);
 
-      xhr.setRequestHeader("Content-Type", "application/json");
+      if (options.headers) {
+        options.headers.forEach(({
+          key,
+          value
+        }) => {
+          xhr.setRequestHeader(key, value);
+        });
+      } else {
+        xhr.setRequestHeader("Content-Type", "application/json");
+      }
 
       xhr.onload = () => {
         resolve(xhr);
@@ -82,7 +91,7 @@ class AnfrageBase {
       if (method === "GET" || !data) {
         xhr.send();
       } else {
-        xhr.send(JSON.stringify(data));
+        xhr.send(data instanceof FormData ? data : JSON.stringify(data));
       }
     });
   }
