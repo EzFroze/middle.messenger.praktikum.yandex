@@ -3,6 +3,7 @@ import { authAPI } from "../../api";
 import { store } from "../../app/store";
 import { router } from "../../app/router";
 import { Routes } from "../../app/routes/typings";
+import { createNotification } from "../../utils/create-notification";
 
 class AuthController {
   async signup(data: RegisterPostRequest) {
@@ -14,39 +15,85 @@ class AuthController {
 
       if (response.id) {
         router.go(Routes.MESSENGER_PAGE);
-        return;
+      } else {
+        throw new Error(response.reason);
       }
-
-      throw new Error(response.reason);
     } catch (e) {
-      console.log(e);
+      createNotification({
+        type: "danger",
+        text: e.message
+      });
     }
   }
 
   async signin(data: AuthPostRequest) {
     try {
-      const result = await authAPI.signin(data);
-      if (result.status === 200) {
-        // await this.getUser();
-        router.go(Routes.PROFILE_PAGE);
+      const {
+        response,
+        status
+      } = await authAPI.signin(data);
+
+      if (status === 200) {
+        router.go(Routes.SETTINGS_PAGE);
+      } else {
+        throw new Error(response.reason);
       }
     } catch (e) {
-      console.log(e);
+      createNotification({
+        type: "danger",
+        text: e.message
+      });
     }
   }
 
   async getUser() {
-    const data = await authAPI.user();
-    const user = data.response;
-    store.set("user", user);
+    try {
+      const data = await authAPI.user();
+      const {
+        response: user,
+        status
+      } = data;
+
+      if (
+        status === 401
+        && router.pathname !== Routes.AUTH_PAGE
+      ) {
+        router.go(Routes.AUTH_PAGE);
+
+        createNotification({
+          title: "Авторизуйтесь",
+          text: "Вы не авторизованы",
+          type: "danger"
+        });
+        return;
+      }
+
+      store.set("settings", user);
+    } catch (e) {
+      createNotification({
+        type: "danger",
+        text: e.message
+      });
+    }
   }
 
   async logout() {
     try {
       await authAPI.logout();
+
+      store.set("settings", { id: 0 });
+
       router.go(Routes.AUTH_PAGE);
+
+      createNotification({
+        text: "Вы успешно вышли из аккаута",
+        type: "success"
+      });
     } catch (e) {
-      console.log(e);
+      createNotification({
+        type: "danger",
+        text: e.message
+      });
     }
   }
 }

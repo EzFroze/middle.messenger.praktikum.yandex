@@ -65,7 +65,10 @@ class SettingsController {
         });
       }
     } catch (e) {
-      console.log(e);
+      createNotification({
+        text: e.message,
+        type: "danger"
+      });
     }
   }
 }
