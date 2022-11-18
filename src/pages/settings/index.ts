@@ -7,14 +7,16 @@ import Block from "../../app/block";
 import { ChildType } from "../../app/block/typings";
 import { Routes } from "../../app/routes/typings";
 import { authController } from "../../contollers";
+import { store } from "../../app/store";
+import { StoreState } from "../../app/store/typings";
 
 type Props = {
   titleName: string,
-  name: ChildType<ProfileInfoBlock>,
+  first_name: ChildType<ProfileInfoBlock>,
   email: ChildType<ProfileInfoBlock>,
   login: ChildType<ProfileInfoBlock>,
-  surname: ChildType<ProfileInfoBlock>,
-  nickname: ChildType<ProfileInfoBlock>,
+  second_name: ChildType<ProfileInfoBlock>,
+  display_name: ChildType<ProfileInfoBlock>,
   phone: ChildType<ProfileInfoBlock>,
   avatar: ChildType<Avatar>,
   editDataBtn: ChildType<Link>,
@@ -31,6 +33,33 @@ class ProfilePage extends Block<Props> {
   }
 
   init() {
+    authController.getUser()
+      .then(() => {
+        const { settings } = store.getState();
+
+        this.setValues(settings);
+        this.setDisplayName(settings);
+      });
+  }
+
+  setValues(profile: StoreState["settings"]) {
+    Object.entries(profile)
+      .forEach(([key, value]) => {
+        if (this.children[key]) {
+          this.children[key].setProps({ value });
+        }
+      });
+  }
+
+  setDisplayName(profile: StoreState["settings"]) {
+    const displayName = profile.display_name;
+    if (displayName !== null) {
+      this.setProps({ titleName: displayName });
+    }
+  }
+
+  setAvatar() {
+    // TODO добавить аватар
   }
 
   render() {
@@ -38,22 +67,20 @@ class ProfilePage extends Block<Props> {
   }
 }
 
-const src = "https://avatars.githubusercontent.com/u/43078049?v=4";
-
 const profileProps: Props = ({
-  name: {
+  first_name: {
     block: ProfileInfoBlock,
     props: {
       key: "Имя",
-      value: "Рустам"
+      value: "",
     },
     $$type: "child"
   },
-  surname: {
+  second_name: {
     block: ProfileInfoBlock,
     props: {
       key: "Фамилия",
-      value: "Султанбеков"
+      value: "",
     },
     $$type: "child"
   },
@@ -61,7 +88,7 @@ const profileProps: Props = ({
     block: ProfileInfoBlock,
     props: {
       key: "Почта",
-      value: "RS@yandex.ru"
+      value: "",
     },
     $$type: "child"
   },
@@ -69,15 +96,15 @@ const profileProps: Props = ({
     block: ProfileInfoBlock,
     props: {
       key: "Логин",
-      value: "EzFroze"
+      value: ""
     },
     $$type: "child"
   },
-  nickname: {
+  display_name: {
     block: ProfileInfoBlock,
     props: {
       key: "Имя в чате",
-      value: "Руста"
+      value: ""
     },
     $$type: "child"
   },
@@ -85,14 +112,14 @@ const profileProps: Props = ({
     block: ProfileInfoBlock,
     props: {
       key: "Телефон",
-      value: "8 800-555-35-35"
+      value: ""
     },
     $$type: "child"
   },
-  titleName: "Рустам",
+  titleName: "",
   avatar: {
     block: Avatar,
-    props: { src },
+    props: {},
     $$type: "child"
   },
   editDataBtn: {
