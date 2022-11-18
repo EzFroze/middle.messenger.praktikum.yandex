@@ -80,8 +80,7 @@ class Block<P extends Record<string | number | symbol, any> = any> {
       });
   }
 
-  protected componentDidMount(): any {
-    return true;
+  protected componentDidMount(): void {
   }
 
   public dispatchComponentDidMount() {
