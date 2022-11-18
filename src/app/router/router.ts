@@ -10,6 +10,8 @@ export class Router {
 
   history: History;
 
+  pathname: string;
+
   private _currentRoute: Route | null;
 
   private readonly _rootQuery: string;
@@ -23,6 +25,8 @@ export class Router {
 
     this.routes = [];
     this.history = window.history;
+    this.pathname = window.location.pathname;
+
     this._currentRoute = null;
     this._rootQuery = rootQuery;
 

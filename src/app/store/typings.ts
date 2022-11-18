@@ -2,7 +2,16 @@ export type Indexed<T = unknown> = Record<string, T>;
 
 export type StoreState = {
   login: Indexed,
-  profile: Indexed,
+  settings: {
+    id: number,
+    first_name: string,
+    second_name: string,
+    display_name: string | null,
+    login: string,
+    avatar: unknown,
+    email: string,
+    phone: string
+  },
   messenger: Indexed
 };
 
