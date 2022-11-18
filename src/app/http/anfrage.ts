@@ -1,4 +1,5 @@
 import { METHOD, Options, OptionsWithoutMethod } from "./typings";
+import { API_URL } from "../../const";
 
 function queryStringify(data = {}): string {
   const result = Object.entries(data)
@@ -92,7 +93,7 @@ export class Anfrage extends AnfrageBase {
 
   constructor(baseUrl: string = "/") {
     super();
-    this.baseUrl = `https://ya-praktikum.tech/api/v2/${baseUrl}`;
+    this.baseUrl = `${API_URL}${baseUrl}`;
   }
 
   get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
