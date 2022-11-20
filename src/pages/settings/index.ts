@@ -2,10 +2,9 @@ import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
 
 import { ProfileLayout } from "../../layout";
-import { Avatar, Button, Link, ProfileInfoBlock } from "../../components";
+import { Avatar, Button, ProfileInfoBlock } from "../../components";
 import Block from "../../app/block";
 import { ChildType } from "../../app/block/typings";
-import { Routes } from "../../app/routes/typings";
 import { authController, resourcesController, settingsController } from "../../contollers";
 import { connect } from "../../app/store/helpers";
 import { StoreState } from "../../app/store/typings";
@@ -19,8 +18,8 @@ type Props = {
   display_name: ChildType<ProfileInfoBlock>,
   phone: ChildType<ProfileInfoBlock>,
   avatar: ChildType<Avatar>,
-  editDataBtn: ChildType<Link>,
-  editPasswordBtn: ChildType<Link>,
+  editDataBtn: ChildType<Button>,
+  editPasswordBtn: ChildType<Button>,
   exitBtn: ChildType<Button>,
   style?: typeof style,
   state?: StoreState["settings"]
@@ -37,9 +36,11 @@ class ProfilePage extends Block<Props> {
     await authController.getUser();
 
     this.children.avatar.setProps({
-      events: {
-        change: this.handleClickInput.bind(this)
-      }
+      events: { change: this.handleClickInput.bind(this) }
+    });
+
+    this.children.editDataBtn.setProps({
+      events: { click: this.handleClickEditBtn.bind(this) }
     });
 
     this.setValues();
@@ -76,6 +77,10 @@ class ProfilePage extends Block<Props> {
 
     await settingsController.editAvatar(target.files);
     this.setAvatar();
+  }
+
+  handleClickEditBtn() {
+
   }
 
   render() {
@@ -139,19 +144,17 @@ const profileProps: Props = ({
     $$type: "child"
   },
   editDataBtn: {
-    block: Link,
+    block: Button,
     props: {
-      to: Routes.MAIN_PAGE,
-      className: style.key,
+      className: `${style.key} ${style.btn}`,
       text: "Изменить данные"
     },
     $$type: "child"
   },
   editPasswordBtn: {
-    block: Link,
+    block: Button,
     props: {
-      to: Routes.MAIN_PAGE,
-      className: style.key,
+      className: `${style.key} ${style.btn}`,
       text: "Изменить пароль"
     },
     $$type: "child"

@@ -4,7 +4,6 @@ import template from "./index.hbs";
 type Props = {
   text: string,
   className: string,
-  link?: string
 } & TProps;
 
 export class Button extends Block<Props> {

@@ -1,18 +1,20 @@
-import Block from "../../app/block";
+import Block, { TProps } from "../../app/block";
 import { ChildsRecord } from "../../app/block/typings";
 import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
 
 type Props = {
   content: ChildsRecord,
-  style?: typeof style
+  style?: typeof style,
+  contentClass?: string
+} & TProps;
+
+const defaultProps: Pick<Props, "style" | "contentClass"> = {
+  style,
+  contentClass: ""
 };
 
-const defaultProps: Pick<Props, "style"> = {
-  style
-};
-
-export class Modal extends Block {
+export class Modal extends Block<Props> {
   constructor(props: Props) {
     const childs = props.content;
     super({
