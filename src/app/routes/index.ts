@@ -4,8 +4,9 @@ import {
   messengerPage,
   page404,
   page500,
-  profilePage,
-  registerPage
+  registerPage,
+  settingsEditDataPage,
+  settingsPage
 } from "../../pages";
 import { ChildsRecord } from "../block/typings";
 import { Routes } from "./typings";
@@ -17,5 +18,6 @@ export const routes: ChildsRecord = {
   [Routes.PAGE_404]: page404,
   [Routes.PAGE_500]: page500,
   [Routes.MESSENGER_PAGE]: messengerPage,
-  [Routes.SETTINGS_PAGE]: profilePage,
+  [Routes.SETTINGS_PAGE]: settingsPage,
+  [Routes.SETTINGS_EDIT_DATA_PAGE]: settingsEditDataPage
 } as const;

@@ -1,13 +1,14 @@
 import template from "./index.hbs";
 import * as style from "./styles.module.pcss";
 
-import { ProfileLayout } from "../../layout";
-import { Avatar, Button, ProfileInfoBlock } from "../../components";
-import Block from "../../app/block";
-import { ChildType } from "../../app/block/typings";
-import { authController, resourcesController, settingsController } from "../../contollers";
-import { connect } from "../../app/store/helpers";
-import { StoreState } from "../../app/store/typings";
+import { SettingsLayout } from "../../../layout";
+import { Avatar, Button, Link, ProfileInfoBlock } from "../../../components";
+import Block from "../../../app/block";
+import { ChildType } from "../../../app/block/typings";
+import { authController, resourcesController, settingsController } from "../../../contollers";
+import { connect } from "../../../app/store/helpers";
+import { StoreState } from "../../../app/store/typings";
+import { Routes } from "../../../app/routes/typings";
 
 type Props = {
   titleName: string,
@@ -18,7 +19,7 @@ type Props = {
   display_name: ChildType<ProfileInfoBlock>,
   phone: ChildType<ProfileInfoBlock>,
   avatar: ChildType<Avatar>,
-  editDataBtn: ChildType<Button>,
+  editDataLink: ChildType<Link>,
   editPasswordBtn: ChildType<Button>,
   exitBtn: ChildType<Button>,
   style?: typeof style,
@@ -27,20 +28,18 @@ type Props = {
 
 const defaultValues: Pick<Props, "style"> = { style };
 
-class ProfilePage extends Block<Props> {
+class SettingsPage extends Block<Props> {
   constructor(props: Props) {
     super({ ...defaultValues, ...props });
   }
 
   async init() {
-    await authController.getUser();
+    if (!this.props.state?.id) {
+      await authController.getUser();
+    }
 
     this.children.avatar.setProps({
       events: { change: this.handleClickInput.bind(this) }
-    });
-
-    this.children.editDataBtn.setProps({
-      events: { click: this.handleClickEditBtn.bind(this) }
     });
 
     this.setValues();
@@ -66,8 +65,8 @@ class ProfilePage extends Block<Props> {
   }
 
   setAvatar() {
-    const avatar = this.props.state?.avatar as string;
-    this.children.avatar.props.src = resourcesController.getFile(avatar);
+    const avatarPath = this.props.state?.avatar as string;
+    this.children.avatar.props.src = resourcesController.getFile(avatarPath);
   }
 
   async handleClickInput(event: Event) {
@@ -79,16 +78,12 @@ class ProfilePage extends Block<Props> {
     this.setAvatar();
   }
 
-  handleClickEditBtn() {
-
-  }
-
   render() {
     return this.compile(template, this.props);
   }
 }
 
-const profileProps: Props = ({
+const settingsProps: Props = ({
   first_name: {
     block: ProfileInfoBlock,
     props: {
@@ -143,11 +138,12 @@ const profileProps: Props = ({
     props: {},
     $$type: "child"
   },
-  editDataBtn: {
-    block: Button,
+  editDataLink: {
+    block: Link,
     props: {
-      className: `${style.key} ${style.btn}`,
-      text: "Изменить данные"
+      to: Routes.SETTINGS_EDIT_DATA_PAGE,
+      text: "Изменить данные",
+      className: `${style.key} ${style.btn}`
     },
     $$type: "child"
   },
@@ -174,14 +170,14 @@ const profileProps: Props = ({
   }
 });
 
-const WithStore = connect<ProfilePage>({
-  block: ProfilePage,
-  props: profileProps,
+const WithStore = connect<SettingsPage>({
+  block: SettingsPage,
+  props: settingsProps,
   $$type: "child"
 }, (state) => state.settings);
 
-export const profilePage: ChildType<ProfileLayout> = {
-  block: ProfileLayout,
+export const settingsPage: ChildType<SettingsLayout> = {
+  block: SettingsLayout,
   props: {
     content: WithStore
   },

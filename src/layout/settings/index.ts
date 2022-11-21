@@ -25,7 +25,7 @@ const defaultValues: Pick<Props, "style" | "messengerLink"> = {
   },
 };
 
-export class ProfileLayout extends Block<Props> {
+export class SettingsLayout extends Block<Props> {
   constructor(props: Props) {
     super({ ...defaultValues, ...props });
   }

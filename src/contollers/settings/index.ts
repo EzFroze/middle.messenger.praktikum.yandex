@@ -2,6 +2,8 @@ import { UserPassword, UserProfile } from "../../api/settings-api/typings";
 import { settingsAPI } from "../../api";
 import { createNotification } from "../../utils/create-notification";
 import { store } from "../../app/store";
+import { router } from "../../app/router";
+import { Routes } from "../../app/routes/typings";
 
 class SettingsController {
   async editProfileData(data: UserProfile) {
@@ -15,6 +17,7 @@ class SettingsController {
 
       if (status === 200) {
         store.set("settings", { ...response });
+        router.go(Routes.SETTINGS_PAGE);
         createNotification({
           text: "Данные успешно обновлены",
           type: "success"
