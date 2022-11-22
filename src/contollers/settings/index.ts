@@ -63,13 +63,20 @@ class SettingsController {
     try {
       const result = await settingsAPI.password(data);
 
-      const { status } = result;
+      const {
+        status,
+        response
+      } = result;
 
       if (status === 200) {
+        router.go(Routes.SETTINGS_PAGE);
+
         createNotification({
           text: "Пароль успешно обновлен",
           type: "success"
         });
+      } else {
+        throw new Error(response.reason);
       }
     } catch (e) {
       createNotification({

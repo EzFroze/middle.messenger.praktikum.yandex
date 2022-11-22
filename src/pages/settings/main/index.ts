@@ -20,7 +20,7 @@ type Props = {
   phone: ChildType<ProfileInfoBlock>,
   avatar: ChildType<Avatar>,
   editDataLink: ChildType<Link>,
-  editPasswordBtn: ChildType<Button>,
+  editPasswordBtn: ChildType<Link>,
   exitBtn: ChildType<Button>,
   style?: typeof style,
   state?: StoreState["settings"]
@@ -148,8 +148,9 @@ const settingsProps: Props = ({
     $$type: "child"
   },
   editPasswordBtn: {
-    block: Button,
+    block: Link,
     props: {
+      to: Routes.SETTINGS_EDIT_PASSWORD,
       className: `${style.key} ${style.btn}`,
       text: "Изменить пароль"
     },

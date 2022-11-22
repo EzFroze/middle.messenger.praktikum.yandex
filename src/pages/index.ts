@@ -6,3 +6,4 @@ export { mainPage } from "./main";
 export { messengerPage } from "./messenger";
 export { settingsPage } from "./settings/main";
 export { settingsEditDataPage } from "./settings/edit-data";
+export { settingsEditPasswordPage } from "./settings/edit-password";
