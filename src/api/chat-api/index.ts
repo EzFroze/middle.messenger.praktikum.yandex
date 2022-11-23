@@ -1,5 +1,10 @@
 import { BaseAPI } from "../../app/http";
-import { CreateChatRequestType, DeleteChatRequestType } from "./typings";
+import {
+  AddUsersInChatRequestType,
+  CreateChatRequestType,
+  DeleteChatRequestType,
+  GetGhatsTokenRequestType
+} from "./typings";
 
 export class ChatAPI extends BaseAPI {
   constructor() {
@@ -16,6 +21,14 @@ export class ChatAPI extends BaseAPI {
 
   delete(data: DeleteChatRequestType): Promise<XMLHttpRequest> {
     return this.http.delete("/", { data });
+  }
+
+  token(data: GetGhatsTokenRequestType) {
+    return this.http.post(`/token/${data.id}`);
+  }
+
+  users(data: AddUsersInChatRequestType) {
+    return this.http.put("/users", { data });
   }
 
   update = undefined;

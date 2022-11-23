@@ -99,8 +99,8 @@ export class ChatList extends Block<Props> {
     }, style.modal);
   }
 
-  handleClickChat(event: Event) {
-    chatController.setSelectedChat(event);
+  async handleClickChat(event: Event) {
+    await chatController.setSelectedChat(event);
   }
 
   render() {

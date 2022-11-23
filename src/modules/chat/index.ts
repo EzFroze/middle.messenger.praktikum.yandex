@@ -3,8 +3,10 @@ import * as style from "./styles.module.pcss";
 import { clip, dots, sendArrow } from "../../../static/images";
 import Block from "../../app/block";
 import { Input } from "../../components";
-import { TForm, validate } from "../../utils/validate";
 import { ChildType } from "../../app/block/typings";
+import { StoreState } from "../../app/store/typings";
+import { connect } from "../../app/store/helpers";
+import { authController, chatController } from "../../contollers";
 
 type Props = {
   style?: typeof style,
@@ -12,7 +14,8 @@ type Props = {
   clip?: string,
   sendArrow?: string,
   chatData?: unknown,
-  messageInput: ChildType<Input>
+  messageInput?: ChildType<Input>,
+  state?: StoreState["messenger"]
 };
 
 const defaultValues: Pick<Props, "dots" | "clip" | "sendArrow" | "style"> = {
@@ -23,52 +26,36 @@ const defaultValues: Pick<Props, "dots" | "clip" | "sendArrow" | "style"> = {
 };
 
 export class Chat extends Block<Props> {
-  private form: TForm = {
-    message: {
-      validate: {
-        minLength: {
-          length: 1
-        }
-      },
-      value: ""
-    }
-  };
-
   constructor(props: Props) {
     super({ ...defaultValues, ...props });
   }
 
-  init() {
-    this.children.messageInput.setProps(
-      {
-        style: {
-          formControl: style.input,
-          error: style.error
-        },
-        events: {
-          change: (event: Event) => this.handleChangeMessage(event, this.children.messageInput)
-        }
-      }
-    );
+  async init() {
+    await authController.getUser();
   }
 
-  handleChangeMessage(event: Event, input: Block) {
-    const { value } = event.target as HTMLInputElement;
-
-    const form = this.form.message;
-
-    const { error } = validate(value, form.validate);
-
-    form.value = value;
-    form.error = error;
-
-    input.setProps({
-      value,
-      error
-    });
+  componentDidUpdate() {
+    chatController.chatConnect();
   }
 
   render() {
     return this.compile(template, this.props);
   }
 }
+
+export const chat: ChildType<Chat> = connect({
+  block: Chat,
+  props: {
+    messageInput: {
+      block: Input,
+      props: {
+        placeholder: "Сообщение",
+        type: "text",
+        id: "message",
+        className: style.input
+      },
+      $$type: "child"
+    }
+  },
+  $$type: "child"
+}, (state) => state.messenger);

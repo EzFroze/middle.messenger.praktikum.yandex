@@ -60,7 +60,8 @@ class Store extends EventBus {
     },
     messenger: {
       chatsList: [],
-      selectedChatId: null
+      selectedChatId: null,
+      chatToken: undefined
     }
   };
 

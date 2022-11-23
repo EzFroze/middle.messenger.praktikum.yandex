@@ -66,6 +66,7 @@ class SettingsPage extends Block<Props> {
 
   setAvatar() {
     const avatarPath = this.props.state?.avatar as string;
+    if (!avatarPath) return;
     this.children.avatar.props.src = resourcesController.getFile(avatarPath);
   }
 
