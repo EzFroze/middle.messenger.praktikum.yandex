@@ -1,11 +1,11 @@
 import template from "./index.hbs";
 import { MessengerLayout } from "../../layout";
 import { Chat, ChatList } from "../../modules";
-import { chatList as chatListMock } from "./mock";
 import Block from "../../app/block";
 import { Input } from "../../components";
 import * as style from "./styles.module.pcss";
 import { ChildType } from "../../app/block/typings";
+import { chatList } from "../../modules/chat-list";
 
 type Props = {
   chatList: ChildType<ChatList>,
@@ -24,11 +24,7 @@ class MessengerPage extends Block<Props> {
 }
 
 const pageProps: Props = {
-  chatList: {
-    block: ChatList,
-    props: { chats: chatListMock },
-    $$type: "child"
-  },
+  chatList,
   chat: {
     block: Chat,
     props: {

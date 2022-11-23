@@ -16,4 +16,6 @@ export function createModal(content: ChildsRecord, contentClass?: string) {
       root.append(fragment);
     }
   }
+
+  return modal.dispatchComponentDidUnmount.bind(modal);
 }

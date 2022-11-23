@@ -26,7 +26,7 @@ export class Input extends Block<Props> {
     super({ ...defaultValues, ...props });
   }
 
-  componentDidMount(): any {
+  componentDidMount() {
     if (this.props.autofocus) {
       const input = this.element?.querySelector("input");
       if (input) {

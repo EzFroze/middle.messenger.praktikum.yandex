@@ -59,7 +59,9 @@ class Store extends EventBus {
       login: "",
       avatar: ""
     },
-    messenger: {}
+    messenger: {
+      chatsList: []
+    }
   };
 
   constructor() {
@@ -77,3 +79,7 @@ class Store extends EventBus {
 }
 
 export const store = new Store();
+
+// TODO удалить после добавлеия
+// @ts-ignore
+window.store = () => store.getState();

@@ -1,3 +1,5 @@
+import { GetChatsResponseType } from "../../api/chat-api/typings";
+
 export type Indexed<T = unknown> = Record<string, T>;
 
 export type StoreState = {
@@ -12,7 +14,9 @@ export type StoreState = {
     email: string,
     phone: string
   },
-  messenger: Indexed
+  messenger: {
+    chatsList: GetChatsResponseType
+  }
 };
 
 export enum StoreEvents {

@@ -5,18 +5,23 @@
       <input type="text" placeholder="Поиск" required>
     </label>
   </div>
+  <div class="{{style.btnWrapper}}">
+    {{{createChatButton}}}
+  </div>
   <ul class={{style.list}}>
     <hr/>
-    {{#each chats}}
+    {{#each state.chatsList}}
       <li class={{../style.item}}>
         <div class={{../style.avatar}}></div>
         <div class={{../style.message}}>
-          <h3 class={{../style.name}}>{{name}}</h3>
-          <span class={{../style.messageText}}>{{text}}</span>
+          <h3 class={{../style.name}}>{{this.title}}</h3>
+          <span class={{../style.messageText}}>{{this.last_message}}</span>
         </div>
         <div class={{../style.info}}>
           <time class={{../style.time}}>{{time}}</time>
-          <span class={{../style.messageCount}}>{{unread}}</span>
+          {{#if this.unread_count}}
+            <span class={{../style.messageCount}}>{{this.unread_count}}</span>
+          {{/if}}
         </div>
       </li>
       <hr/>
