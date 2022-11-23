@@ -3,7 +3,6 @@ import { GetChatsResponseType } from "../../api/chat-api/typings";
 export type Indexed<T = unknown> = Record<string, T>;
 
 export type StoreState = {
-  login: Indexed,
   settings: {
     id: number,
     first_name: string,
@@ -15,7 +14,8 @@ export type StoreState = {
     phone: string
   },
   messenger: {
-    chatsList: GetChatsResponseType
+    chatsList: GetChatsResponseType,
+    selectedChatId: number | null
   }
 };
 

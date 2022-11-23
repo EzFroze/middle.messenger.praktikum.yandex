@@ -12,6 +12,7 @@
     <hr/>
     {{#each state.chatsList}}
       <li class={{../style.item}}>
+        <div class="{{../style.messageContainer}}" data-chat-id="{{this.id}}"></div>
         <div class={{../style.avatar}}></div>
         <div class={{../style.message}}>
           <h3 class={{../style.name}}>{{this.title}}</h3>

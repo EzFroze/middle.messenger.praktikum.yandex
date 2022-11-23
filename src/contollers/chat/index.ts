@@ -54,6 +54,14 @@ export class ChatController {
       });
     }
   }
+
+  setSelectedChat(event: Event) {
+    const target = event.target as HTMLElement;
+    const id = target.getAttribute("data-chat-id");
+    if (id) {
+      store.set("messenger.selectedChatId", id);
+    }
+  }
 }
 
 export default new ChatController();

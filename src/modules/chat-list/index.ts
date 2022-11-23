@@ -47,12 +47,18 @@ export class ChatList extends Block<Props> {
 
     this.children.createChatButton.setProps({
       events: {
-        click: this.handleClickButton.bind(this)
+        click: this.handleClickCreateChatButton.bind(this)
+      }
+    });
+
+    this.setProps({
+      events: {
+        click: this.handleClickChat.bind(this)
       }
     });
   }
 
-  handleClickButton() {
+  handleClickCreateChatButton() {
     let inputValue = "";
 
     const closeModal = createModal({
@@ -91,6 +97,10 @@ export class ChatList extends Block<Props> {
         $$type: "child"
       }
     }, style.modal);
+  }
+
+  handleClickChat(event: Event) {
+    chatController.setSelectedChat(event);
   }
 
   render() {

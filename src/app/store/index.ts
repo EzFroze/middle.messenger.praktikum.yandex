@@ -48,7 +48,6 @@ function set(
 
 class Store extends EventBus {
   private state: StoreState = {
-    login: {},
     settings: {
       id: 0,
       first_name: "",
@@ -60,7 +59,8 @@ class Store extends EventBus {
       avatar: ""
     },
     messenger: {
-      chatsList: []
+      chatsList: [],
+      selectedChatId: null
     }
   };
 
@@ -80,6 +80,6 @@ class Store extends EventBus {
 
 export const store = new Store();
 
-// TODO удалить после добавлеия
+// TODO удалить после завершения работ
 // @ts-ignore
 window.store = () => store.getState();
