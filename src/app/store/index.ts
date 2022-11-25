@@ -1,50 +1,8 @@
 import { EventBus } from "../event-bus";
-import { Indexed, StoreEvents, StoreState } from "./typings";
-
-function merge(lhs: Indexed, rhs: Indexed): Indexed {
-  const keys = Object.keys(rhs);
-  for (let i = 0; i < keys.length; i += 1) {
-    const key = keys[i];
-    try {
-      if (typeof rhs[key] === "object") {
-        // eslint-disable-next-line no-param-reassign
-        lhs[key] = merge(lhs[key] as Indexed, rhs[key] as Indexed);
-      } else {
-        // eslint-disable-next-line no-param-reassign
-        lhs[key] = rhs[key];
-      }
-    } catch (e) {
-      // eslint-disable-next-line no-param-reassign
-      lhs[key] = rhs[key];
-    }
-  }
-  return lhs;
-}
-
-function set(
-  state: StoreState,
-  path: string,
-  value: unknown
-): void {
-  if (typeof state !== "object") {
-    return;
-  }
-
-  const splitedPath = path.split(".");
-  const lastPath = splitedPath[splitedPath.length - 1];
-  const result = splitedPath.reduceRight<Indexed>((acc, key) => {
-    if (!acc[key] && key === lastPath) {
-      acc[key] = value;
-    } else if (!acc[key]) {
-      // eslint-disable-next-line no-param-reassign
-      acc = { [key]: acc };
-    }
-
-    return acc;
-  }, {});
-
-  merge(state, result);
-}
+import { set } from "./helpers";
+import { StoreEvents, StoreState } from "./typings";
+import { deepClone } from "../../utils/deep-clone";
+import { isEqual } from "../../utils/is-equal";
 
 class Store extends EventBus {
   private state: StoreState = {
@@ -61,7 +19,8 @@ class Store extends EventBus {
     messenger: {
       chatsList: [],
       selectedChatId: null,
-      chatToken: undefined
+      chat: undefined,
+      chatToken: undefined,
     }
   };
 
@@ -74,8 +33,12 @@ class Store extends EventBus {
   }
 
   public set(path: string, value: unknown) {
+    const prevState = deepClone(this.state);
     set(this.state, path, value);
-    this.emit(StoreEvents.Updated);
+
+    if (!isEqual(prevState, this.state)) {
+      this.emit(StoreEvents.Updated);
+    }
   }
 }
 

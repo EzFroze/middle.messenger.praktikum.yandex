@@ -1,5 +1,7 @@
 import { v4 as makeUUID } from "uuid";
 import { EventBus } from "../event-bus";
+import { isEqual } from "../../utils/is-equal";
+import { deepClone } from "../../utils/deep-clone";
 
 export type TProps = {
   events?: Record<string, (event: any) => void>;
@@ -172,8 +174,10 @@ class Block<P extends Record<string | number | symbol, any> = any> {
 
   private _makePropsProxy(props: P & TProps) {
     const update = (oldProps: {}, newProps: {}) => {
-      this._eventBus()
-        .emit(Block.EVENTS.FLOW_CDU, oldProps, newProps);
+      if (!isEqual(oldProps, newProps)) {
+        this._eventBus()
+          .emit(Block.EVENTS.FLOW_CDU, oldProps, newProps);
+      }
     };
 
     return new Proxy(props, {
@@ -183,10 +187,11 @@ class Block<P extends Record<string | number | symbol, any> = any> {
         return typeof value === "function" ? value.bind(target) : value;
       },
       set(target, key, value) {
-        const oldProps = { ...target };
+        const oldProps = deepClone(target);
         // @ts-ignore
         // eslint-disable-next-line no-param-reassign
         target[key] = value;
+
         update(oldProps, target);
         return true;
       },
@@ -207,7 +212,7 @@ class Block<P extends Record<string | number | symbol, any> = any> {
 
     Object.keys(events)
       .forEach((eventName) => {
-        this._element!.addEventListener(eventName, events[eventName]);
+        this._element?.addEventListener(eventName, events[eventName]);
       });
   }
 
@@ -217,7 +222,7 @@ class Block<P extends Record<string | number | symbol, any> = any> {
 
     Object.keys(events)
       .forEach((eventName) => {
-        this._element!.removeEventListener(eventName, events[eventName]);
+        this._element?.removeEventListener(eventName, events[eventName]);
       });
   }
 

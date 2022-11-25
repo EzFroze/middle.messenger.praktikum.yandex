@@ -10,6 +10,10 @@ import { store } from "../../app/store";
 export class ChatController {
   socket?: WebSocket;
 
+  token?: string;
+
+  interval?: NodeJS.Timer;
+
   async getChats() {
     try {
       const result = await chatAPI.request();
@@ -68,7 +72,7 @@ export class ChatController {
       const state = store.getState();
       if (state.messenger.selectedChatId === id) return;
 
-      store.set("messenger.selectedChatId", id);
+      store.set("messenger", { selectedChatId: id });
 
       await this.setChatToken();
     }
@@ -86,7 +90,7 @@ export class ChatController {
         } = result;
 
         if (status === 200) {
-          store.set("messenger.chatToken", token);
+          store.set("messenger", { chatToken: token });
         }
       }
     } catch (e) {
@@ -102,47 +106,87 @@ export class ChatController {
     const userId = state.settings.id;
     const chatId = state.messenger.selectedChatId;
     const token = state.messenger.chatToken;
+    this.token = token;
 
     if (!userId || !chatId || !token) return;
 
     this.socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`);
+  }
 
-    // this.socket?.send(JSON.stringify({
-    //   content: "0",
-    //   type: "get old",
-    // }));
+  handleOpenSocket() {
+    store.set("messenger", { chat: undefined });
 
-    setInterval(() => {
-      this.socket?.send(JSON.stringify({
-        type: "ping"
-      }));
+    this.socket?.send(JSON.stringify({
+      content: "0",
+      type: "get old",
+    }));
+
+    this.pingPongSocket();
+  }
+
+  handleCloseSocket(event: WebSocketEventMap["close"]) {
+    if (event.wasClean) {
+      console.log("Соединение закрыто чисто");
+    } else {
+      console.log("Обрыв соединения");
+    }
+  }
+
+  pingPongSocket() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+
+    const ping = {
+      type: "ping"
+    };
+
+    this.interval = setInterval(() => {
+      this.socket?.send(JSON.stringify(ping));
     }, 10_000);
   }
 
+  handleMessageSocket(event: MessageEvent) {
+    const data = JSON.parse(event.data);
+    if (data.type === "pong") return;
+
+    const state = store.getState();
+
+    if (data.type === "message" && state.messenger.chat) {
+      this.handleOpenSocket();
+    }
+
+    if (Array.isArray(data)) {
+      store.set("messenger", { chat: [...data] });
+    }
+  }
+
   chatConnect() {
+    const state = store.getState();
+    if (this.token === state.messenger.chatToken) {
+      return;
+    }
+
     this.createSocket();
 
-    this.socket?.addEventListener("open", () => {
-      console.log("Соединение установлено");
-    });
+    this.socket?.addEventListener("open", this.handleOpenSocket.bind(this));
 
-    this.socket?.addEventListener("close", (event) => {
-      if (event.wasClean) {
-        console.log("Соединение закрыто чисто");
-      } else {
-        console.log("Обрыв соединения");
-      }
+    this.socket?.addEventListener("close", this.handleCloseSocket.bind(this));
 
-      console.log(`Код: ${event.code} | Причина: ${event.reason}`);
-    });
-
-    this.socket?.addEventListener("message", (event) => {
-      console.log("Получены данные", event.data);
-    });
+    this.socket?.addEventListener("message", this.handleMessageSocket.bind(this));
 
     this.socket?.addEventListener("error", (event: ErrorEvent) => {
-      console.log("Ошибка", event.message);
+      console.error("Ошибка", event.message);
     });
+  }
+
+  sendMessage(message: string) {
+    this.socket?.send(JSON.stringify({
+      content: message,
+      type: "message"
+    }));
+
+    this.pingPongSocket();
   }
 
   async addUsersToChat(data: AddUsersInChatRequestType) {

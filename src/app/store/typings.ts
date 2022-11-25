@@ -16,7 +16,8 @@ export type StoreState = {
   messenger: {
     chatsList: GetChatsResponseType,
     selectedChatId: number | null,
-    chatToken?: string
+    chatToken?: string,
+    chat?: unknown[]
   }
 };
 

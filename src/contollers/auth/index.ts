@@ -47,6 +47,11 @@ class AuthController {
   }
 
   async getUser() {
+    const state = store.getState();
+    if (state.settings.id && state.settings.id !== 0) {
+      return;
+    }
+
     try {
       const data = await authAPI.user();
       const {
@@ -68,7 +73,7 @@ class AuthController {
         return;
       }
 
-      store.set("settings", user);
+      store.set("settings", { ...user });
     } catch (e) {
       createNotification({
         type: "danger",

@@ -19,7 +19,8 @@
           <span class={{../style.messageText}}>{{this.last_message.content}}</span>
         </div>
         <div class={{../style.info}}>
-          <time class={{../style.time}}>{{#convertTime}}{{this.last_message.time}}{{/convertTime}}</time>
+          <time class={{../style.time}}>{{#convertTime
+            'last_message.time'}}{{this.last_message.time}}{{/convertTime}}</time>
           {{#if this.unread_count}}
             <span class={{../style.messageCount}}>{{this.unread_count}}</span>
           {{/if}}

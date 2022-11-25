@@ -112,4 +112,7 @@ export const chatList: ChildType<ChatList> = connect({
   block: ChatList,
   props: {},
   $$type: "child"
-}, (state) => state.messenger);
+}, (state) => ({
+  chatsList: { ...state.messenger.chatsList },
+  selectedChatId: state.messenger.selectedChatId
+}));
