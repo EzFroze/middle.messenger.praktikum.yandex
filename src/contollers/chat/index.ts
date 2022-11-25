@@ -1,9 +1,9 @@
 import { createNotification } from "../../utils/create-notification";
 import { chatAPI } from "../../api";
 import {
-  AddUsersInChatRequestType,
   CreateChatRequestType,
-  DeleteChatRequestType
+  DeleteChatRequestType,
+  EditUsersInChatRequestType
 } from "../../api/chat-api/typings";
 import { store } from "../../app/store";
 
@@ -54,9 +54,7 @@ export class ChatController {
 
   async deleteChat(data: DeleteChatRequestType) {
     try {
-      const result = await chatAPI.delete(data);
-
-      console.log(result);
+      await chatAPI.delete(data);
     } catch (e) {
       createNotification({
         text: e.message,
@@ -153,7 +151,7 @@ export class ChatController {
     const state = store.getState();
 
     if (data.type === "message" && state.messenger.chat) {
-      this.handleOpenSocket();
+      store.set("messenger", { chat: [data, ...state.messenger.chat] });
     }
 
     if (Array.isArray(data)) {
@@ -189,15 +187,35 @@ export class ChatController {
     this.pingPongSocket();
   }
 
-  async addUsersToChat(data: AddUsersInChatRequestType) {
+  async addUsersToChat(data: EditUsersInChatRequestType) {
     try {
-      const result = await chatAPI.users(data);
+      const result = await chatAPI.usersPut(data);
 
       const { status } = result;
 
       if (status === 200) {
         createNotification({
           text: "Пользователи добавлены",
+          type: "success"
+        });
+      }
+    } catch (e) {
+      createNotification({
+        text: e.message,
+        type: "danger"
+      });
+    }
+  }
+
+  async removeUsersToChat(data: EditUsersInChatRequestType) {
+    try {
+      const result = await chatAPI.usersDelete(data);
+
+      const { status } = result;
+
+      if (status === 200) {
+        createNotification({
+          text: "Пользователи удалены",
           type: "success"
         });
       }

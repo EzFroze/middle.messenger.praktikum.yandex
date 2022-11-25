@@ -1,5 +1,5 @@
 <div class={{style.container}}>
-  {{#if state.chat}}
+  {{#if state.chat.length includeZero=true}}
     <div class={{style.recipient}}>
       <div class={{style.recipientContainer}}>
         <div class={{style.userInfo}}>
@@ -14,8 +14,12 @@
             {{this.selectedChat.title}}
           </h3>
         </div>
-        <div class={{style.settings}}>
+        <div class="{{style.settings}} {{style.tooltip}}">
           <img src={{dots}} alt=""/>
+          <div class="{{style.tooltipText}}">
+            {{{addUserButton}}}
+            {{{removeUserButton}}}
+          </div>
         </div>
       </div>
       <hr/>

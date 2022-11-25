@@ -31,7 +31,7 @@ export type GetGhatsTokenRequestType = {
   id: number
 };
 
-export type AddUsersInChatRequestType = {
+export type EditUsersInChatRequestType = {
   users: number[],
   chatId: number
 };

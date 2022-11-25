@@ -1,8 +1,8 @@
 import { BaseAPI } from "../../app/http";
 import {
-  AddUsersInChatRequestType,
   CreateChatRequestType,
   DeleteChatRequestType,
+  EditUsersInChatRequestType,
   GetGhatsTokenRequestType
 } from "./typings";
 
@@ -27,8 +27,12 @@ export class ChatAPI extends BaseAPI {
     return this.http.post(`/token/${data.id}`);
   }
 
-  users(data: AddUsersInChatRequestType) {
+  usersPut(data: EditUsersInChatRequestType) {
     return this.http.put("/users", { data });
+  }
+
+  usersDelete(data: EditUsersInChatRequestType) {
+    return this.http.delete("/users", { data });
   }
 
   update = undefined;

@@ -2,6 +2,7 @@ import { ChildType } from "../block/typings";
 import Block from "../block";
 import { Indexed, StoreEvents, StoreState } from "./typings";
 import { store } from "./index";
+import { deepClone } from "../../utils/deep-clone";
 
 export function connect<B extends Block = Block>(
   block: ChildType<B>,
@@ -36,8 +37,13 @@ function merge(lhs: Indexed, rhs: Indexed): Indexed {
     const key = keys[i];
     try {
       if (typeof rhs[key] === "object") {
-        // eslint-disable-next-line no-param-reassign
-        lhs[key] = merge(lhs[key] as Indexed, rhs[key] as Indexed);
+        if (Array.isArray(rhs[key])) {
+          // eslint-disable-next-line no-param-reassign
+          lhs[key] = deepClone(rhs[key]);
+        } else {
+          // eslint-disable-next-line no-param-reassign
+          lhs[key] = merge(lhs[key] as Indexed, rhs[key] as Indexed);
+        }
       } else {
         // eslint-disable-next-line no-param-reassign
         lhs[key] = rhs[key];
