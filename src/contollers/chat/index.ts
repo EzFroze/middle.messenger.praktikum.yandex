@@ -145,8 +145,15 @@ export class ChatController {
   }
 
   handleMessageSocket(event: MessageEvent) {
-    const data = JSON.parse(event.data);
-    if (data.type === "pong") return;
+    let data;
+
+    try {
+      data = JSON.parse(event.data);
+    } catch (e) {
+      console.error(e);
+    }
+
+    if (!data || data.type === "pong") return;
 
     const state = store.getState();
 
