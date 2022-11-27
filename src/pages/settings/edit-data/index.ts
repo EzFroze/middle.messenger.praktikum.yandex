@@ -114,9 +114,7 @@ class SettingsEditDataPage extends Block<Props> {
   }
 
   async init() {
-    if (!this.props.state?.id) {
-      await authController.getUser();
-    }
+    await authController.getUser();
 
     this.setValues();
     this.setInputsEvent();
@@ -132,8 +130,7 @@ class SettingsEditDataPage extends Block<Props> {
       .forEach(([key, value]) => {
         if (this.children[key]) {
           this.children[key].setProps({ value });
-          // @ts-ignore
-          this.form[key].value = value;
+          this.form[key].value = value as string;
         }
       });
   }
