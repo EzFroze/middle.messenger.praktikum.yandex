@@ -50,7 +50,8 @@ class AuthPage extends Block<Props> {
     super(props);
   }
 
-  init() {
+  async init() {
+    await authController.getUser();
     const inputs = this.getInputs();
 
     inputs.forEach((input) => {

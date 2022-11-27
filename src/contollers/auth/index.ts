@@ -73,6 +73,16 @@ class AuthController {
         return;
       }
 
+      if (
+        status === 200
+        && (
+          router.pathname === Routes.AUTH_PAGE
+          || router.pathname === Routes.REGISTER_PAGE
+        )
+      ) {
+        router.go(Routes.SETTINGS_PAGE);
+      }
+
       store.set("settings", { ...user });
     } catch (e) {
       createNotification({
