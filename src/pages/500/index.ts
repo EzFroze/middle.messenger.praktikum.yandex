@@ -1,9 +1,13 @@
-import style from "./styles.module.pcss";
+import Block, { TProps } from "../../app/block";
+import { Link } from "../../components";
 import template from "./index.hbs";
-import Block, { TProps } from "../../utils/block";
+import * as style from "./styles.module.pcss";
+import { ChildType } from "../../app/block/typings";
+import { Routes } from "../../app/routes/typings";
 
 type Props = {
-  style: typeof style
+  style: typeof style;
+  messengerLink: ChildType<Link>;
 } & TProps;
 
 class Page500 extends Block<Props> {
@@ -16,4 +20,21 @@ class Page500 extends Block<Props> {
   }
 }
 
-export const page500 = new Page500({ style });
+const page500Props: Props = {
+  style,
+  messengerLink: {
+    block: Link,
+    props: {
+      to: Routes.MESSENGER_PAGE,
+      text: "Назад к чатам",
+      className: style.link,
+    },
+    $$type: "child"
+  },
+};
+
+export const page500: ChildType<Page500> = {
+  block: Page500,
+  props: page500Props,
+  $$type: "child"
+};

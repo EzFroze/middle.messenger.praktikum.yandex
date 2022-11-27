@@ -1,15 +1,18 @@
 import template from "./index.hbs";
-import style from "./styles.module.pcss";
+import * as style from "./styles.module.pcss";
 
-import emptySrc from "../../../static/images/empty-image.png";
-import Block from "../../utils/block";
+import emptySrc from "../../../static/images/empty-avatar.png";
+import Block from "../../app/block";
 
 type Props = {
   style?: typeof style,
   src?: string
 };
 
-const defaultValues: Pick<Props, "style" | "src"> = { style, src: emptySrc };
+const defaultValues: Pick<Props, "style" | "src"> = {
+  style,
+  src: emptySrc
+};
 
 export class Avatar extends Block<Props> {
   constructor(props: Props) {

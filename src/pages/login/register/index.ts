@@ -1,22 +1,26 @@
-import style from "./styles.module.pcss";
-import template from "./index.hbs";
-import { LoginLayout } from "../../../layout/exports";
-import { Input } from "../../../components/exports";
-import Block, { TProps } from "../../../utils/block";
-import { Button } from "../../../components/button";
-import { TForm, validate } from "../../../utils/validate";
+import Block, { TProps } from "../../../app/block";
+import { Button, Input, Link } from "../../../components";
 import { patterns } from "../../../const/regexp";
+import { LoginLayout } from "../../../layout";
+import { TForm, validate } from "../../../utils/validate";
+import template from "./index.hbs";
+import * as style from "./styles.module.pcss";
+import { ChildType } from "../../../app/block/typings";
+import { RegisterPostRequest } from "../../../api/login-api/typings";
+import { authController } from "../../../contollers";
+import { Routes } from "../../../app/routes/typings";
 
 type Props = {
-  style: typeof style,
-  mailInput: Input,
-  loginInput: Input,
-  nameInput: Input,
-  phoneInput: Input,
-  surnameInput: Input,
-  passwordInput: Input,
-  passwordRetryInput: Input,
-  registerBtn: Button
+  style: typeof style;
+  mailInput: ChildType<Input>;
+  loginInput: ChildType<Input>;
+  nameInput: ChildType<Input>;
+  phoneInput: ChildType<Input>;
+  surnameInput: ChildType<Input>;
+  passwordInput: ChildType<Input>;
+  passwordRetryInput: ChildType<Input>;
+  registerBtn: ChildType<Button>;
+  authBtn: ChildType<Link>;
 } & TProps;
 
 export class RegisterPage extends Block<Props> {
@@ -26,72 +30,92 @@ export class RegisterPage extends Block<Props> {
       validate: {
         regexp: {
           pattern: patterns.EMAIL,
-          errorMessage: "Проверьте правильность введенной почты"
+          errorMessage: "Проверьте правильность введенной почты",
         },
-        minLength: 4
-      }
+        minLength: {
+          length: 4
+        },
+      },
     },
     login: {
       value: "",
       validate: {
-        minLength: 3,
-        maxLength: 20,
+        minLength: {
+          length: 3
+        },
+        maxLength: {
+          length: 20
+        },
         regexp: {
           pattern: patterns.LOGIN,
-          errorMessage: "Логин"
-        }
-      }
+          errorMessage: "Логин",
+        },
+      },
     },
     first_name: {
       value: "",
       validate: {
         regexp: {
           pattern: patterns.NAME,
-          errorMessage: "Имя может на латинице или кирилице. Первая буква заглавная"
-        }
-      }
+          errorMessage:
+            "Имя может на латинице или кирилице. Первая буква заглавная",
+        },
+      },
     },
     second_name: {
       value: "",
       validate: {
         regexp: {
           pattern: patterns.NAME,
-          errorMessage: "Фамилия может на латинице или кирилице. Первая буква заглавная"
-        }
-      }
+          errorMessage:
+            "Фамилия может на латинице или кирилице. Первая буква заглавная",
+        },
+      },
     },
     phone: {
       value: "",
       validate: {
         regexp: {
           pattern: patterns.PHONE,
-          errorMessage: "Введите корректный номер телефона"
+          errorMessage: "Введите корректный номер телефона",
         },
-        minLength: 10,
-        maxLength: 15,
-      }
+        minLength: {
+          length: 10
+        },
+        maxLength: {
+          length: 15
+        },
+      },
     },
     password: {
       value: "",
       validate: {
-        minLength: 8,
-        maxLength: 40,
+        minLength: {
+          length: 8
+        },
+        maxLength: {
+          length: 40
+        },
         regexp: {
           pattern: patterns.PASSWORD,
-          errorMessage: "Минимум 8 букв и одна заглавная"
-        }
-      }
+          errorMessage: "Минимум 8 букв и одна заглавная",
+        },
+      },
     },
     password_retry: {
       value: "",
       validate: {
-        minLength: 8,
-        maxLength: 40,
+        minLength: {
+          length: 8
+        },
+        maxLength: {
+          length: 40
+        },
         regexp: {
           pattern: patterns.PASSWORD,
-          errorMessage: "Минимум 8 букв и одна заглавная"
-        }
-      }
+          errorMessage: "Минимум 8 букв и одна заглавная",
+        },
+      },
     },
   };
 
@@ -102,13 +126,17 @@ export class RegisterPage extends Block<Props> {
   init() {
     const inputs = this.getInputs();
     inputs.forEach((input) => {
-      input.setProps({ events: {
-        focusout: (event: Event) => { this.handleChangeBlur(event, input); },
-      } });
+      input.setProps({
+        events: {
+          focusout: (event: Event) => {
+            this.handleChangeBlur(event, input);
+          },
+        },
+      });
     });
 
     this.children.registerBtn.setProps({
-      events: { click: (event: Event) => this.handleClick(event) }
+      events: { click: this.handleClick.bind(this) },
     });
   }
 
@@ -122,31 +150,54 @@ export class RegisterPage extends Block<Props> {
     form.value = value;
     form.error = error;
 
-    input.setProps({ value, error });
+    input.setProps({
+      value,
+      error
+    });
   }
 
-  handleClick(event: Event) {
+  handleClick() {
+    let hasError = false;
     const inputs = this.getInputs();
 
-    inputs.forEach((input) => {
+    for (let i = 0; i < inputs.length; i += 1) {
+      const input = inputs[i];
+
       const form = this.form[input.props.id];
       const { error } = validate(form.value, form.validate);
 
       if (error) {
-        event.preventDefault();
+        form.error = error;
+        hasError = true;
       }
 
-      input.setProps({ value: form.value, error });
-    });
+      input.setProps({
+        value: form.value,
+        error: form.error
+      });
+    }
+
+    if (hasError) {
+      return;
+    }
+
+    const data = Object.entries(this.form)
+      .reduce<Record<string, string>>((acc, [key, value]) => {
+      acc[key] = value.value;
+      return acc;
+    }, {}) as RegisterPostRequest;
+
+    authController.signup(data);
   }
 
   getInputs() {
-    return Object.values(this.children).reduce((acc, children) => {
-      if (children instanceof Input) {
-        acc.push(children);
-      }
-      return acc;
-    }, [] as Input[]);
+    return Object.values(this.children)
+      .reduce((acc, children) => {
+        if (children instanceof Input) {
+          acc.push(children);
+        }
+        return acc;
+      }, [] as Input[]);
   }
 
   render() {
@@ -154,16 +205,106 @@ export class RegisterPage extends Block<Props> {
   }
 }
 
-const registerInstance = new RegisterPage({
+const registerProps: Props = {
   style,
-  mailInput: new Input({ label: "Почта", type: "text", id: "email", autofocus: true, required: true }),
-  loginInput: new Input({ label: "Логин", type: "text", id: "login", required: true }),
-  nameInput: new Input({ label: "Имя", type: "text", id: "first_name", required: true }),
-  surnameInput: new Input({ label: "Фамилия", type: "text", id: "second_name", required: true }),
-  phoneInput: new Input({ label: "Телефон", type: "text", id: "phone", required: true }),
-  passwordInput: new Input({ label: "Пароль", type: "password", id: "password", required: true }),
-  passwordRetryInput: new Input({ label: "Пароль (ещё раз)", type: "password", id: "password_retry", required: true }),
-  registerBtn: new Button({ text: "Создать профиль", className: style.authBtn, type: "link", link: "/messenger" })
-});
+  mailInput: {
+    block: Input,
+    props: {
+      label: "Почта",
+      type: "text",
+      id: "email",
+      autofocus: true,
+      required: true,
+    },
+    $$type: "child"
+  },
+  loginInput: {
+    block: Input,
+    props: {
+      label: "Логин",
+      type: "text",
+      id: "login",
+      required: true,
+    },
+    $$type: "child"
+  },
+  nameInput: {
+    block: Input,
+    props: {
+      label: "Имя",
+      type: "text",
+      id: "first_name",
+      required: true,
+    },
+    $$type: "child"
+  },
+  surnameInput: {
+    block: Input,
+    props: {
+      label: "Фамилия",
+      type: "text",
+      id: "second_name",
+      required: true,
+    },
+    $$type: "child"
+  },
+  phoneInput: {
+    block: Input,
+    props: {
+      label: "Телефон",
+      type: "text",
+      id: "phone",
+      required: true,
+    },
+    $$type: "child"
+  },
+  passwordInput: {
+    block: Input,
+    props: {
+      label: "Пароль",
+      type: "password",
+      id: "password",
+      required: true,
+    },
+    $$type: "child"
+  },
+  passwordRetryInput: {
+    block: Input,
+    props: {
+      label: "Пароль (ещё раз)",
+      type: "password",
+      id: "password_retry",
+      required: true,
+    },
+    $$type: "child"
+  },
+  registerBtn: {
+    block: Button,
+    props: {
+      text: "Создать профиль",
+      className: style.register,
+    },
+    $$type: "child"
+  },
+  authBtn: {
+    block: Link,
+    props: {
+      to: Routes.AUTH_PAGE,
+      text: "Войти",
+      className: style.authBtn,
+    },
+    $$type: "child"
+  },
+};
 
-export const registerPage = new LoginLayout({ content: registerInstance });
+export const registerPage: ChildType<LoginLayout> = {
+  block: LoginLayout,
+  props: {
+    content: {
+      block: RegisterPage,
+      props: registerProps,
+      $$type: "child"
+    },
+  },
+  $$type: "child"
+};

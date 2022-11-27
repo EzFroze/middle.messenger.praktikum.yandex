@@ -1,13 +1,16 @@
 import template from "./index.hbs";
-
-import { MessengerLayout } from "../../layout/exports";
-import { Chat, ChatList } from "../../modules/exports";
-import { chatList as chatListMock } from "./mock";
-import Block from "../../utils/block";
-import { Input } from "../../components/input";
+import { MessengerLayout } from "../../layout";
+import { Chat, ChatList } from "../../modules";
+import Block from "../../app/block";
+import * as style from "./styles.module.pcss";
+import { ChildType } from "../../app/block/typings";
+import { chatList } from "../../modules/chat-list";
+import { chat } from "../../modules/chat";
 
 type Props = {
-  content: Block
+  chatList: ChildType<ChatList>,
+  chat: ChildType<Chat>,
+  style?: typeof style
 };
 
 class MessengerPage extends Block<Props> {
@@ -20,9 +23,20 @@ class MessengerPage extends Block<Props> {
   }
 }
 
-const chatListResult = new ChatList({ chats: chatListMock });
-const chatResult = new Chat({ messageInput: new Input({ placeholder: "Сообщение", type: "text", id: "message", style: {} }) });
+const pageProps: Props = {
+  chatList,
+  chat,
+  style
+};
 
-const layout = new MessengerLayout({ chatList: chatListResult, chat: chatResult });
-
-export const messengerPage = new MessengerPage({ content: layout });
+export const messengerPage: ChildType<MessengerLayout> = {
+  block: MessengerLayout,
+  props: {
+    content: {
+      block: MessengerPage,
+      props: pageProps,
+      $$type: "child"
+    }
+  },
+  $$type: "child"
+};

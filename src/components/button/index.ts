@@ -1,11 +1,9 @@
-import Block, { TProps } from "../../utils/block";
+import Block, { TProps } from "../../app/block";
 import template from "./index.hbs";
 
 type Props = {
   text: string,
-  className: string,
-  type: "button" | "link",
-  link?: string
+  className?: string,
 } & TProps;
 
 export class Button extends Block<Props> {

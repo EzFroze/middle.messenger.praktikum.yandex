@@ -1,17 +1,17 @@
 <div class={{style.personalImage}}>
   <label>
-    <input type="file" />
-    <figure 
+    <input type="file" accept="image/png, image/jpeg"/>
+    <figure
       {{#if isEmpty}}
-        class="{{style.personalFigure}} {{style.noSrc}}"   
+      class="{{style.personalFigure}} {{style.noSrc}}"
       {{else}}
-        class={{style.personalFigure}}
+      class={{style.personalFigure}}
       {{/if}}
     >
-      <img 
-      src={{src}}
-        class={{style.personalAvatar}}   
-        alt="avatar" />
+      <img
+        src={{src}}
+        class={{style.personalAvatar}}
+        alt="avatar"/>
       <figcaption class={{style.personalFigcaption}}>
         <p>Поменять <br> аватар</p>
       </figcaption>

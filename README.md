@@ -4,14 +4,17 @@
 
 ### Проект запускается командой `npm run start`
 
+### Тесты запускаются командой `npm run test`
+
 ### Ссылка на проект - [Netify](https://nimble-bubblegum-c28335.netlify.app/)
 
 ### Стек технологий который используется в проекте
 
-- TypeScript
-- Node
-- Express
-- Handlebars
-- PostCSS
-- ESlint
-- Stylelint
+- TypeScript - JS + типизация
+- Node - Все крутится на нем
+- Express - Раздача статики
+- Handlebars - Шаблонизатор
+- PostCSS - Стили
+- ESlint - Стилизация проекта/кода
+- Stylelint - Стилизация стилей
+- Mocha - Тесты

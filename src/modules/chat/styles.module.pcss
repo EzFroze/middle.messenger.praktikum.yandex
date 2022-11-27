@@ -11,8 +11,7 @@
   flex-direction: column;
 
   hr {
-    margin: 0;
-    margin-top: 10px;
+    margin: 10px 0 0;
   }
 }
 
@@ -44,6 +43,11 @@
 .chat {
   padding: 30px 0;
   height: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+  width: 100%;
+  overflow-y: auto;
 
   .date {
     display: block;
@@ -55,7 +59,7 @@
   }
 
   .messageContainer {
-    max-width: 402px;
+    max-width: 50%;
     width: fit-content;
     position: relative;
     border-radius: 12px;
@@ -73,23 +77,24 @@
     line-height: 9px;
   }
 
+  .from,
+  .to {
+    display: flex;
+    align-items: flex-end;
+    gap: 28px;
+  }
+
   .from {
     background: #f8f8f8;
 
     .messageTime {
-      position: absolute;
-      bottom: 11px;
-      right: 11px;
       color: var(--secondary);
     }
   }
 
   .to {
     margin-left: auto;
-    display: flex;
-    align-items: flex-end;
     background: #e4edfd;
-    gap: 28px;
 
     .messageTime {
       color: var(--blue);
@@ -102,8 +107,7 @@
   flex-direction: column;
 
   hr {
-    margin: 0;
-    margin-bottom: 10px;
+    margin: 0 0 10px;
   }
 
   .inputs {
@@ -137,6 +141,66 @@
 
     .sendArrow {
       display: flex;
+      border: 0;
+      background: transparent;
     }
   }
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltipText {
+  visibility: hidden;
+  width: 150px;
+  background-color: #e5e5e5;
+  left: -120px;
+  color: var(--black);
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tooltip:hover .tooltipText {
+  visibility: visible;
+}
+
+.tooltipElement {
+  border: 0;
+  background: transparent;
+  color: var(--blue);
+  font-size: 13px;
+  line-height: 13px;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  background: var(--blue);
+  width: 50%;
+  color: var(--white);
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 0;
+  font-size: 13px;
+  line-height: 13px;
 }

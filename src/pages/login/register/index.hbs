@@ -1,6 +1,6 @@
-<div class={{style.container}}>
-  <h1 class={{style.title}}>Регистрация</h2>
-  <div class={{style.inputs}}>
+<main class={{style.container}}>
+  <h1 class={{style.title}}>Регистрация</h1>
+  <form class={{style.inputs}}>
     {{{mailInput}}}
     {{{loginInput}}}
     {{{nameInput}}}
@@ -8,7 +8,7 @@
     {{{phoneInput}}}
     {{{passwordInput}}}
     {{{passwordRetryInput}}}
-  </div>
+  </form>
   {{{registerBtn}}}
-  <a href="/auth" class={{style.register}}>Войти</a>
-</div>
+  {{{authBtn}}}
+</main>

@@ -1,27 +1,39 @@
+type TLength = {
+  length: number,
+  errorMessage?: string;
+};
+
+type TRegexp = {
+  pattern: RegExp;
+  errorMessage?: string;
+};
+
 type TOptions = {
-  regexp?: {
-    pattern: RegExp,
-    errorMessage?: string
-  },
-  maxLength?: number,
-  minLength?: number,
+  regexp?: TRegexp;
+  maxLength?: TLength;
+  minLength?: TLength;
 };
 
 type TResult = {
-  value: string,
-  error?: string
+  value: string;
+  error?: string;
 };
 
 export type TForm = {
   [key: string]: {
-    value: string,
-    error?: string
-    validate: TOptions
-  }
+    value: string;
+    error?: string;
+    validate: TOptions;
+  };
 };
 
 export function validate(value: string, validateOptions: TOptions): TResult {
-  const { regexp, maxLength, minLength } = validateOptions;
+  const {
+    regexp,
+    maxLength,
+    minLength
+  } = validateOptions;
+
   let error;
 
   if (regexp) {
@@ -32,13 +44,16 @@ export function validate(value: string, validateOptions: TOptions): TResult {
     }
   }
 
-  if (maxLength && value.length > maxLength) {
-    error = `Максимальное количество симоволов - ${maxLength}`;
+  if (minLength && (value.length < minLength.length)) {
+    error = minLength.errorMessage || `Минимальное количество симоволов - ${minLength.length}`;
   }
 
-  if (minLength && value.length < minLength) {
-    error = `Минимальное количество символов - ${minLength}`;
+  if (maxLength && (value.length > maxLength.length)) {
+    error = maxLength.errorMessage || `Максимальное количество симоволов - ${maxLength.length}`;
   }
 
-  return { value, error };
+  return {
+    value,
+    error
+  };
 }

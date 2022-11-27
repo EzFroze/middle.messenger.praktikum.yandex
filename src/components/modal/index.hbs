@@ -1,0 +1,9 @@
+<div class="{{style.modalWindow}}">
+  <div class="{{style.backdrop}}" id="backdrop"></div>
+  <div class="{{style.content}} {{contentClass}}">
+    <span title="Close" class="{{style.modalClose}}" id="close">&#x2715</span>
+    {{#each childs}}
+      {{{this}}}
+    {{/each}}
+  </div>
+</div>

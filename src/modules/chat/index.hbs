@@ -1,55 +1,57 @@
 <div class={{style.container}}>
-  <div class={{style.recipient}}>
-    <div class={{style.recipientContainer}}>
-      <div class={{style.userInfo}}>
-        <div class={{style.avatar}}></div>
-        <h3 class={{style.userName}}>
-          Вадим
-        </h3>
+  {{#if state.chat.length includeZero=true}}
+    <div class={{style.recipient}}>
+      <div class={{style.recipientContainer}}>
+        <div class={{style.userInfo}}>
+          {{#if this.selectedChat.avatar}}
+            <div class="{{style.avatar}}">
+              <img src="{{this.selectedChat.avatar}}" alt="avatar">
+            </div>
+          {{else}}
+            <div class={{style.avatar}}></div>
+          {{/if}}
+          <h3 class={{style.userName}}>
+            {{this.selectedChat.title}}
+          </h3>
+        </div>
+        <div class="{{style.settings}} {{style.tooltip}}">
+          <img src={{dots}} alt=""/>
+          <div class="{{style.tooltipText}}">
+            {{{addUserButton}}}
+            {{{removeUserButton}}}
+          </div>
+        </div>
       </div>
-      <div class={{style.settings}}>
-        <img src={{dots}} alt="" />
+      <hr/>
+    </div>
+    <div class={{style.chat}}>
+      {{#each state.chat}}
+        <div class="{{../style.messageContainer}}
+          {{#ifEquals this.user_id ../state.userId}}{{../style.to}}{{else}}{{../style.from}}{{/ifEquals}}">
+          <p class={{../style.messageText}}>
+            {{this.content}}
+          </p>
+          <time class={{../style.messageTime}}>{{#convertTime 'time'}}{{this.time}}{{/convertTime}}</time>
+        </div>
+      {{/each}}
+    </div>
+    <div class={{style.sendMessage}}>
+      <hr/>
+      <div class={{style.inputs}}>
+        <div class={{style.file}}>
+          <img src={{clip}} alt="clip"/>
+        </div>
+        <div class={{style.text}}>
+          {{{messageInput}}}
+        </div>
+        <div class={{style.sendArrow}}>
+          {{{sendArrow}}}
+        </div>
       </div>
     </div>
-    <hr />
-  </div>
-  <div class={{style.chat}}>
-    <span class={{style.date}}>
-      19 июля
-    </span>
-    <div class="{{style.messageContainer}} {{style.from}}">
-      <p class={{style.messageText}}>
-        Привет! Смотри, тут всплыл интересный кусок лунной космической истории —
-        НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для
-        полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500
-        EL — и к слову говоря, все тушки этих камер все еще находятся на
-        поверхности Луны, так как астронавты с собой забрали только кассеты с
-        пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то
-        пошло не так и на ракету они так никогда и не попали. Всего их было
-        произведено 25 штук, одну из них недавно продали на аукционе за 45000
-        евро.
-      </p>
-      <time class={{style.messageTime}}>11:56</time>
+  {{else}}
+    <div class="{{style.empty}}">
+      <h2>Выберите чат чтобы начать общение</h2>
     </div>
-    <div class="{{style.messageContainer}} {{style.to}}">
-      <p class={{style.messageText}}>
-        Круто!
-      </p>
-      <time class={{style.messageTime}}>12:00</time>
-    </div>
-  </div>
-  <div class={{style.sendMessage}}>
-    <hr />
-    <div class={{style.inputs}}>
-      <div class={{style.file}}>
-        <img src={{clip}} alt="clip" />
-      </div>
-      <div class={{style.text}}>
-        {{{messageInput}}}
-      </div>
-      <div class={{style.sendArrow}}>
-        <img src={{sendArrow}} alt="send message" />
-      </div>
-    </div>
-  </div>
+  {{/if}}
 </div>

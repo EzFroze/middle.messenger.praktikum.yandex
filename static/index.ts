@@ -1,9 +1,10 @@
-import { getTemplate } from "../src/utils/get-template";
+import { router } from "../src/app/router";
+import { routes } from "../src/app/routes";
+import { registerHelpers } from "../src/utils/handlebars-helpers";
 
-const root = document.getElementById("root")!;
+registerHelpers();
 
-const template = getTemplate();
-
-root.appendChild(template.getContent()!);
-
-template.dispatchComponentDidMount();
+window.addEventListener("DOMContentLoaded", () => {
+  router.registerRoutes(routes)
+    .start();
+});

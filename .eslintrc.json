@@ -1,17 +1,32 @@
 {
-  "env": { "es6": true },
-  "extends": ["airbnb/base", "airbnb-typescript/base"],
+  "env": {
+    "es6": true
+  },
+  "extends": [
+    "airbnb/base",
+    "airbnb-typescript/base"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "rules": {
-    "quotes": [2, "double", { "allowTemplateLiterals": true }],
+    "quotes": [
+      2,
+      "double",
+      {
+        "allowTemplateLiterals": true
+      }
+    ],
     "@typescript-eslint/quotes": [
       2,
       "double",
-      { "allowTemplateLiterals": true }
+      {
+        "allowTemplateLiterals": true
+      }
     ],
     "@typescript-eslint/default-param-last": "off",
     "@typescript-eslint/comma-dangle": "off",
@@ -22,17 +37,26 @@
     "no-underscore-dangle": "off",
     "no-useless-return": "off",
     "class-methods-use-this": "off",
-    "no-param-reassign": "warn"
+    "no-param-reassign": "warn",
+    "max-classes-per-file": "off",
+    "import/no-cycle": "off"
   },
   "overrides": [
     {
-      "files": [".[jt]s?x*"]
+      "files": [
+        ".[jt]s?x*"
+      ]
     }
   ],
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
       },
       "typescript": {}
     }
