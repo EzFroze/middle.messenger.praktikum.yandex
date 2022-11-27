@@ -7,6 +7,8 @@ import { connect } from "../../../app/store/helpers";
 import { Routes } from "../../../app/routes/typings";
 import { StoreState } from "../../../app/store/typings";
 import { authController, settingsController } from "../../../contollers";
+import { TForm, validate } from "../../../utils/validate";
+import { patterns } from "../../../const/regexp";
 import { UserProfile } from "../../../api/settings-api/typings";
 
 type Props = {
@@ -27,6 +29,86 @@ const defaultProps: Pick<Props, "style"> = {
 };
 
 class SettingsEditDataPage extends Block<Props> {
+  private form: TForm = {
+    email: {
+      value: "",
+      validate: {
+        regexp: {
+          pattern: patterns.EMAIL,
+          errorMessage: "Проверьте правильность введенной почты",
+        },
+        minLength: {
+          length: 4
+        },
+      },
+    },
+    login: {
+      value: "",
+      validate: {
+        minLength: {
+          length: 3
+        },
+        maxLength: {
+          length: 20
+        },
+        regexp: {
+          pattern: patterns.LOGIN,
+          errorMessage: "Отображаемое имя",
+        },
+      },
+    },
+    display_name: {
+      value: "",
+      validate: {
+        minLength: {
+          length: 3
+        },
+        maxLength: {
+          length: 20
+        },
+        regexp: {
+          pattern: patterns.NAME,
+          errorMessage: "Отображаемое имя",
+        },
+      },
+    },
+    first_name: {
+      value: "",
+      validate: {
+        regexp: {
+          pattern: patterns.NAME,
+          errorMessage:
+            "Имя может на латинице или кирилице. Первая буква заглавная",
+        },
+      },
+    },
+    second_name: {
+      value: "",
+      validate: {
+        regexp: {
+          pattern: patterns.NAME,
+          errorMessage:
+            "Фамилия может на латинице или кирилице. Первая буква заглавная",
+        },
+      },
+    },
+    phone: {
+      value: "",
+      validate: {
+        regexp: {
+          pattern: patterns.PHONE,
+          errorMessage: "Введите корректный номер телефона",
+        },
+        minLength: {
+          length: 10
+        },
+        maxLength: {
+          length: 15
+        },
+      },
+    },
+  };
+
   constructor(props: Props) {
     super({ ...defaultProps, ...props });
   }
@@ -50,6 +132,8 @@ class SettingsEditDataPage extends Block<Props> {
       .forEach(([key, value]) => {
         if (this.children[key]) {
           this.children[key].setProps({ value });
+          // @ts-ignore
+          this.form[key].value = value;
         }
       });
   }
@@ -75,7 +159,19 @@ class SettingsEditDataPage extends Block<Props> {
               id,
               value
             } = event.target as HTMLInputElement;
-            this.children[id].setProps({ value });
+
+            const form = this.form[id];
+
+            const {
+              error,
+              value: validateValue
+            } = validate(value, form.validate);
+
+            this.children[id].setProps({
+              value: validateValue,
+              error
+            });
+            form.value = value;
           }
         }
       });
@@ -85,17 +181,32 @@ class SettingsEditDataPage extends Block<Props> {
   handleClickSaveData() {
     const inputs = this.getInputs();
 
-    const form: Record<string, string | undefined> = {};
+    let hasError = false;
 
     inputs.forEach((input) => {
       const {
         id,
-        value
       } = input.props;
-      form[id] = value;
+      const form = this.form[id];
+      const {
+        error
+      } = validate(form.value, form.validate);
+
+      if (error) {
+        hasError = true;
+        input.setProps({ error });
+      }
     });
 
-    settingsController.editProfileData(form as UserProfile);
+    if (hasError) return;
+
+    const form = Object.entries(this.form)
+      .reduce<Record<string, any>>((acc, [key, value]) => {
+      acc[key] = value.value;
+      return acc;
+    }, {}) as UserProfile;
+
+    settingsController.editProfileData(form);
   }
 
   render() {
