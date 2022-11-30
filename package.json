@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "rimraf ./dist && parcel static/index.html --no-cache",
     "build": "rimraf ./dist && parcel build static/index.html --public-url '/' --no-cache --no-source-maps",
-    "start": "npm run build && ts-node server.ts",
+    "start": "ts-node server.ts",
+    "start:docker": "ts-node-transpile-only server.ts",
     "lint": "eslint src/**/*.ts server.ts",
     "lint:fix": "eslint src/**/*.ts server.ts --fix",
     "style": "stylelint src/**/*.pcss",
