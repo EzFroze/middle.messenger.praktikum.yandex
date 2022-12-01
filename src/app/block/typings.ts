@@ -1,7 +1,7 @@
 import Block from ".";
 
-export interface ChildConstructor<B = Block,
-  P extends Record<string | number | symbol, any> = any> {
+export interface ChildConstructor<B extends Block = Block,
+  P = B["props"]> {
   new(props: P): B
 }
 
