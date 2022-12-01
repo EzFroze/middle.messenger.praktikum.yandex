@@ -1,7 +1,7 @@
 import template from "./index.hbs";
-import * as style from "./styles.module.pcss";
+import style from "./styles.module.pcss";
 
-import arrow from "../../../static/images/send-arrow.svg";
+import { sendArrow as arrow } from "../../../static/images";
 import Block from "../../app/block";
 import { Link } from "../../components";
 import { ChildType } from "../../app/block/typings";

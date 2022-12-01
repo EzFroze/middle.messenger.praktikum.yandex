@@ -4,7 +4,7 @@ import { patterns } from "../../../const/regexp";
 import { LoginLayout } from "../../../layout";
 import { TForm, validate } from "../../../utils/validate";
 import template from "./index.hbs";
-import * as style from "./styles.module.pcss";
+import style from "./styles.module.pcss";
 import { ChildType } from "../../../app/block/typings";
 import { RegisterPostRequest } from "../../../api/login-api/typings";
 import { authController } from "../../../contollers";
