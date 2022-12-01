@@ -4,8 +4,8 @@
   "compilerOptions": {
     "outDir": "dist",
     "target": "es2016",
-    "declaration": true,
-    "declarationMap": true,
+    "declaration": false,
+    "declarationMap": false,
     "module": "CommonJS",
     "noImplicitAny": true,
     "noUnusedLocals": true,
