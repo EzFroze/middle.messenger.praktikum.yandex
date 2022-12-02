@@ -43,7 +43,3 @@ class Store extends EventBus {
 }
 
 export const store = new Store();
-
-// TODO удалить после завершения работ
-// @ts-ignore
-window.store = () => store.getState();

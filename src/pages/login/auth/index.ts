@@ -3,7 +3,7 @@ import { Button, Input, Link } from "../../../components";
 import { LoginLayout } from "../../../layout";
 import { TForm, validate } from "../../../utils/validate";
 import template from "./index.hbs";
-import * as style from "./styles.module.pcss";
+import style from "./styles.module.pcss";
 import { patterns } from "../../../const/regexp";
 import { ChildType } from "../../../app/block/typings";
 import { authController } from "../../../contollers";

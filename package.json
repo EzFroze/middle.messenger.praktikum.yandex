@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "rimraf ./dist && parcel static/index.html --no-cache",
-    "build": "rimraf ./dist && parcel build static/index.html --public-url '/' --no-cache --no-source-maps",
+    "dev": "rimraf ./dist && NODE_ENV=development webpack serve --config webpack.config.js",
+    "build": "rimraf ./dist && NODE_ENV=production webpack --config webpack.config.js",
     "start": "npm run build && ts-node server.ts",
+    "start:docker": "ts-node-transpile-only server.ts",
     "lint": "eslint src/**/*.ts server.ts",
     "lint:fix": "eslint src/**/*.ts server.ts --fix",
     "style": "stylelint src/**/*.pcss",
     "style:fix": "stylelint src/**/*.pcss --fix",
-    "test": "ts-mocha ./src/**/*.spec.ts -r jsdom-global/register"
+    "test": "ts-mocha ./src/**/*.spec.ts -r jsdom-global/register",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -27,8 +29,7 @@
     "browsers": ">= 0.25%"
   },
   "devDependencies": {
-    "@parcel/optimizer-cssnano": "2.6.2",
-    "@parcel/transformer-inline-string": "2.6.2",
+    "@fullhuman/postcss-purgecss": "5.0.0",
     "@types/express": "4.17.13",
     "@types/jsdom-global": "3.0.4",
     "@types/mocha": "10.0.0",
@@ -37,36 +38,42 @@
     "@typescript-eslint/eslint-plugin": "5.33.0",
     "@typescript-eslint/parser": "5.33.0",
     "assert": "2.0.0",
-    "buffer": "6.0.3",
-    "eslint": "8.21.0",
+    "css-loader": "6.7.2",
+    "cssnano": "5.1.14",
+    "eslint": "8.28.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "17.0.0",
-    "events": "3.3.0",
+    "file-loader": "6.2.0",
+    "handlebars-loader": "1.7.2",
+    "html-webpack-plugin": "5.5.0",
+    "husky": "8.0.0",
     "jsdom": "20.0.3",
     "jsdom-global": "3.0.2",
+    "mini-css-extract-plugin": "2.7.1",
     "mocha": "10.1.0",
-    "parcel": "2.6.2",
-    "parcel-transformer-hbs": "1.0.4",
     "postcss": "8.4.14",
-    "postcss-modules": "4.3.1",
-    "postcss-nested": "5.0.6",
-    "process": "0.11.10",
+    "postcss-loader": "7.0.2",
+    "postcss-nested": "6.0.0",
+    "postcss-preset-env": "7.8.3",
     "rimraf": "3.0.2",
+    "source-map-loader": "4.0.1",
     "stream-browserify": "3.0.0",
+    "style-loader": "3.3.1",
     "stylelint": "14.10.0",
     "stylelint-config-standard": "27.0.0",
+    "ts-loader": "9.4.1",
     "ts-mocha": "10.0.0",
-    "util": "0.12.5"
+    "typescript": "4.9.3",
+    "webpack": "5.75.0",
+    "webpack-cli": "5.0.0",
+    "webpack-dev": "1.1.1",
+    "webpack-dev-server": "4.11.1",
+    "xhr2": "0.2.1"
   },
   "dependencies": {
     "express": "4.18.1",
     "handlebars": "4.7.7",
     "ts-node": "10.9.1",
     "uuid": "8.3.2"
-  },
-  "@parcel/transformer-css": {
-    "cssModules": {
-      "global": false
-    }
   }
 }

@@ -1,5 +1,5 @@
 import template from "./index.hbs";
-import * as style from "./styles.module.pcss";
+import style from "./styles.module.pcss";
 import { clip, dots, sendArrow } from "../../../static/images";
 import Block from "../../app/block";
 import { Button, Input } from "../../components";
@@ -64,12 +64,6 @@ export class Chat extends Block<Props> {
 
   componentDidUpdate() {
     chatController.chatConnect();
-
-    const selectedChat = this.props.state?.chatsList.filter(
-      ({ id }) => id === this.props.state?.selectedChatId
-    )[0];
-
-    this.setProps({ selectedChat });
   }
 
   handleInput(event: Event) {

@@ -16,7 +16,7 @@ function queryStringify(data = {}): string {
 // Если кратко запрос (русский) -> anfrage (немецкий)
 // Привет ревьюеру и счастья и здоровья и любви
 // PS Пишу это в 2 часа ночи
-class AnfrageBase {
+export class AnfrageBase {
   get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
     const query = queryStringify(options.data);
     return this._request(url + query, {

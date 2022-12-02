@@ -2,7 +2,7 @@ import template from "./index.hbs";
 import { MessengerLayout } from "../../layout";
 import { Chat, ChatList } from "../../modules";
 import Block from "../../app/block";
-import * as style from "./styles.module.pcss";
+import style from "./styles.module.pcss";
 import { ChildType } from "../../app/block/typings";
 import { chatList } from "../../modules/chat-list";
 import { chat } from "../../modules/chat";

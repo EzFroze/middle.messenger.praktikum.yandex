@@ -1,5 +1,5 @@
-import Handlebars from "handlebars";
-import { deepClone } from "./deep-clone";
+import Handlebars from "handlebars/runtime";
+import { deepClone } from "../deep-clone";
 
 // много ts игнора, но это типизоровать нет времени :(
 
